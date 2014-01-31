@@ -1,0 +1,4 @@
+MakeCoffee: hasContainer hasCoffee
+MakePasta: hasPasta hasCookingPot CookerOn
+BrushTeeth: hasBrusher hasToothpaste
+WatchTelevision: hasRemoteControl TVOn TVOff
