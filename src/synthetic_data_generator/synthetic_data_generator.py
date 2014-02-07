@@ -33,7 +33,7 @@ def parseArgs(argv):
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print 'test.py -i <inputfile> -o <outputfile>'
+         print 'synthetic_data_generator.py -i <inputfile> -o <outputfile>'
          sys.exit()
       elif opt in ("-i", "--ifile"):
          inputfile = arg
@@ -185,6 +185,7 @@ Output:
     sensor_activation_patterns -> different sensor patterns for each ADL, 
         containing sensor activations and their probabilities (list of lists of strings)
     activity_patterns -> contain daily frequency and occurring time slots (list of lists of strings)
+    noise_specs -> noise specifications for sensor activations or action properties (list of lists)
 """
 
 def adlScriptParser(adl_file):
@@ -268,12 +269,12 @@ def adlScriptParser(adl_file):
         
     # Next lines are for activity patterns
     activity_patterns = []
-    not_eof = True    
-    while not_eof:
+    not_comment = True    
+    while not_comment:
         line = adl_file.readline().strip('\n')
-        if not line: 
-            # EOF
-            not_eof = False
+        # Check whether it is a comment
+        if line[0] == '#':                    
+            not_comment = False
         else:
             # First line of the pattern contains the Probability and lines of sequences and alterations
             if line.split(' ')[0] != 'Prob':
@@ -305,7 +306,28 @@ def adlScriptParser(adl_file):
                 day_pattern.append(pattern)            
             activity_patterns.append(day_pattern)
     
-    return simulated_days, adl_names, sensor_act_patterns, activity_patterns
+    # Next lines should contain the noise specifications
+    # Each line has a probability value followed by action properties or sensor activations
+    # That probability specifies the probability of activation in one hour time slot
+    noise_specs = []
+    not_comment = True
+    while not_comment:
+        line = adl_file.readline().strip('\n')
+        # Check whether it is a comment
+        if line[0] == '#':                    
+            not_comment = False
+        else:
+            aux_list = line.split(' ')
+            try:
+                aux_list[0] = float(aux_list[0])
+            except ValueError:
+                msg = 'Expected a float number for first elemen of noise specification; read:' + aux_list[0]
+                sys.exit(msg)
+            
+            noise_specs.append(aux_list)
+            
+    
+    return simulated_days, adl_names, sensor_act_patterns, activity_patterns, noise_specs
     
 """
 Function to generate sensor activations following the indications of the ADL script
@@ -316,9 +338,10 @@ Input:
     sensor_activation_patterns -> different sensor patterns for each ADL, 
         containing sensor activations and their probabilities (list of lists of strings)
     activity_patterns -> contain daily frequency and occurring time slots (list of lists of strings)
+    noise_specs -> contains the specifications for generating noisy sensor activations (list of lists)
     outputfile -> file where generated sensor activations are written (file name)
 """    
-def adlGenerator(days, adl_names, sensor_activation_patterns, activity_patterns, outputfile):
+def adlGenerator(days, adl_names, sensor_activation_patterns, activity_patterns, noise_specs, outputfile):
     
     print 'Days to be simulated:', days
     
@@ -327,7 +350,7 @@ def adlGenerator(days, adl_names, sensor_activation_patterns, activity_patterns,
     # Initialize an empty pd.DataFrame object
     timed_sensor_activations = pd.DataFrame()    
     
-    # Iterate through days and generate considering activity and sensor activation patterns
+    # Iterate through days and generate data considering activity and sensor activation patterns
     for i in xrange(days):
         # Choose an activity pattern for day 1 considering pattern probabilities
         print 'Day', i, ':', current_day        
@@ -356,7 +379,17 @@ def adlGenerator(days, adl_names, sensor_activation_patterns, activity_patterns,
                 if result == 1:
                     timed_sensor_activations = pd.concat([timed_sensor_activations, timed_activations])
                         
-            
+        
+        # Generate noisy sensor activations for current day using noise_specs
+        # Initialize empty DataFrame
+        noisy_activations = pd.DataFrame()
+        noisy_activations = generateNoisyActivations(noise_specs, current_day)
+        # Print for debugging purposes
+        print 'Noisy activations for day:', current_day
+        print noisy_activations
+        # Concatenate noisy_activations to timed_sensor_activations        
+        timed_sensor_activations = pd.concat([timed_sensor_activations, noisy_activations])        
+        
         # Update current_day!!!
         current_day = current_day + datetime.timedelta(days=1)
     
@@ -364,7 +397,40 @@ def adlGenerator(days, adl_names, sensor_activation_patterns, activity_patterns,
     print 'Generated complete timed sensor activations (head only):'
     print timed_sensor_activations.head(n=50)
     timed_sensor_activations.to_csv(outputfile, header=False)
-        
+
+"""
+Function to generate noisy activations for a whole day using noise_specs read from adl_script
+Input:
+    noise_specs: contains the probabilities of activations per hour (list of lists)
+    current_day: current day as datetime.datetime object
+Output:
+    noisy_activations: sensor activations with timestamps (pd.DataFrame)
+"""
+def generateNoisyActivations(noise_specs, current_day):
+    # Initialize empty dates and sensor_array, which will be used to form noisy_activations    
+    dates = []
+    sensor_array = []
+    # Iterate through 24 hours in current_day
+    for i in xrange(24):
+        # Calculate if activations should occur in this hour
+        for j in xrange(len(noise_specs)):
+            activation_prob = float(noise_specs[j][0])
+            activations = noise_specs[j][1:]
+            for k in xrange(len(activations)):
+                rand_num = np.random.random()                
+                if rand_num <= activation_prob:
+                    # we must generate noise
+                    # calculate a time for this noisy activation
+                    seconds_delay = 3600 * np.random.random()
+                    timestamp = current_day + datetime.timedelta(hours=i, seconds=seconds_delay)
+                    dates.append(timestamp)
+                    sensor_array.append([activations[k], 'None', ''])
+    
+    # Put dates and sensor_array in noisy_activations
+    noisy_activations = pd.DataFrame(sensor_array, index=dates)
+    return noisy_activations
+                    
+
 """
 Function to generate sensor activations from an activity pattern and sensor activation patterns
 Input:
@@ -375,7 +441,7 @@ Input:
 Output:    
     0/1: 0 if alteration is not executed, 1 otherwise
     timed_sensor_activations: sensor activation with timestamps (pd.DataFrame), if alteration
-        gets executes, and empty DataFrame otherwise
+        gets executed, and empty DataFrame otherwise
 """
 def generateTimedSensorActivationsForAlteration(selected_pattern, sensor_activation_patterns, adl_names, current_day):
     # Calculate whether alteration will be executed
@@ -487,6 +553,7 @@ def generateTimedSensorActivationsForSequence(selected_pattern, sensor_activatio
             sensor_array.append(sensors[j])
     
     timed_sensor_activations = pd.DataFrame(sensor_array, index=dates)
+    
     print 'Timed sensor activation for selected sequence:'
     print timed_sensor_activations
     
@@ -516,7 +583,12 @@ def generateSensorActivations(sensor_pattern, dates, time_lapse, current_adl):
     for i in xrange(len(sensor_pattern)):        
         sensor = sensor_pattern[i].split('@')[0]
         delay = int(sensor_pattern[i].split('@')[1])
-        sensor_array.append([sensor, current_adl])
+        if i == 0:
+            sensor_array.append([sensor, current_adl, 'start'])
+        elif i == len(sensor_pattern) - 1:
+            sensor_array.append([sensor, current_adl, 'end'])
+        else:
+            sensor_array.append([sensor, current_adl, ''])
         if delay != 0:
             # Generate a new date
             std = delay * 0.25
@@ -561,6 +633,10 @@ def getCurrentDay():
     day = int(today.split('-')[2])
     
     return datetime.datetime(year, month, day)
+    
+"""
+Main function
+"""
             
 if __name__ == "__main__":
    # call the argument parser 
@@ -573,7 +649,8 @@ if __name__ == "__main__":
    #outputfile = open(outputfile_name, 'w')
    
    # parse the ADL script
-   [simulated_days, adl_names, sensor_act_patterns, activity_patterns] = adlScriptParser(inputfile)   
+   [simulated_days, adl_names, sensor_act_patterns, activity_patterns, noise_specs] = adlScriptParser(inputfile)   
+   
   
    # Print the contents of the script for debugging purposes
    """    
@@ -595,6 +672,10 @@ if __name__ == "__main__":
            print pattern[j]
        
        print ' '
-   """    
+   """
+   print 'Noise specifications:'
+   for i in xrange(len(noise_specs)):
+       print noise_specs[i]
+       
    # Once the ADL generation script has been read, generate data
-   adlGenerator(simulated_days, adl_names, sensor_act_patterns, activity_patterns, outputfile_name)
+   adlGenerator(simulated_days, adl_names, sensor_act_patterns, activity_patterns, noise_specs, outputfile_name)
