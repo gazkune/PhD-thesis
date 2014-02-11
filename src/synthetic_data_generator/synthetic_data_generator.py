@@ -640,9 +640,9 @@ Main function
 
 def main(argv):
     # call the argument parser 
-   [inputfile_name, outputfile_name] = parseArgs(sys.argv[1:])
+   [inputfile_name, outputfile_name] = parseArgs(argv[1:])
    print 'Input file is', inputfile_name
-   print 'Output file is', outputfile_name
+   print 'Output file is', outputfile_name   
    
    # open input and output files
    inputfile = open(inputfile_name, 'r')

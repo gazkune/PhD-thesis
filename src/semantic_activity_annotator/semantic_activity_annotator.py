@@ -408,7 +408,7 @@ Main function
 
 def main(argv):
    # call the argument parser 
-   [dataset_file, seed_file, output_file] = parseArgs(sys.argv[1:])
+   [dataset_file, seed_file, output_file] = parseArgs(argv[1:])
    print 'Dataset:', dataset_file
    print 'Seed activity models:', seed_file
    print 'Annotated actions:', output_file
