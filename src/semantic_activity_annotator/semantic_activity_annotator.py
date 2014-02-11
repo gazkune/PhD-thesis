@@ -117,7 +117,8 @@ Output:
     True/False: True if activity duration is less than max_duration; False elsewhere
 """
 def rightActivityDuration(activity_start, activity_end, activity, activity_df, seed_activities):
-    duration = activity_df.index[activity_end] - activity_df.index[activity_start]
+    duration = activity_df.index[activity_end] - activity_df.index[activity_start]    
+    max_duration = datetime.timedelta(seconds=0)
     for j in xrange(len(seed_activities)):
         try:
             seed_activities[j].index(activity)
@@ -125,6 +126,7 @@ def rightActivityDuration(activity_start, activity_end, activity, activity_df, s
             continue
         max_duration = datetime.timedelta(seconds=seed_activities[j][1])
         break
+    
     if duration < max_duration:
         return True
     else:
@@ -161,7 +163,7 @@ def annotateActivities1(activity_df, seed_activities):
     activity_end = 0    
     current_activity = np.array([])
     # annotated_activities has the following structure
-    # [[Activity, StartIndex, EndIndex], [Activity, StartIndex, EndIndex], ...]
+    # [[Activity, Completed, StartIndex, EndIndex], [Activity, Completed, StartIndex, EndIndex], ...]
     annotated_activities = []
     for i in xrange(len(activity_df)):        
         # <i> can be used to index the row
@@ -179,20 +181,32 @@ def annotateActivities1(activity_df, seed_activities):
         # Print for debugging purposes                    
         #print 'Action:', action, 'Activities:', activities
         if len(activities) == 0:
+            print 'Iteration:', i 
+            print '   current_activities:', current_activity
+            print '   activities:', activities
             continue        
         
-        if len(current_activity) == 0 and len(activities) > 0:            
+        if len(current_activity) == 0 and len(activities) > 0:
+            print 'Iteration:', i
+            print '   current_activity:', current_activity
+            print '   activities:', activities
             activity_start = i
-            current_activity = activities            
+            current_activity = activities
             continue
             
         if len(current_activity) > 0 and len(activities) > 0:
             # Check time from last action to this one and see if it is coherent with the activies
             # in current_activity
+            print 'Iteration:', i
+            print '   current_activity:', current_activity
+            print '   activities:', activities
+            aux_activities = []
             for j in xrange(len(current_activity)):
-                if not rightActivityDuration(i-1, i, current_activity[j], activity_df, seed_activities):
-                    current_activity = np.delete(current_activity, j)
+                if rightActivityDuration(i-1, i, current_activity[j], activity_df, seed_activities):
+                    print '   Keep activity'
+                    aux_activities.append(current_activity[j])
             
+            current_activity = np.array(aux_activities)
             if len(current_activity) == 0:
                 activity_start = i
                 current_activity = activities
@@ -211,6 +225,14 @@ def annotateActivities1(activity_df, seed_activities):
                     Completion criterion could make us not annotate activities that really occurred
                     but with a missing activation
                 """
+                aux_0 = list(activities)
+                aux_1 = list(current_activity)
+                for j in xrange(len(aux_0)):
+                    aux_1.append(aux_0[j])
+                    
+                current_activity = np.array(aux_1)
+                print 'Empty intersection:', current_activity
+                """
                 if len(current_activity) == 1:
                     # End current activity
                     # Is this the best policy? Should we end an activity even if it has not been
@@ -219,7 +241,8 @@ def annotateActivities1(activity_df, seed_activities):
                     annotated_activities.append([current_activity[0], False, activity_start, activity_end])
                 # start a new activity
                 current_activity = activities
-                activity_start = i                
+                activity_start = i
+                """
                 continue
             else:
                 # intersection is not empty
@@ -305,44 +328,57 @@ def annotateActivities2(activity_df, seed_activities):
     # Implements approach 2
     print 'annotateActivities approach 2'
     
-    unique_action_indexes = []
-    for i in xrange(len(activity_df)):
+    # annotated_activities has the following structure
+    # [[Activity, Completed, StartIndex, EndIndex], [Activity, Completed, StartIndex, EndIndex], ...]
+    annotated_activities = []
+    
+    i = 0
+    while i < len(activity_df):
         # <i> can be used to index the row
         action = activity_df.iloc[i, 0] # actions are in column 0 always        
         
-        # Is action unique?
-        activity_indexes = []
-        for j in xrange(len(seed_activities)):
-            seed = seed_activities[j]
-            seed_actions = seed[1] # In a seed activity, actions are the second element
-            try:
-                seed_actions.index(action)
-            except ValueError:
-                continue
-                        
-            activity_indexes.append(j)
-            
-        if len(activity_indexes) == 1:
-            # action is unique
-            unique_action_indexes.append(i)
-    
-    # unique_action_indexes contains a list of indexes of unique actions inside activity_df
-    # print for debugging
-    # print 'Unique actions:'
-    # print activity_df.iloc[unique_action_indexes]
-   
-    """   
-    Iterate through unique_action_indexes and expand them left and right (if possible)
-    If another unique action is found: 
-        If both represent the same activity, continue expansion
-        If not, stop expansion and store the previous index
-    If an action contained in various activities is found:
-        If current activity is inside those activities:
-            If current activity is complete, stop expansion
-            If not, continue expansion
-        If current activity is not inside those activities:
-            stop expansion    
-    """
+        # Iterate through seed_activities and check whether action
+        # is contained in any of the activities
+        activities = actionInSeedActivities(action, seed_activities)
+        
+        # To use intersection functions, use np.array
+        activities = np.array(activities)
+        
+        if len(activities) == 0:
+            i = i + 1
+            continue        
+        
+        # Activity start index
+        start_index = i
+        
+        for j in xrange(len(activities)):
+            activity = activities[j]
+            incr = 1
+            # Use two booleans to handle activity recognition
+            activity_detected = False
+            time_out = False        
+            while not activity_detected and not time_out and (start_index + incr) < len(activity_df):
+                if not rightActivityDuration(start_index, start_index + incr, activity, activity_df, seed_activities):
+                    time_out = True
+                else:
+                    if completeActivity(start_index, start_index + incr, activity, activity_df, seed_activities):
+                        activity_detected = True
+                        end_index = start_index + incr
+                        detected_activity = activity
+                incr = incr + 1
+            if activity_detected == True:
+                annotated_activities.append([detected_activity, True, start_index, end_index])
+                i = end_index
+                break
+        
+        i = i + 1
+        
+    # annotated_activities contain all the activities detected (completed always True)
+    print 'Annotated activities:'
+    for i in xrange(len(annotated_activities)):
+        print annotated_activities[i]
+        
+    return annotated_activities            
        
        
 """
@@ -370,8 +406,9 @@ def actionInSeedActivities(action, seed_activities):
 Main function
 """
 
-if __name__ == "__main__":
-    # call the argument parser 
+if __name__ == "__main__":   
+   
+   # call the argument parser 
    [dataset_file, seed_file, output_file] = parseArgs(sys.argv[1:])
    print 'Dataset:', dataset_file
    print 'Seed activity models:', seed_file
@@ -390,8 +427,9 @@ if __name__ == "__main__":
    print seed_activities
    
    # Call annotateActivities function
-   annotated_activities = annotateActivities1(activity_df, seed_activities)
+   annotated_activities = annotateActivities2(activity_df, seed_activities)
    
+      
    # Use only complete activities to create the annotated pd.DataFrame
    # Each row will be: [timestamp, action, real_label, annotated_label]
    aux_list = []

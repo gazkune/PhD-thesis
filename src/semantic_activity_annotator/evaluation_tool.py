@@ -9,8 +9,8 @@ Created on Thu Feb  6 15:29:27 2014
 A tool to evaluate the performance of semantic_acitvity_annotator.py
 """
 import sys, getopt
-import numpy as np
-import time, datetime
+#import numpy as np
+#import time, datetime
 import pandas as pd
 
 """
@@ -54,10 +54,10 @@ def evaluate(annotated_actions):
     for i in xrange(len(aux) - 1):
         if aux.start_end.iloc[i] == 'start':        
             activity = aux.real_label.iloc[i]
-            print 'Activity:', activity
+            #print 'Activity:', activity
             eval_index = -1        
             if len(eval_table) == 0:
-                print 'First element'
+                #print 'First element'
                 eval_table.append([activity, 1, 0])
                 eval_index = 0
             else:
@@ -67,13 +67,13 @@ def evaluate(annotated_actions):
                     except ValueError:
                         continue
                     # Activity found
-                    print 'Activity', activity, 'is in the evaluation table'
+                    #print 'Activity', activity, 'is in the evaluation table'
                     eval_index = j
                     eval_table[eval_index][1] = eval_table[eval_index][1] + 1
                     break
                 if eval_index == -1:
                     # New activity which is not in the eval_table
-                    print 'Activity', activity, 'is not in the evaluation table: append!'
+                    #print 'Activity', activity, 'is not in the evaluation table: append!'
                     eval_table.append([activity, 1, 0])
                     eval_index = len(eval_table) - 1
                 
@@ -96,90 +96,7 @@ def evaluate(annotated_actions):
     print 'Evaluation table:'
     for i in xrange(len(eval_table)):
         print eval_table[i]
-        
-                        
-    
-    """
-    real_activity_groups = []
-    annotated_activity_groups = []
-    real_start_index = -1
-    real_end_index = -1
-    annotated_start_index = -1
-    annotated_end_index = -1
-    for i in xrange(len(annotated_actions)):
-        # Real activity groups
-        if real_start_index == -1:
-            # No group started
-            if annotated_actions.real_label.iloc[i] != 'None':
-                real_start_index = i
-                real_activity = annotated_actions.real_label.iloc[i]
-        else:
-            if annotated_actions.real_label.iloc[i] != real_activity:
-                real_end_index = i - 1
-                real_activity_groups.append([real_activity, real_start_index, real_end_index])
-                if annotated_actions.real_label.iloc[i] != 'None':
-                    real_start_index = i
-                    real_activity = annotated_actions.real_label.iloc[i]
-                else:
-                    real_start_index = -1
-        # Annotated activity groups
-        if annotated_start_index == -1:
-            # No group started
-            if annotated_actions.annotated_label.iloc[i] != 'None':
-                annotated_start_index = i
-                annotated_activity = annotated_actions.annotated_label.iloc[i]
-        else:
-            if annotated_actions.annotated_label.iloc[i] != annotated_activity:
-                annotated_end_index = i - 1
-                annotated_activity_groups.append([annotated_activity, annotated_start_index, annotated_end_index])
-                if annotated_actions.annotated_label.iloc[i] != 'None':
-                    annotated_start_index = i
-                    annotated_activity = annotated_actions.annotated_label.iloc[i]
-                else:
-                    annotated_start_index = -1
-    
-    # Filter 'None' labels in real_activity_groups when appropriate
-    # Print both lists before for debugginf pruposes    
-    print 'Length Real Activities:', len(real_activity_groups)
-    print 'Length Annotated Activities:', len(annotated_activity_groups)
 
-    aux_list = []
-    i = 0    
-    while i  < len(real_activity_groups):
-        if i + 1 == len(real_activity_groups):
-            # we are in the last item, just add it
-            aux_list.append(real_activity_groups[i])
-            break
-        if real_activity_groups[i][0] == real_activity_groups[i + 1][0]:
-            # Two contiguous equal activities
-            if real_activity_groups[i + 1][1] - real_activity_groups[i][2] < 3:
-                # Fuse both activities
-                # Take into account that the criterion of distance < 3 is arbitrary
-                aux_list.append([real_activity_groups[i][0], real_activity_groups[i][1], real_activity_groups[i+1][2]])
-                i = i + 2
-            else:
-                aux_list.append(real_activity_groups[i])
-                i = i + 1
-        else:
-            aux_list.append(real_activity_groups[i])                
-            i = i + 1
-                
-    print 'Length Real Activities:', len(aux_list)
-    print 'Length Annotated Activities:', len(annotated_activity_groups)   
-
-    if len(aux_list) > len(annotated_activity_groups):
-        max_len = len(aux_list)
-    else:
-        max_len = len(annotated_activity_groups)
-    
-    for i in xrange(max_len):
-        if i < len(aux_list) and i < len(annotated_activity_groups):
-            print aux_list[i], ' | ', annotated_activity_groups[i]
-        elif i < len(aux_list) and i >= len(annotated_activity_groups):
-            print aux_list[i], ' |  ---'
-        elif i < len(annotated_activity_groups) and i >= len(aux_list):
-            print '---  | ', annotated_activity_groups[i]
-       """     
 
 """
 Main function
