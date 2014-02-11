@@ -637,9 +637,9 @@ def getCurrentDay():
 """
 Main function
 """
-            
-if __name__ == "__main__":
-   # call the argument parser 
+
+def main(argv):
+    # call the argument parser 
    [inputfile_name, outputfile_name] = parseArgs(sys.argv[1:])
    print 'Input file is', inputfile_name
    print 'Output file is', outputfile_name
@@ -679,3 +679,6 @@ if __name__ == "__main__":
        
    # Once the ADL generation script has been read, generate data
    adlGenerator(simulated_days, adl_names, sensor_act_patterns, activity_patterns, noise_specs, outputfile_name)
+            
+if __name__ == "__main__":
+   main(sys.argv)

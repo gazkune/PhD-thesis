@@ -406,8 +406,7 @@ def actionInSeedActivities(action, seed_activities):
 Main function
 """
 
-if __name__ == "__main__":   
-   
+def main(argv):
    # call the argument parser 
    [dataset_file, seed_file, output_file] = parseArgs(sys.argv[1:])
    print 'Dataset:', dataset_file
@@ -453,7 +452,8 @@ if __name__ == "__main__":
    print 'To store in a csv file:'
    print activity_df.head(50)
    
-   activity_df.to_csv(output_file)
-   
-   
-       
+   activity_df.to_csv(output_file)    
+
+
+if __name__ == "__main__":   
+    main(sys.argv)

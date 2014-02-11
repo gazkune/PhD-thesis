@@ -97,17 +97,18 @@ def evaluate(annotated_actions):
     for i in xrange(len(eval_table)):
         print eval_table[i]
 
-
 """
 Main function
 """
 
-if __name__ == "__main__":
-    # call the argument parser 
-   inputfile = parseArgs(sys.argv[1:])
+def main(argv):
+   # call the argument parser 
+   inputfile = parseArgs(argv[1:])
    print 'Input file:', inputfile
    
    annotated_actions = pd.read_csv(inputfile, parse_dates=0, index_col=0)   
    
    evaluate(annotated_actions)
-      
+
+if __name__ == "__main__":   
+   main(sys.argv)
