@@ -72,7 +72,7 @@ def main(argv):
    time.sleep(1)
    
    # Call evaluation_tool
-   arguments = ['evaluation_tool.py', '-i', labeled_actions]
+   arguments = ['evaluation_tool.py', '-i', labeled_actions, '-o', evaluation_results]
    eval_main(arguments)
     
 if __name__ == "__main__":
