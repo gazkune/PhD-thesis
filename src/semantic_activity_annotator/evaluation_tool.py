@@ -54,7 +54,7 @@ def evaluate(annotated_actions):
     aux = aux.sort_index()
 
     # eval_table will contain the evaluation information
-    # [Activity, real_occurrences, annotated_correct_occurrences]
+    # [Activity, real_occurrences, annotated_correct_occurrences, annotated_total_occurrences]
     eval_table = []    
     for i in xrange(len(aux) - 1):
         if aux.start_end.iloc[i] == 'start':        
@@ -63,7 +63,7 @@ def evaluate(annotated_actions):
             eval_index = -1        
             if len(eval_table) == 0:
                 #print 'First element'
-                eval_table.append([activity, 1, 0])
+                eval_table.append([activity, 1, 0, 0])
                 eval_index = 0
             else:
                 for j in xrange(len(eval_table)):
@@ -79,7 +79,7 @@ def evaluate(annotated_actions):
                 if eval_index == -1:
                     # New activity which is not in the eval_table
                     #print 'Activity', activity, 'is not in the evaluation table: append!'
-                    eval_table.append([activity, 1, 0])
+                    eval_table.append([activity, 1, 0, 0])
                     eval_index = len(eval_table) - 1
                 
             start = aux.index[i]
@@ -97,6 +97,35 @@ def evaluate(annotated_actions):
             if activity_detected == True and other_activity == False:
                 eval_table[eval_index][2] = eval_table[eval_index][2] + 1
     
+    print 'Evaluation table:'
+    for i in xrange(len(eval_table)):
+        print eval_table[i]    
+    
+    # Count all the annotated occurrences for each activity
+    current_activity = 'None'
+    for i in xrange(len(annotated_actions)):
+        annotated_activity = annotated_actions.annotated_label[i]
+        if annotated_activity == 'None':
+            current_activity = 'None'
+        else:
+            if annotated_activity != current_activity:
+                exit_loop = False
+                j = 0
+                while exit_loop == False and j < len(eval_table):
+                    try:
+                        eval_table[j].index(annotated_activity)
+                        index = j                        
+                    except ValueError:
+                        j = j + 1
+                        continue
+                    exit_loop = True
+                if exit_loop == True:
+                    eval_table[index][3] = eval_table[index][3] + 1
+                    current_activity = annotated_activity
+                else:
+                    msg = 'Activity ' + annotated_activity + ' is not in eval_table'
+                    sys.exit(msg)
+        
     # eval_table is ready. Print it for debugging
     print 'Evaluation table:'
     for i in xrange(len(eval_table)):
@@ -119,6 +148,7 @@ def main(argv):
    
    # Write eval_table to outputfile
    fd = open(outputfile, 'w')
+   fd.write('Activity | Real Occurrences | Correctly annotated | Total annotated\n')
    for i in xrange(len(eval_table)):
        fd.write(str(eval_table[i]) + '\n')
        
