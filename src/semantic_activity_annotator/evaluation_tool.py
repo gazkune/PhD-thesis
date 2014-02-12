@@ -23,25 +23,30 @@ Output:
 """
 
 def parseArgs(argv):
-   inputfile = ''   
+   inputfile = ''
+   outputfile = ''
    try:
-      opts, args = getopt.getopt(argv,"hi:",["input="])      
+      opts, args = getopt.getopt(argv,"hi:o:",["input=","output="])      
    except getopt.GetoptError:
-      print 'evaluation_tool.py -i <inputfile>'
+      print 'evaluation_tool.py -i <inputfile> -o <outputfile>'
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
          print 'evaluation_tool.py -i <inputfile>'
          sys.exit()
       elif opt in ("-i", "--input"):
-         inputfile = arg      
+         inputfile = arg
+      elif opt in ("-o", "--output"):
+         outputfile = arg
    
-   return inputfile
+   return inputfile, outputfile
 
 """
 The evaluation function
 Input:
     annotated_actions: [timestamp, action, real_label, start/end, annotated_label] (pd.DataFrame)
+Output:
+    eval_table: [Activity (str), Real_Occurrences (int), Annotated_Occurrences(int)]
 """
 def evaluate(annotated_actions):
     aux = annotated_actions[annotated_actions.start_end == 'start']
@@ -96,6 +101,8 @@ def evaluate(annotated_actions):
     print 'Evaluation table:'
     for i in xrange(len(eval_table)):
         print eval_table[i]
+        
+    return eval_table
 
 """
 Main function
@@ -103,12 +110,19 @@ Main function
 
 def main(argv):
    # call the argument parser 
-   inputfile = parseArgs(argv[1:])
+   [inputfile, outputfile] = parseArgs(argv[1:])
    print 'Input file:', inputfile
    
    annotated_actions = pd.read_csv(inputfile, parse_dates=0, index_col=0)   
    
-   evaluate(annotated_actions)
+   eval_table = evaluate(annotated_actions)
+   
+   # Write eval_table to outputfile
+   fd = open(outputfile, 'w')
+   for i in xrange(len(eval_table)):
+       fd.write(str(eval_table[i]) + '\n')
+       
+   fd.close()
 
 if __name__ == "__main__":   
    main(sys.argv)
