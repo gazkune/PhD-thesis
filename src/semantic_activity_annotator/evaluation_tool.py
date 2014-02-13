@@ -44,20 +44,20 @@ def parseArgs(argv):
 """
 The evaluation function
 Input:
-    annotated_actions: [timestamp, action, real_label, start/end, annotated_label] (pd.DataFrame)
+    annotated_actions: [timestamp, action, real_label, start/end, annotated_label, start/end] (pd.DataFrame)
 Output:
     eval_table: [Activity (str), Real_Occurrences (int), Annotated_Occurrences(int)]
 """
 def evaluate(annotated_actions):
-    aux = annotated_actions[annotated_actions.start_end == 'start']
-    aux = pd.concat([aux, annotated_actions[annotated_actions.start_end == 'end']])
+    aux = annotated_actions[annotated_actions.r_start_end == 'start']
+    aux = pd.concat([aux, annotated_actions[annotated_actions.r_start_end == 'end']])
     aux = aux.sort_index()
 
     # eval_table will contain the evaluation information
     # [Activity, real_occurrences, annotated_correct_occurrences, annotated_total_occurrences]
     eval_table = []    
     for i in xrange(len(aux) - 1):
-        if aux.start_end.iloc[i] == 'start':        
+        if aux.r_start_end.iloc[i] == 'start':        
             activity = aux.real_label.iloc[i]
             #print 'Activity:', activity
             eval_index = -1        
@@ -102,6 +102,7 @@ def evaluate(annotated_actions):
         print eval_table[i]    
     
     # Count all the annotated occurrences for each activity
+    """
     current_activity = 'None'
     for i in xrange(len(annotated_actions)):
         annotated_activity = annotated_actions.annotated_label[i]
@@ -125,6 +126,13 @@ def evaluate(annotated_actions):
                 else:
                     msg = 'Activity ' + annotated_activity + ' is not in eval_table'
                     sys.exit(msg)
+    """
+    for i in xrange(len(eval_table)):
+        activity = eval_table[i][0]
+        aux_df0 = annotated_actions[annotated_actions.annotated_label == activity]
+        aux_df1 = aux_df0[aux_df0.a_start_end == 'start']
+        eval_table[i][3] = len(aux_df1)
+        
         
     # eval_table is ready. Print it for debugging
     print 'Evaluation table:'

@@ -417,7 +417,7 @@ def main(argv):
    activity_df = pd.read_csv(dataset_file, parse_dates=0, header=None, index_col=0)
    
    # Rename columns
-   activity_df = activity_df.rename(columns={1: 'action', 2: 'real_label', 3: 'start_end'})
+   activity_df = activity_df.rename(columns={1: 'action', 2: 'real_label', 3: 'r_start_end'})
    
    
    # Parse the seed_file file
@@ -430,10 +430,12 @@ def main(argv):
    
       
    # Use only complete activities to create the annotated pd.DataFrame
-   # Each row will be: [timestamp, action, real_label, annotated_label]
+   # Each row will be: [timestamp, action, real_label, r_start_end, annotated_label, a_start_end]
    aux_list = []
+   se_list = []
    for i in xrange(len(activity_df)):
        aux_list.append('None')
+       se_list.append('')
   
    
    # Iterate through annotated_activities and choose only those that are complete (True)
@@ -443,11 +445,15 @@ def main(argv):
            # Complete activity
            start = annotated_activities[i][2]
            end = annotated_activities[i][3]
+           se_list[start] = 'start'
+           se_list[end] = 'end'
            for j in xrange(start, end + 1):
                aux_list[j] = annotated_activities[i][0]
    
    annotated_labels = pd.DataFrame(aux_list, index=activity_df.index)
+   annotated_se = pd.DataFrame(se_list, index=activity_df.index)
    activity_df['annotated_label'] = annotated_labels
+   activity_df['a_start_end'] = annotated_se
    
    print 'To store in a csv file:'
    print activity_df.head(50)
