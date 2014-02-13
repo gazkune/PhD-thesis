@@ -1,0 +1,7 @@
+MakeCoffee 300: hasContainer hasCoffee
+MakeChocolate 300: hasContainer hasChocolate
+MakePasta 900: hasPasta useCookingAppliance useCookingUtensil
+BrushTeeth 90: hasBrusher hasToothpaste turnOnTap
+WatchTelevision 30: hasRemoteControl useTV
+WashHands 90: turnOnTap hasSoap
+ReadBook 30: hasBook useFurniture
