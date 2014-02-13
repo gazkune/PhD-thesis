@@ -5,12 +5,13 @@ Created on Tue Feb 11 15:32:42 2014
 @author: gazkune
 """
 
-import sys, os, getopt, time
-sys.path.append(os.path.abspath("/home/gazkune/repositories/gorka.azkune/src/synthetic_data_generator"))
-from synthetic_data_generator import main as sdg_main
-sys.path.append(os.path.abspath("/home/gazkune/repositories/gorka.azkune/src/semantic_activity_annotator"))
-from semantic_activity_annotator import main as saa_main
-from evaluation_tool import main as eval_main
+import sys, getopt, time
+
+print sys.path
+#import synthetic_data_generator.synthetic_data_generator
+from synthetic_data_generator.synthetic_data_generator import main as sdg_main
+from semantic_activity_annotator.semantic_activity_annotator import main as saa_main
+from semantic_activity_annotator.evaluation_tool import main as eval_main
 
 """
 Function to parse arguments from command line
