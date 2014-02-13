@@ -95,38 +95,10 @@ def evaluate(annotated_actions):
                         # Another activity has been detected, which is not OK
                         other_activity = True
             if activity_detected == True and other_activity == False:
-                eval_table[eval_index][2] = eval_table[eval_index][2] + 1
+                eval_table[eval_index][2] = eval_table[eval_index][2] + 1  
     
-    print 'Evaluation table:'
-    for i in xrange(len(eval_table)):
-        print eval_table[i]    
     
-    # Count all the annotated occurrences for each activity
-    """
-    current_activity = 'None'
-    for i in xrange(len(annotated_actions)):
-        annotated_activity = annotated_actions.annotated_label[i]
-        if annotated_activity == 'None':
-            current_activity = 'None'
-        else:
-            if annotated_activity != current_activity:
-                exit_loop = False
-                j = 0
-                while exit_loop == False and j < len(eval_table):
-                    try:
-                        eval_table[j].index(annotated_activity)
-                        index = j                        
-                    except ValueError:
-                        j = j + 1
-                        continue
-                    exit_loop = True
-                if exit_loop == True:
-                    eval_table[index][3] = eval_table[index][3] + 1
-                    current_activity = annotated_activity
-                else:
-                    msg = 'Activity ' + annotated_activity + ' is not in eval_table'
-                    sys.exit(msg)
-    """
+    # Count all the annotated occurrences for each activity    
     for i in xrange(len(eval_table)):
         activity = eval_table[i][0]
         aux_df0 = annotated_actions[annotated_actions.annotated_label == activity]
