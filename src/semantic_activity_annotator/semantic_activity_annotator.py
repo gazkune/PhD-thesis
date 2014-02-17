@@ -350,7 +350,7 @@ def annotateActivities2(activity_df, seed_activities):
         
         # Activity start index
         start_index = i
-        
+        aux_list = []
         for j in xrange(len(activities)):
             activity = activities[j]
             incr = 1
@@ -367,11 +367,26 @@ def annotateActivities2(activity_df, seed_activities):
                         detected_activity = activity
                 incr = incr + 1
             if activity_detected == True:
-                annotated_activities.append([detected_activity, True, start_index, end_index])
-                i = end_index
-                break
+                #annotated_activities.append([detected_activity, True, start_index, end_index])
+                aux_list.append([detected_activity, True, start_index, end_index])
+                #i = end_index
+                #break
+                
+        # aux_list will contain all the activities detected from current action
+        # take the shortest activity
+        if len(aux_list) > 0:
+            max_length = len(activity_df)
+            for j in xrange(len(aux_list)):
+                activity_length = aux_list[j][3] - aux_list[j][2]
+                if activity_length < max_length:
+                    max_length = activity_length
+                    selected_activity = aux_list[j]
         
-        i = i + 1
+            annotated_activities.append(selected_activity)
+            # Update i to start with the action that follows the end of selected activity
+            i = selected_activity[3] + 1
+        else:
+            i = i + 1
         
     # annotated_activities contain all the activities detected (completed always True)
     print 'Annotated activities:'
