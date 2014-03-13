@@ -40,6 +40,6 @@ S 22:00-23:00 BrushTeeth@0 WashHands@10
 A 15:00-16:00 WatchTelevision 0.75
 A 18:00-20:00 ReadBook 0.5
 # Noise specification; Meaning -> Probability of sensor occurrence in an hour interval
-0.15 hasContainer hasBook useFurniture hasBrusher useCookingUtensil
-0.1 hasCoffee hasBacon hasFlavour hasRemoteControl
+#0.15 hasContainer hasBook useFurniture hasBrusher useCookingUtensil
+#0.1 hasCoffee hasBacon hasFlavour hasRemoteControl
 # Finish always with a comment

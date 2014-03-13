@@ -7,16 +7,16 @@ MakeCoffee 2
 0.5 hasContainer@0 hasMilk@20 useCookingAppliance@20 hasCoffee@120 hasFlavour@20
 0.5 hasContainer@0 hasWater@10 useCookingAppliance@15 hasFlavour@90 hasCoffee@30
 MakeChocolate 3
-0.8 hasContainer@0 hasMilk@20 useCookingAppliance@20 hasChocolate@120
-0.19 useCookingAppliance@0 useCookingUtensil@5 hasMilk@20 hasChocolate@30 hasContainer@200
-0.01 hasContainer@0 hasMilk@20 useCookingAppliance@20
+0.76 hasContainer@0 hasMilk@20 useCookingAppliance@20 hasChocolate@120
+0.14 useCookingAppliance@0 useCookingUtensil@5 hasMilk@20 hasChocolate@30 hasContainer@200
+0.1 hasContainer@0 hasMilk@20 useCookingAppliance@20
 MakePasta 2
 0.8 useCookingUtensil@0 hasWater@20 useCookingAppliance@30 hasPasta@120 hasTomatoSauce@600
 0.2 hasPasta@0 useCookingUtensil@20 hasWater@25 useCookingAppliance@30 hasBacon@50 hasCream@600
 BrushTeeth 3
-0.7 hasBrusher@0 hasToothpaste@5 hasContainer@30 turnOnTap@5
-0.29 hasBrusher@0 hasToothpaste@5 hasContainer@30 turnOnTap@5 hasDentalFloss@15
-0.01 hasToothpaste@0 hasContainer@30 turnOnTap@5 hasDentalFloss@15
+0.66 hasBrusher@0 hasToothpaste@5 hasContainer@30 turnOnTap@5
+0.24 hasBrusher@0 hasToothpaste@5 hasContainer@30 turnOnTap@5 hasDentalFloss@15
+0.1 hasToothpaste@0 hasContainer@30 turnOnTap@5 hasDentalFloss@15
 WatchTelevision 2
 0.5 useFurniture@0 hasRemoteControl@5 useTV@10
 0.5 hasRemoteControl@0 useTV@5 useFurniture@5
