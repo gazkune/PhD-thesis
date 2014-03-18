@@ -13,13 +13,16 @@ import sys, getopt
 import numpy as np
 import time, datetime
 import pandas as pd
+import json
 
 """
-Function to parse arguments from command line
+Function to parse arguments from command line. If context_model is provided, there is no
+need for seed_activity_models
 Input:
     argv -> command line arguments
 Output:
     dataset_file -> csv file where action properties are with time stamps and activity label
+    context_model -> json file where sensors, objects and activities are described
     seed_file -> file where seed activity models are defined (special format)
     output_file -> file to write the identified activities in dataset_file using 
         seed activity models defined at seed_file as templates
@@ -27,25 +30,30 @@ Output:
 
 def parseArgs(argv):
    dataset_file = ''
+   context_file = ''
    seed_file = ''
    output_file = ''
    try:
-      opts, args = getopt.getopt(argv,"hd:s:o:",["dataset=","seed=","ofile="])      
+      opts, args = getopt.getopt(argv,"hd:c:s:o:",["dataset=","context=","seed=","ofile="])      
    except getopt.GetoptError:
-      print 'semantic_activity_annotator.py -d <dataset> -s <seed> -o <outputfile>'
+      print 'semantic_activity_annotator.py -d <dataset> -c <context_model> -s <seed> -o <outputfile>'
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print 'semantic_activity_annotator.py -d <dataset> -s <seed> -o <outputfile>'
+         print 'semantic_activity_annotator.py -d <dataset> -c <context_model> -s <seed> -o <outputfile>'
          sys.exit()
       elif opt in ("-d", "--dataset"):
          dataset_file = arg
-      elif opt in ("-s", "--seed"):
-         seed_file = arg
+      elif opt in ("-c", "--context"):
+         context_file = arg
+      elif opt in ("-s", "--seed"):                      
+         seed_file = arg         
       elif opt in ("-o", "--ofile"):
          output_file = arg
    
-   return dataset_file, seed_file, output_file
+   if context_file != '' and seed_file != '':
+       print 'WARNING: as context file has been provided, seed activity file will not be taken into account'
+   return dataset_file, context_file, seed_file, output_file
    
 """
 Function to parse seed activity models in the specified file (special format)
@@ -91,10 +99,31 @@ def parseSeedActivityModels(seed_file):
     return seed_activities
 
 """
+function to build seed activity models, exactly as function parseSeedActivityModels does, 
+but from the context_model dictionary read from the json file
+Input:
+    context_model: a dict where activities, objects and sensors are decribed (extracted
+    from a json file)
+Output:
+    seed_activites: a list of seed activity models
+"""
+def buildSeedActivityModelsFromContext(context_model):
+    activities = context_model["activities"]
+    seed_activities = []
+    for name in activities:        
+        duration = activities[name]["duration"]
+        actions = activities[name]["min_model"]
+        seed_activities.append([name, duration, actions])
+        
+    return seed_activities
+        
+
+"""
 Function to check whether a list of actions is complete respect to a seed activity definition
 """
 def completeActivity(activity_start, activity_end, activity, activity_df, seed_activities):
-    actions = activity_df.iloc[activity_start:activity_end+1, 0].values
+    action_col = activity_df.columns.tolist().index('action')
+    actions = activity_df.iloc[activity_start:activity_end+1, action_col].values
     for i in xrange(len(seed_activities)):
         if seed_activities[i][0] == activity:
             seed_actions = np.array(seed_activities[i][2]) # 0 element: name, 1 element: duration
@@ -134,197 +163,16 @@ def rightActivityDuration(activity_start, activity_end, activity, activity_df, s
 
 
 """
-Function that annotates the dataset contained in activity_df, using seed activity models
-defined in seed_activities as templates
+Function to annotate actions with activities, from seed_activity_models
 Input:
-    activity_df: a dataset where timestamped action properties are (pd.DataFrame)
-    seed_activities: seed activity models (list of list)
+    activity_df: pd.DataFrame with sensors, actions and activities (real label)
+    seed_activities: list of seed models for activities [Activity, Duration [action0, action1...]]
 Output:
-    annotated_activities: [[Activity, Completed, StartIndex, EndIndex], [Activity, Completed, StartIndex, EndIndex], ...]
-    Completed is a boolean that indicates if the detected activity has been completed
-    considering seed activity models
+    annotated_activities: a list of annotated activities which the following structure
+    [[Activity, Completed, StartIndex, EndIndex], [Activity, Completed, StartIndex, EndIndex], ...]
 """
-
-"""
-2 approaches:
-    1) Iterate through all action contained in activity_df. When an action is contained in a
-    seed activity (one or more), start new activity (store index). Keep on iterating until completing
-    the seed activity. If activity is not completed, but an action appears that is contained in another
-    activity, start a new activity and finish the last one. If the incomplete activity was not defined
-    (actions contained in more than one activity), do not assign any activity
-    2) Find unique actions, which are the actions that are only contained by one seed activity. 
-    Store the indexes of those unique actions and expand them (left, right) until completing the seed activity model        
-"""
-def annotateActivities1(activity_df, seed_activities):
-    # Implements approach 1
-    print 'annotateActivities approach 1'  
-    #activity_start = False
-    activity_start = 0
-    activity_end = 0    
-    current_activity = np.array([])
-    # annotated_activities has the following structure
-    # [[Activity, Completed, StartIndex, EndIndex], [Activity, Completed, StartIndex, EndIndex], ...]
-    annotated_activities = []
-    for i in xrange(len(activity_df)):        
-        # <i> can be used to index the row
-        action = activity_df.iloc[i, 0] # actions are in column 0 always        
-        
-        # Iterate through seed_activities and check whether action
-        # is contained in any of the activities
-        activities = actionInSeedActivities(action, seed_activities)
-        
-        # To use intersection functions, use np.array
-        activities = np.array(activities)
-            
-        # activities is a list of seed activity names where action
-        # is contained
-        # Print for debugging purposes                    
-        #print 'Action:', action, 'Activities:', activities
-        if len(activities) == 0:
-            print 'Iteration:', i 
-            print '   current_activities:', current_activity
-            print '   activities:', activities
-            continue        
-        
-        if len(current_activity) == 0 and len(activities) > 0:
-            print 'Iteration:', i
-            print '   current_activity:', current_activity
-            print '   activities:', activities
-            activity_start = i
-            current_activity = activities
-            continue
-            
-        if len(current_activity) > 0 and len(activities) > 0:
-            # Check time from last action to this one and see if it is coherent with the activies
-            # in current_activity
-            print 'Iteration:', i
-            print '   current_activity:', current_activity
-            print '   activities:', activities
-            aux_activities = []
-            for j in xrange(len(current_activity)):
-                if rightActivityDuration(i-1, i, current_activity[j], activity_df, seed_activities):
-                    print '   Keep activity'
-                    aux_activities.append(current_activity[j])
-            
-            current_activity = np.array(aux_activities)
-            if len(current_activity) == 0:
-                activity_start = i
-                current_activity = activities
-            
-            # We have to play with activities and current_activity
-            inter = np.intersect1d(activities, current_activity)
-            # inter is the intersection between both arrays
-            if len(inter) == 0:
-                # empty intersection
-                """
-                This case should be treated carefully, specially if we consider noisy scenarios
-                If we have positive noise (sensor activations that should not occur):
-                    Using the completion criterion we can prevent positive noise, e.g.
-                    if the activity is not completed, do not annotate and start a new activity
-                If we have negative noise (missing sensor activations):
-                    Completion criterion could make us not annotate activities that really occurred
-                    but with a missing activation
-                """
-                aux_0 = list(activities)
-                aux_1 = list(current_activity)
-                for j in xrange(len(aux_0)):
-                    aux_1.append(aux_0[j])
-                    
-                current_activity = np.array(aux_1)
-                print 'Empty intersection:', current_activity
-                """
-                if len(current_activity) == 1:
-                    # End current activity
-                    # Is this the best policy? Should we end an activity even if it has not been
-                    # completed?
-                    activity_end = i - 1
-                    annotated_activities.append([current_activity[0], False, activity_start, activity_end])
-                # start a new activity
-                current_activity = activities
-                activity_start = i
-                """
-                continue
-            else:
-                # intersection is not empty
-                current_activity = inter
-                if len(inter) == 1:
-                    # Activity has been clearly detected
-                    # Check whether activity has been completed
-                    if completeActivity(activity_start, i, current_activity[0], activity_df, seed_activities):
-                        # End current activity
-                        activity_end = i
-                        # Check duration
-                        if rightActivityDuration(activity_start, i, current_activity[0], activity_df, seed_activities):
-                            annotated_activities.append([current_activity[0], True, activity_start, activity_end])
-                            current_activity = np.array([])                        
-                    else:
-                        continue          
-            
-    # Print annotated_activities for debugging purposes
-    print 'Annotated activities after first pass:'
-    for i in xrange(len(annotated_activities)):
-        print annotated_activities[i]
-    
-    # After first pass through the dataset, we have the annotated activities with 
-    # completed and non-completed activities; now we have to check the non-completed ones
-    # with duration information and successive actions
-    for i in xrange(len(annotated_activities)):
-        # Take the first non-completed activity
-        if annotated_activities[i][1] == False:
-            start_index = annotated_activities[i][2]
-            activity = annotated_activities[i][0]
-            # Search for the closest completed activity
-            found = False
-            increment = 0
-            while not found:
-                if annotated_activities[i + increment][2] == False:
-                    increment = increment + 1
-                else:
-                    found = True
-                    
-            # i + increment is the index of the closest complete activity
-            end_index = i + increment
-            # Iterate through activity_df using start_index and end_index and find if there is
-            # an action that completes current non-completed action and respects the maximum
-            # duration criterion
-            exit_loop = False
-            increment = 0
-            completed = False
-            while not exit_loop:
-                if completeActivity(start_index, start_index + increment, activity, activity_df, seed_activities):
-                    completed = True
-                    comp_index = start_index + increment
-                    exit_loop = True
-                else:
-                    increment = increment + 1
-                    if start_index + increment == end_index:
-                        exit_loop = True
-            # if completed is True, we found actions that completed the activity -> 
-            # check time constraints
-            if completed == True:                
-                if rightActivityDuration(start_index, comp_index, activity, activity_df, seed_activities):
-                    # Complete and legal activity
-                    annotated_activities[i][1] = True
-                    annotated_activities[i][3] = comp_index
-                    print 'A new completed activity has been discovered!:'
-                    print annotated_activities[i]
-    
-    # Activities that were not completed in the first pass, will remain incomplete,
-    # but activities that have been completed in the secon pass, should appear as completed now
-    # print complete annotated_activities (True) for debugging purposes
-    # First tests suggest that if we do not have missing values, complete annotated_activities
-    # capture all the activities correctly
-    
-    print 'Annotated activities after second pass:'
-    for i in xrange(len(annotated_activities)):
-        if annotated_activities[i][1] == True:
-            print annotated_activities[i]
-
-    return annotated_activities            
-            
        
-       
-def annotateActivities2(activity_df, seed_activities):
+def annotateActivities(activity_df, seed_activities):
     # Implements approach 2
     print 'annotateActivities approach 2'
     
@@ -335,7 +183,10 @@ def annotateActivities2(activity_df, seed_activities):
     i = 0
     while i < len(activity_df):
         # <i> can be used to index the row
-        action = activity_df.iloc[i, 0] # actions are in column 0 always        
+        # Discover where actions are
+        cols = activity_df.columns.tolist()
+        action_col = cols.index('action')
+        action = activity_df.iloc[i, action_col] # actions are in column 0 always        
         
         # Iterate through seed_activities and check whether action
         # is contained in any of the activities
@@ -416,6 +267,29 @@ def actionInSeedActivities(action, seed_activities):
         activities.append(seed_activities[j][0])
 
     return activities
+    
+"""
+Function to obtain a list of actions from activity_df sensors and context_model
+sensor -> action transformations are defined in context_model
+Input:
+    activity_df: pd.DataFrame with time-stamped sensor activations
+    context_model: dict where activities, sensors and objects are described
+Output:
+    actions: a list of actions
+"""
+def obtainActions(activity_df, context_model):
+    sensors = context_model["sensors"]    
+    actions = []
+    for i in activity_df.index:        
+        name_sensor = activity_df.loc[i, "sensor"]        
+        try:
+            action = sensors[name_sensor]["action"]
+        except KeyError:
+            msg = 'obtainActions: ' + name_sensor + ' sensor is not in the context_model; please have a look at provided dataset and context model'
+            exit(msg)
+        actions.append(action)
+    
+    return actions
         
 """
 Main function
@@ -423,26 +297,40 @@ Main function
 
 def main(argv):
    # call the argument parser 
-   [dataset_file, seed_file, output_file] = parseArgs(argv[1:])
+   [dataset_file, context_file, seed_file, output_file] = parseArgs(argv[1:])
    print 'Dataset:', dataset_file
+   print 'Context model:', context_file
    print 'Seed activity models:', seed_file
    print 'Annotated actions:', output_file
    
    # Read the dataset_file and build a DataFrame 
-   activity_df = pd.read_csv(dataset_file, parse_dates=0, header=None, index_col=0)
-   
-   # Rename columns
-   activity_df = activity_df.rename(columns={1: 'action', 2: 'real_label', 3: 'r_start_end'})
-   
-   
-   # Parse the seed_file file
-   seed_activities = parseSeedActivityModels(seed_file)
+   activity_df = pd.read_csv(dataset_file, parse_dates=0, index_col=0)
+        
+   # Build seed_activity models
+   if context_file != '':
+       context_model = json.loads(open(context_file).read())
+       seed_activities = buildSeedActivityModelsFromContext(context_model)       
+   else:
+       # Parse the seed_file file
+       seed_activities = parseSeedActivityModels(seed_file)
    print 'Seed activity models:'
-   print seed_activities
+   print seed_activities   
+   
+   # Add a new column to activity_df for actions
+   # actions are obtained transforming sensors to actions, as indicated in
+   # context_model
+   action_column = obtainActions(activity_df, context_model)
+   print 'Obtained actions:'
+   print action_column
+   action_df = pd.DataFrame(action_column, index=activity_df.index)
+   activity_df['action'] = action_df   
+   # Re-order columns to have [time_stamp, sensor, action, activity, start_end]
+   cols = activity_df.columns.tolist()   
+   cols = [cols[0]] + cols[-1:] + cols[1:-1]   
+   activity_df = activity_df[cols]   
    
    # Call annotateActivities function
-   annotated_activities = annotateActivities2(activity_df, seed_activities)
-   
+   annotated_activities = annotateActivities(activity_df, seed_activities)   
       
    # Use only complete activities to create the annotated pd.DataFrame
    # Each row will be: [timestamp, action, real_label, r_start_end, annotated_label, a_start_end]
@@ -450,8 +338,7 @@ def main(argv):
    se_list = []
    for i in xrange(len(activity_df)):
        aux_list.append('None')
-       se_list.append('')
-  
+       se_list.append('')  
    
    # Iterate through annotated_activities and choose only those that are complete (True)
    # to modify annotated_labels
@@ -471,8 +358,7 @@ def main(argv):
    activity_df['a_start_end'] = annotated_se
    
    print 'To store in a csv file:'
-   print activity_df.head(50)
-   
+   print activity_df.head(50)   
    activity_df.to_csv(output_file)    
 
 

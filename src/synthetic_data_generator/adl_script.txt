@@ -4,17 +4,17 @@
 MakeCoffee MakePasta BrushTeeth WatchTelevision
 # Sensor activation patterns
 MakeCoffee 3
-0.8 CupObj@0 CoffeeObj@20 SugarObj@20
-0.15 KettleObj@0 MilkObj@20 CupObj@180 CoffeeObj@30 SugarObj@20
-0.05 CupObj@0 MicroWaveOn@20 CoffeeObj@10 SugarObj@10 MicroWaveOff@50
+0.8 cupSens@0 afcoffeeSens@20 wsugarSens@20
+0.15 smilkSens@20 cupSens@180 afcoffeeSens@30 bsugarSens@20
+0.05 cupSens@0 microwavesens@20 afcoffeeSens@10 wsugarSens@10
 MakePasta 2
-0.8 CookingpotObj@0 PastaObj@20 CookerOn@30 TomatosauceObj@600
-0.2 PastaObj@0 CookingpotObj@20 CookerOn@30 BaconObj@50 CreamObj@600
+0.8 saucepanSens@0 spaghettiSens@20 cookerSens@30 ftomatoSens@600
+0.2 macaroniSens@0 saucepanSens@20 cookerSens@30 baconSens@50 creamSens@600
 BrushTeeth 1
-1 BrusherObj@0 ToothpasteObj@5
+1 brusherSens@0 toothpasteSens@5 btapSens@10
 WatchTelevision 2
-0.7 SofaObj@0 RemoteControlObj@5 TVOn@5 TVOff@2000
-0.3 RemoteControlObj@0 TVOn@5 SofaObj@5 TVOff@500
+0.7 sofaSens@0 rcontrolSens@5 tvSens@5
+0.3 rcontrolSens@0 tvSens@5 sofaSens@5
 # Activity patterns: describe how a day is
 Prob 0.8 4
 S 7:00-7:30 MakeCoffee@0 BrushTeeth@40
@@ -24,3 +24,5 @@ A 18:00-19:30 WatchTelevision 0.8
 Prob 0.2 2
 S 7:00-7:30 MakeCoffee@0 BrushTeeth@40
 S 20:00-20:30 BrushTeeth@0 WatchTelevision@50
+# Noise Specs - None
+# Finish always with a comment

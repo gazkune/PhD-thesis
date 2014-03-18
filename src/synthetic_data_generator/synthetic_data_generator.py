@@ -393,10 +393,11 @@ def adlGenerator(days, adl_names, sensor_activation_patterns, activity_patterns,
         # Update current_day!!!
         current_day = current_day + datetime.timedelta(days=1)
     
-    timed_sensor_activations = timed_sensor_activations.sort_index()
+    timed_sensor_activations = timed_sensor_activations.sort_index()    
+    timed_sensor_activations = timed_sensor_activations.rename(columns={0: 'sensor', 1: 'activity', 2: 'start_end'})
     print 'Generated complete timed sensor activations (head only):'
     print timed_sensor_activations.head(n=50)
-    timed_sensor_activations.to_csv(outputfile, header=False)
+    timed_sensor_activations.to_csv(outputfile)
 
 """
 Function to generate noisy activations for a whole day using noise_specs read from adl_script

@@ -44,21 +44,21 @@ def parseArgs(argv):
 """
 The evaluation function
 Input:
-    annotated_actions: [timestamp, action, real_label, start/end, annotated_label, start/end] (pd.DataFrame)
+    annotated_actions: [timestamp, sensor, action, activity, start/end, annotated_label, start/end] (pd.DataFrame)
 Output:
     eval_table: [Activity (str), Real_Occurrences (int), Annotated_Occurrences(int)]
 """
 def evaluate(annotated_actions):
-    aux = annotated_actions[annotated_actions.r_start_end == 'start']
-    aux = pd.concat([aux, annotated_actions[annotated_actions.r_start_end == 'end']])
+    aux = annotated_actions[annotated_actions.start_end == 'start']
+    aux = pd.concat([aux, annotated_actions[annotated_actions.start_end == 'end']])
     aux = aux.sort_index()
 
     # eval_table will contain the evaluation information
     # [Activity, real_occurrences, annotated_correct_occurrences, annotated_total_occurrences]
     eval_table = []    
     for i in xrange(len(aux) - 1):
-        if aux.r_start_end.iloc[i] == 'start':        
-            activity = aux.real_label.iloc[i]
+        if aux.start_end.iloc[i] == 'start':        
+            activity = aux.activity.iloc[i]
             #print 'Activity:', activity
             eval_index = -1        
             if len(eval_table) == 0:
