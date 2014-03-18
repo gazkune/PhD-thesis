@@ -4,26 +4,26 @@
 MakeCoffee MakeChocolate MakePasta BrushTeeth WatchTelevision WashHands ReadBook
 # Sensor activation patterns
 MakeCoffee 2
-0.5 hasContainer@0 hasMilk@20 useCookingAppliance@20 hasCoffee@120 hasFlavour@20
-0.5 hasContainer@0 hasWater@10 useCookingAppliance@15 hasFlavour@90 hasCoffee@30
+0.5 mugSens@0 smilkSens@20 microwaveSens@20 afcoffeeSens@120 wsugarSens@20
+0.5 cupSens@0 ktapSens@10 microwaveSens@15 wsugarSens@90 afcoffeeSens@30
 MakeChocolate 2
-0.8 hasContainer@0 hasMilk@20 useCookingAppliance@20 hasChocolate@120
-0.2 useCookingAppliance@0 useCookingUtensil@5 hasMilk@20 hasChocolate@30 hasContainer@200
+0.8 mugSens@0 wmilkSens@20 microwaveSens@20 chocoSens@120
+0.2 cookerSens@0 potSens@5 wmilkSens@20 chocoSens@30 mugSens@200
 MakePasta 2
-0.8 useCookingUtensil@0 hasWater@20 useCookingAppliance@30 hasPasta@120 hasTomatoSauce@600
-0.2 hasPasta@0 useCookingUtensil@20 hasWater@25 useCookingAppliance@30 hasBacon@50 hasCream@600
+0.8 potSens@0 ktapSens@20 cookerSens@30 macaroniSens@120 ftomatoSens@600
+0.2 spaghettiSens@0 potSens@20 ktapSens@25 cookerSens@30 baconSens@50 creamSens@600
 BrushTeeth 2
-0.7 hasBrusher@0 hasToothpaste@5 hasContainer@30 turnOnTap@5
-0.3 hasBrusher@0 hasToothpaste@5 hasContainer@30 turnOnTap@5 hasDentalFloss@15
+0.7 brusherSens@0 toothpasteSens@5 glassSens@30 btapSens@5
+0.3 brusherSens@0 toothpasteSens@5 glassSens@30 btapSens@5 dentalflossSens@15
 WatchTelevision 2
-0.5 useFurniture@0 hasRemoteControl@5 useTV@10
-0.5 hasRemoteControl@0 useTV@5 useFurniture@5
+0.5 sofaSens@0 rcontrolSens@5 tvSens@10
+0.5 rcontrolSens@0 tvSens@5 sofaSens@5
 WashHands 2
-0.85 turnOnTap@0 hasSoap@15 hasHandCream@40
-0.15 turnOnTap@0 hasSoap@15
+0.85 btapSens@0 bsoapSens@15 handcreamSens@40
+0.15 btapSens@0 bsoapSens@15
 ReadBook 2
-0.9 hasBook@0 useFurniture@10 turnOnLamp@5
-0.1 hasBook@0 useFurniture@10
+0.9 bookaSens@0 bedSens@10 blampSens@5
+0.1 bookbSens@0 sofaSens@10
 # Activity patterns: describe how a day is
 Prob 0.43 4
 S 7:00-7:30 MakeChocolate@0 BrushTeeth@120 WashHands@30
@@ -40,6 +40,6 @@ S 22:00-23:00 BrushTeeth@0 WashHands@10
 A 15:00-16:00 WatchTelevision 0.75
 A 18:00-20:00 ReadBook 0.5
 # Noise specification; Meaning -> Probability of sensor occurrence in an hour interval
-#0.15 hasContainer hasBook useFurniture hasBrusher useCookingUtensil
-#0.1 hasCoffee hasBacon hasFlavour hasRemoteControl
+0.05 cupSens bookaSens bedSens sofaSens brusherSens saucepanSens
+0.1 afcoffeeSens baconSens bsugarSens rcontrolSens
 # Finish always with a comment
