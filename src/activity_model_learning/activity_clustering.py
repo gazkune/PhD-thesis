@@ -23,6 +23,7 @@ Output:
     annotated_file -> csv file obtained from semantic_activity_annotator
     [timestamp, sensor, action, activity, start_end, annotated_label, a_start_end]
     context_file -> file where activities, objects and sensors are described (json format)
+    time_approach -> int (0, 1, 2) to decide what time approach to use
     raw_data_file -> csv file where results will be provided
     [timestamp, sensor, action, activity, start_end]
     summary_file -> json file where final result summary will be provided
@@ -31,28 +32,43 @@ Output:
 
 def parseArgs(argv):
    annotated_file = ''
-   context_file = ''   
+   context_file = ''
+   time_approach = -1
    raw_data_file = ''
    summary_file = ''
    try:
-      opts, args = getopt.getopt(argv,"ha:c:r:s:",["annotated=","context=","raw=","summary="])      
+      opts, args = getopt.getopt(argv,"ha:c:t:r:s:",["annotated=","context=","time=","raw=","summary="])      
    except getopt.GetoptError:
-      print 'activity_clustering.py -a <annotated_actions> -c <context_model> -r <raw_data_file> -s <summary_file>'
+      print 'activity_clustering.py -a <annotated_actions> -c <context_model> -t <time_approach> -r <raw_data_file> -s <summary_file>'
+      print 'For time approach:'
+      print '   0: simple time distance to the centre of the activity'
+      print '   1: duration normalized time distance to static centre'
+      print '   2: duration normalized time distance to dynamic centre'
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print 'activity_clustering.py -a <annotated_actions> -c <context_model> -r <raw_data_file> -s <summary_file>'
+         print 'activity_clustering.py -a <annotated_actions> -c <context_model> -t <time_approach> -r <raw_data_file> -s <summary_file>'
+         print 'For time approach:'
+         print '   0: simple time distance to the centre of the activity'
+         print '   1: duration normalized time distance to static centre'
+         print '   2: duration normalized time distance to dynamic centre'
          sys.exit()
       elif opt in ("-a", "--annotated"):
          annotated_file = arg      
       elif opt in ("-c", "--context"):
          context_file = arg
+      elif opt in ("-t", "--time"):
+         time_approach = int(arg)
       elif opt in ("-r", "--raw"):
          raw_data_file = arg
       elif opt in ("-s", "--summary"):         
          summary_file = arg      
    
-   return annotated_file, context_file, raw_data_file, summary_file
+   if not time_approach in [0, 1, 2]:
+       msg = 'time has to be 0, 1 or 2 and not ' + str(time_approach)
+       exit(msg)
+       
+   return annotated_file, context_file, time_approach, raw_data_file, summary_file
    
 """
 Function to parse context_file, a json file where activities, sensors and objects
@@ -125,7 +141,7 @@ Function to filter insider sensor-actions. Two criterions are used for this filt
 that activity
 Input:
     annotated_df: pd.DataFrame where at least the following info is required
-    [timestamp, sensor, action, annotated_label, a_start_end]
+    [timestamp, sensor, action, annotated_label, a_start_end, location]
     activities: dict with activity info obtained from context_model
     objects: dict with object info obtained from context_model
     sensors: dict with sensor info obtained from context_model
@@ -134,14 +150,15 @@ Output:
     to filter, a new column 'filter' has been added to filtered_df
 """
 def filterInsiders(annotated_df, activities, objects, sensors):
-    aux_df = annotated_df[annotated_df['annotated_label'] != 'None']
+    aux_df = annotated_df[annotated_df['annotated_label'] != 'None']    
     
     filtered_df = annotated_df
     filtered_df['filter'] = pd.DataFrame(['No']*len(annotated_df), index = annotated_df.index)
-    
+        
     for index in aux_df.index:
         sensor = aux_df.loc[index, 'sensor']
         action = aux_df.loc[index, 'action']
+        location = aux_df.loc[index, 'location']
         # filter sensor-action if one of 2 criteria doesn't apply
         # check whether action is in the minimal model
         annotated_activity = aux_df.loc[index, 'annotated_label']
@@ -151,8 +168,16 @@ def filterInsiders(annotated_df, activities, objects, sensors):
         except ValueError:
             # Action is not in minimal model
             # Check location and type
-            loc = checkLocationCompatibility(annotated_activity, sensor, objects, sensors, activities)    
-            typ = checkTypeCompatibility(annotated_activity, sensor, objects, sensors, activities)
+            #loc = checkLocationCompatibility(annotated_activity, sensor, 
+            #                                 objects, sensors, activities)
+            olocation = objects[sensors[sensor]['attached-to']]['location']
+            if olocation != location:
+                loc = False
+            else:
+                loc = True
+                
+            typ = checkTypeCompatibility(annotated_activity, sensor, 
+                                         objects, sensors, activities)
             if typ == False or loc == False:
                 # Filter sensor-action from filtered_df
                 filtered_df.loc[index, 'filter'] = 'Yes'
@@ -173,66 +198,78 @@ Input:
     activities: dict with activity info obtained from context_model
     objects: dict with object info obtained from context_model
     sensors: dict with sensor info obtained from context_model
+    time_approach: int to specify what time approach we should use
+        0: simple time distance to the centre of the activity
+        1: duration normalized time distance to static centre
+        2: duration normalized time distance to dynamic centre
 Output:
     resulting_df: pd.DataFrame where the following info is provided
     [timestamp, sensor, action, annotated_label, a_start_end, filter, assign]
     where 'assign' column refers to the final activity of the sensor-action
 """
-def computeOutsiders(filtered_df, activities, objects, sensors):
-    # store outsider sensor-actions
-    outsiders_df = filtered_df[filtered_df['annotated_label'] == 'None']
-    # store [timestamp, annotated_label, a_start_end] for all activities
-    # that have been detected
-    activity_df = filtered_df[np.logical_or(filtered_df['a_start_end'] == 'start', filtered_df['a_start_end'] == 'end')]
-    activity_df = activity_df[['annotated_label', 'a_start_end']] 
-    # Generate the last column 'assign'
-    assign = ['None']*len(filtered_df)
-    assign_col = pd.DataFrame(assign, index=filtered_df.index)
-    filtered_df['assign'] = assign_col
-    for index in filtered_df.index:
-        if filtered_df.loc[index, 'annotated_label'] != 'None' and filtered_df.loc[index, 'filter'] != 'Yes':            
-            filtered_df.loc[index, 'assign'] = filtered_df.loc[index, 'annotated_label']
+def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
+    # store outsider sensor-actions    
+    outsider_index = filtered_df[filtered_df['annotated_label'] == 'None'].index
+    # Copy the 'annotated_label' column to generate a new column in filtered_df
+    filtered_df['assign'] = filtered_df['annotated_label']
+    # TODO: Add another column for definitive start/end
+    #filtered_df['d_start_end'] = filtered_df['a_start_end']
     
-    # Print for debugging purposes
-    #print 'computeOutsiders: filtered_df'
-    #print filtered_df.head(50)
+    #print 'Filtered df with new columns:'
+    #print filtered_df['d_start_end'].head(50)
+        
+    # TODO: do not forget to change the assign value for those sensor-actions
+    # whose 'filter' value is 'Yes' when outsiders have been processed (end of the function)
+    
+    # store indexes from activities ('start' and 'end' indexes for 'a_start_end' labels)    
+    activity_index = filtered_df[np.logical_or(filtered_df['a_start_end'] == 'start', filtered_df['a_start_end'] == 'end')].index    
+    act_index_list = activity_index.tolist()
+        
     # For each action-sensor find its previous and next activity
     previous_activity = {}
     next_activity = {}
     last_j = 0
     #count_outsiders = 0
-    for i in outsiders_df.index:
+    #for i in outsiders_df.index:
+    for i in outsider_index:
         # Use next_j to store where we start iterating for activities
         j = last_j
-        while j < len(activity_df):
+        #while j < len(activity_df):
+        while j < len(activity_index):
             # Update j = j + 2, since two blocks form one activity (start, end)
             # Special case: j + 2 == len(activity_df) (last activity) and
             # sensor-action is before that activity -> there is no next_activity
-            if j + 2 == len(activity_df) and i > activity_df.index[j+1]:
-                previous_activity = {'name' : activity_df.loc[activity_df.index[j], 
+            #if j + 2 == len(activity_df) and i > activity_df.index[j+1]:
+            if j + 2 == len(activity_index) and i > activity_index[j+1]:
+                previous_activity = {'name' : filtered_df.loc[activity_index[j], 
                                                           'annotated_label'],
-                                     'start_time' : activity_df.index[j], 
-                                     'end_time' : activity_df.index[j+1]}
+                                     'start_time' : activity_index[j], 
+                                     'end_time' : activity_index[j+1],
+                                     'location' : filtered_df.loc[activity_index[j], 'location']}
                 next_activity = {}
                 # Update last_j
                 last_j = j
                 break
-            if i < activity_df.index[j]:                
+            #if i < activity_df.index[j]:
+            if i < activity_index[j]:
                 if j == 0:
                     previous_activity = {}
-                    next_activity = {'name' : activity_df.loc[activity_df.index[j], 
+                    next_activity = {'name' : filtered_df.loc[activity_index[j], 
                                                           'annotated_label'], 
-                                     'start_time' : activity_df.index[j], 
-                                     'end_time' : activity_df.index[j+1]}
+                                     'start_time' : activity_index[j], 
+                                     'end_time' : activity_index[j+1],
+                                     'location' : filtered_df.loc[activity_index[j], 'location']}
                 if j > last_j:
-                    previous_activity = {'name' : activity_df.loc[activity_df.index[j-1],
+                    previous_activity = {'name' : filtered_df.loc[activity_index[j-1],
                                                                   'annotated_label'],
-                                        'start_time' : activity_df.index[j-2],
-                                        'end_time' : activity_df.index[j-1]}
-                    next_activity = {'name' : activity_df.loc[activity_df.index[j], 
+                                        'start_time' : activity_index[j-2],
+                                        'end_time' : activity_index[j-1],
+                                        'location' : filtered_df.loc[activity_index[j-1], 'location']}
+                    next_activity = {'name' : filtered_df.loc[activity_index[j], 
                                                           'annotated_label'], 
-                                     'start_time' : activity_df.index[j], 
-                                     'end_time' : activity_df.index[j+1]}
+                                     'start_time' : activity_index[j], 
+                                     'end_time' : activity_index[j+1],
+                                     'location' : filtered_df.loc[activity_index[j], 'location']}
                 # Update last_j
                 last_j = j
                 break
@@ -245,27 +282,31 @@ def computeOutsiders(filtered_df, activities, objects, sensors):
         #print '   next:', next_activity
         # Use location, type and time information to decide whether sensor-action
         # should be included in the annotated_label
-        sensor = outsiders_df.loc[i, 'sensor']        
+        sensor = filtered_df.loc[i, 'sensor']        
         # Check location and type compatibility with previous activity (if it exists)        
         # TODO: for location compatibility: even though an activity may be perfomed
         # in several locations, it would be nice to infer from data where it has
         # been actually performed and use that location for location compatibility
+        # I added a location column to activity_df, where inferred location
+        # for each activity can be found
         if previous_activity != {}:
             activity = previous_activity['name']
-            p_loc_ok = checkLocationCompatibility(activity, sensor, objects, sensors, activities) == True
+            #p_loc_ok = checkLocationCompatibility(activity, sensor, objects, sensors, activities) == True
+            p_loc_ok = previous_activity['location'] == objects[sensors[sensor]['attached-to']]['location']
             p_type_ok = checkTypeCompatibility(activity, sensor, objects, sensors, activities) == True 
-            # Check time (Gaussian criterion)
-            [p_in_range, p_delta_centre, p_delta_closest] = timeManagement(i, previous_activity, True, activities)
+            # Time management 
+            [p_in_range, p_delta_centre, p_delta_closest, p_dtime_dist, p_stime_dist] = timeManagement(i, previous_activity, True, activities)
         else:
             p_loc_ok = False
             p_type_ok = False
         # Check location and type compatibility with previous activity (if it exists)    
         if next_activity != {}:
             activity = next_activity['name']
-            n_loc_ok = checkLocationCompatibility(activity, sensor, objects, sensors, activities) == True
+            n_loc_ok = next_activity['location'] == objects[sensors[sensor]['attached-to']]['location']
             n_type_ok = checkTypeCompatibility(activity, sensor, objects, sensors, activities) == True 
-            # Check time (Gaussian criterion)
-            [n_in_range, n_delta_centre, n_delta_closest] = timeManagement(i, next_activity, False, activities)
+            # Time management
+            [n_in_range, n_delta_centre, n_delta_closest, n_dtime_dist, n_stime_dist] = timeManagement(i, next_activity, False, activities)
+            # in case of next activity, dynamic and static time distance are the same
         else:
             n_loc_ok = False
             n_type_ok = False
@@ -277,9 +318,12 @@ def computeOutsiders(filtered_df, activities, objects, sensors):
             print '   in_range:', p_in_range
             print '   delta_centre:', p_delta_centre.seconds
             print '   delta_closest:', p_delta_closest.seconds
+            print '   dynamic time_dist:', p_dtime_dist
+            print '   static time_dist:', p_stime_dist
         else:
             if previous_activity != {}:
                 print '   not compatible with previous activity', previous_activity['name']
+                #print '   object location', objects[sensors[sensor]['attached-to']]['location'], 'Activity location:', previous_activity['location']
             else:
                 print '   there is no previous activity'
         if n_loc_ok == True and n_type_ok == True:      
@@ -288,9 +332,11 @@ def computeOutsiders(filtered_df, activities, objects, sensors):
             print '   in_range:', n_in_range
             print '   delta_centre:', n_delta_centre.seconds
             print '   delta_closest:', n_delta_closest.seconds
+            print '   time_dist:', n_stime_dist
         else:
             if next_activity != {}:
                 print '   not compatible with next activity', next_activity['name']
+                #print '   object location', objects[sensors[sensor]['attached-to']]['location'], 'Activity location:', next_activity['location']
             else:
                 print '   there is no next activity'
                 
@@ -298,15 +344,88 @@ def computeOutsiders(filtered_df, activities, objects, sensors):
         # with previous and next. Issues:
         # 1) Consider time distance relative to expected duration (time/duration)
         # 2) Consider the portion of duration covered by previous and next activities
-            
+                
+        # Decide whether sensor-action pertains to previous, next or none
+        # Use p/n_loc_ok, p/n_type_ok and p/n_in_range 
+        # Use time_approach for time management criterion
+        previous_ok = p_loc_ok and p_type_ok and p_in_range
+        next_ok = n_loc_ok and n_type_ok and n_in_range
+        
+        if not previous_ok and not next_ok:
+            print '   Not assigned'
+        elif previous_ok and not next_ok:
+            # sensor-action pertains to previous activity
+            filtered_df.loc[i, 'assign'] = previous_activity['name']
+            print '   Assigned to previous activity'
+        elif not previous_ok and next_ok:
+            # sensor-action pertains to next activity
+            filtered_df.loc[i, 'assign'] = next_activity['name']
+            print '   Assigned to next activity'
+            # for dynamic centre calculation, we have to modify activity_index
+            # to include current sensor-action's timestamp in next activity
+            if time_approach == 2:                
+                pos = act_index_list.index(next_activity['start_time'])
+                activity_index = activity_index.insert(pos, i)
+                activity_index = activity_index.drop(next_activity['start_time'])
+                act_index_list = activity_index.tolist()
+                #print '   New limits:', activity_index[pos], ',', activity_index[pos+1]
+                #exit()
+        elif previous_ok and next_ok:
+            # Both are possible, use time criterion
+            if time_approach == 0:
+                # Distance to centre
+                if p_delta_centre <= n_delta_centre:
+                    # Previous activity
+                    filtered_df.loc[i, 'assign'] = previous_activity['name']
+                    print '   Assigned to previous activity'
+                else:
+                    # Next activity
+                    filtered_df.loc[i, 'assign'] = next_activity['name']
+                    print '   Assigned to next activity'
+            elif time_approach == 1:
+                # Distance to static centre
+                if p_stime_dist <= n_stime_dist:
+                    # Previous activity
+                    filtered_df.loc[i, 'assign'] = previous_activity['name']
+                    print '   Assigned to previous activity'
+                else:
+                    # Next activity
+                    filtered_df.loc[i, 'assign'] = next_activity['name']
+                    print '   Assigned to next activity'
+            elif time_approach == 2:
+                # Distance to dynamic centre
+                if p_dtime_dist <= n_dtime_dist:
+                    # Previous activity
+                    filtered_df.loc[i, 'assign'] = previous_activity['name']
+                    print '   Assigned to previous activity'
+                else:
+                    # Next activity
+                    filtered_df.loc[i, 'assign'] = next_activity['name']
+                    print '   Assigned to next activity'
+                    # for dynamic centre calculation, we have to modify activity_index
+                    # to include current sensor-action's timestamp in next activity
+                    pos = act_index_list.index(next_activity['start_time'])
+                    activity_index = activity_index.insert(pos, i)
+                    activity_index = activity_index.drop(next_activity['start_time'])
+                    act_index_list = activity_index.tolist()
+                    #print '   New limits:', activity_index[pos], ',', activity_index[pos+1]
+                    #exit()
+    
+    # All outsiders processed: filter the results with insiders
+    to_be_filtered = filtered_df[filtered_df['filter'] == 'Yes']
+    filtered_df.loc[to_be_filtered.index, 'assign'] = 'None'
+    
+    return filtered_df
+    
+    
 """
 Function to manage time issues between a sensor-action and an activity
 Criterion: Gaussian criterion
 Input:
     sensor_timestamp: timestamp of the sensor-action (pd.tslib.Timestamp)
-    activity: a dict describing an activity {'name', 'start_time', 'end_time'}
+    activity: a dict describing an activity {'name', 'start_time', 'end_time', 'location'}
     where start_time and end_time are pd.tslib.Timestamp
-    previous: boolean that indicates whether activity is before sensor-action
+    previous: boolean that indicates whether activity is before sensor-action    
     activities: dict with activity description from context_model
 Output:
     in_range: True if sensor_timestamp is inside 2*sigma (from start_time, end_time)
@@ -314,6 +433,17 @@ Output:
         (datetime.timedelta)
     delta_closest: time distance between sensor-action and closest start or end
         (datetime.timedelta)
+    dyn_time_dist: time distance using the metrics defined |T_action - C_activity|/duration
+        where T_action is the timestamp of the action, C_activity is the centre of the activity
+        (its calculation is based on duration if activity is previous) and duration is obtained
+        from the context_model
+        (float)
+    st_time_dist: time distance using the metrics defined |T_action - C_activity|/duration
+        where T_action is the timestamp of the action, C_activity is the centre of the activity
+        (static calculation) and duration is obtained
+        from the context_model.
+        (float) 
+    
 """
 def timeManagement(sensor_timestamp, activity, previous, activities):
     diff = activity['end_time'] - activity['start_time']
@@ -327,6 +457,16 @@ def timeManagement(sensor_timestamp, activity, previous, activities):
         duration = activities[activity['name']]['duration']
         double_sigma = centre + datetime.timedelta(seconds=duration)
         in_range = sensor_timestamp < double_sigma
+        # Compute time_dist
+        a_duration = activities[activity['name']]['duration'] # int
+        a_half_duration = a_duration / 2.0 # float
+        h_centre = activity['start_time'] + datetime.timedelta(seconds=a_half_duration)
+        if h_centre > sensor_timestamp:
+            h_delta = h_centre - sensor_timestamp
+        else:
+            h_delta = sensor_timestamp - h_centre
+        dyn_time_dist = h_delta.seconds / float(a_duration)
+        st_time_dist = delta_centre.seconds / float(a_duration)
     else:
         delta_closest = activity['start_time'] - sensor_timestamp
         delta_centre = centre - sensor_timestamp
@@ -334,10 +474,69 @@ def timeManagement(sensor_timestamp, activity, previous, activities):
         duration = activities[activity['name']]['duration']
         double_sigma = centre - datetime.timedelta(seconds=duration)
         in_range = sensor_timestamp > double_sigma
+        # Compute time_dist
+        a_duration = activities[activity['name']]['duration'] # int        
+        st_time_dist = delta_centre.seconds / float(a_duration)
+        dyn_time_dist = st_time_dist
         
-    return in_range, delta_centre, delta_closest
+    return in_range, delta_centre, delta_closest, dyn_time_dist, st_time_dist
         
+"""
+Function to test the location inference idea. The idea is to infere the location of
+a concrete activity from all the possible locations where an activity can be performed.
+For that purpose, we can use the sensors-objects used in that concrete activity
+Input:
+    annotated_df: pd.DataFrame where sensor-actions have been annotated with activity labels
+    activities: dict which describes activities obtained from context_model
+    objects: dict which describes objects obtained from context_model
+    activities: dict which describes sensors obtained from context_model
+Output:
+    location_df: pd.DataFrame with the same index as annotated_df and inferred location
+    for each activity (if there is not activity, location = None)
+"""
+def locationInferenceFromActivity(annotated_df, activities, objects, sensors):
+    print 'Test location inference'
+    labeled_activities = annotated_df[annotated_df['annotated_label'] != 'None']
+    i = 0
+    index = labeled_activities.index
+    # a list of activity locations
+    aux_list = ['None'] * len(annotated_df)
+    location_df = pd.DataFrame(aux_list, index=annotated_df.index)
+    while i < len(labeled_activities):
+        activity = labeled_activities.loc[index[i], 'annotated_label']
+        a_locations = activities[activity]['location'] # list of strings
+        o_locations = []
+        while i < len(labeled_activities) and labeled_activities.loc[index[i], 'annotated_label'] == activity:
+            if labeled_activities.loc[index[i], 'a_start_end'] == 'start':
+                start_index = i
+            if labeled_activities.loc[index[i], 'a_start_end'] == 'end':
+                end_index = i
+            sensor = labeled_activities.loc[index[i], 'sensor']
+            action = sensors[sensor]['action']
+            olocation = objects[sensors[sensor]['attached-to']]['location']
+            try:
+                min_model = activities[activity]['min_model']
+                min_model.index(action)
+                o_locations.append(olocation)
+                i = i + 1
+            except ValueError:
+                i = i + 1
+                continue
         
+        for j in xrange(1, len(o_locations)):
+            if o_locations[j] != o_locations[j-1]:
+                msg = 'Error: for activity '+ activity + ' different locations have been found: ' + str(o_locations) + '\n t: ' + str(index[i])
+                exit(msg)
+        try:
+            loc_index = a_locations.index(o_locations[0])
+            location_df.loc[index[start_index]:index[end_index]] = a_locations[loc_index]
+            #print 'Location for activity', activity, 'is', a_locations[loc_index]
+        except ValueError:
+            msg = 'Location ' + o_locations[0] + ' is not modeled for activity ' + activity
+            
+    return location_df
+            
+
             
 """
 Main function
@@ -345,10 +544,11 @@ Main function
 
 def main(argv):
    # call the argument parser 
-   [annotated_file, context_file, raw_data_file, summary_file] = parseArgs(argv[1:])
+   [annotated_file, context_file, time_approach, raw_data_file, summary_file] = parseArgs(argv[1:])
    print 'Parsed arguments:'
    print '   ', annotated_file
    print '   ', context_file
+   print '   ', time_approach
    print '   ', raw_data_file
    print '   ', summary_file
    
@@ -361,16 +561,20 @@ def main(argv):
    # Parse context_file to obtain activities and actions       
    [activities, objects, sensors] = parseDescription(context_file)
    
-   # Decide whether sensor-actions inside annotated activities (r_start_end)
+   # To test location inference from activity execution
+   location_df = locationInferenceFromActivity(annotated_df, activities, objects, sensors)
+   annotated_df['location'] = location_df
+   #print 'After location inference'
+   #print annotated_df.head(50)
+      
+   # Decide whether sensor-actions inside annotated activities (a_start_end)
    # are really from that activity
    filtered_df = filterInsiders(annotated_df, activities, objects, sensors)
-   #print 'After insider filtering:'
-   #print filtered_df[filtered_df['filter'] == 'Yes']
-   
+     
    # Decide whether outsider sensor-actions pertain to an activity
-   resulting_df = computeOutsiders(filtered_df, activities, objects, sensors)
+   resulting_df = computeOutsiders(filtered_df, activities, objects, sensors, time_approach)
    
-   
+   resulting_df.to_csv(raw_data_file)
 
    
 if __name__ == "__main__":   
