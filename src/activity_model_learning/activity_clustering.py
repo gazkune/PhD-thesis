@@ -213,7 +213,7 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
     # Copy the 'annotated_label' column to generate a new column in filtered_df
     filtered_df['assign'] = filtered_df['annotated_label']
     # TODO: Add another column for definitive start/end
-    #filtered_df['d_start_end'] = filtered_df['a_start_end']
+    filtered_df['d_start_end'] = filtered_df['a_start_end']
     
     #print 'Filtered df with new columns:'
     #print filtered_df['d_start_end'].head(50)
@@ -357,10 +357,18 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
             # sensor-action pertains to previous activity
             filtered_df.loc[i, 'assign'] = previous_activity['name']
             print '   Assigned to previous activity'
+            # Change 'd_start_end' column value for previous activity
+            filtered_df.loc[previous_activity['end_time']:i, 'd_start_end'] = np.nan
+            filtered_df.loc[i, 'd_start_end'] = 'end'            
+                
         elif not previous_ok and next_ok:
             # sensor-action pertains to next activity
             filtered_df.loc[i, 'assign'] = next_activity['name']
             print '   Assigned to next activity'
+            # Change 'd_start_end' column value for next activity
+            if filtered_df.loc[next_activity['start_time'], 'd_start_end'] == 'start':
+                filtered_df.loc[next_activity['start_time'], 'd_start_end'] = np.nan
+                filtered_df.loc[i, 'd_start_end'] = 'start'
             # for dynamic centre calculation, we have to modify activity_index
             # to include current sensor-action's timestamp in next activity
             if time_approach == 2:                
@@ -378,30 +386,51 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
                     # Previous activity
                     filtered_df.loc[i, 'assign'] = previous_activity['name']
                     print '   Assigned to previous activity'
+                    # Change 'd_start_end' column value for previous activity
+                    filtered_df.loc[previous_activity['end_time']:i, 'd_start_end'] = np.nan
+                    filtered_df.loc[i, 'd_start_end'] = 'end'
                 else:
                     # Next activity
                     filtered_df.loc[i, 'assign'] = next_activity['name']
                     print '   Assigned to next activity'
+                    # Change 'd_start_end' column value for next activity
+                    if filtered_df.loc[next_activity['start_time'], 'd_start_end'] == 'start':
+                        filtered_df.loc[next_activity['start_time'], 'd_start_end'] = np.nan
+                        filtered_df.loc[i, 'd_start_end'] = 'start'
             elif time_approach == 1:
                 # Distance to static centre
                 if p_stime_dist <= n_stime_dist:
                     # Previous activity
                     filtered_df.loc[i, 'assign'] = previous_activity['name']
                     print '   Assigned to previous activity'
+                    # Change 'd_start_end' column value for previous activity
+                    filtered_df.loc[previous_activity['end_time']:i, 'd_start_end'] = np.nan
+                    filtered_df.loc[i, 'd_start_end'] = 'end'
                 else:
                     # Next activity
                     filtered_df.loc[i, 'assign'] = next_activity['name']
                     print '   Assigned to next activity'
+                    # Change 'd_start_end' column value for next activity
+                    if filtered_df.loc[next_activity['start_time'], 'd_start_end'] == 'start':
+                        filtered_df.loc[next_activity['start_time'], 'd_start_end'] = 'harl'
+                        filtered_df.loc[i, 'd_start_end'] = 'start'
             elif time_approach == 2:
                 # Distance to dynamic centre
                 if p_dtime_dist <= n_dtime_dist:
                     # Previous activity
                     filtered_df.loc[i, 'assign'] = previous_activity['name']
                     print '   Assigned to previous activity'
+                    # Change 'd_start_end' column value for previous activity
+                    filtered_df.loc[previous_activity['end_time']:i, 'd_start_end'] = np.nan
+                    filtered_df.loc[i, 'd_start_end'] = 'end'
                 else:
                     # Next activity
                     filtered_df.loc[i, 'assign'] = next_activity['name']
                     print '   Assigned to next activity'
+                    # Change 'd_start_end' column value for next activity
+                    if filtered_df.loc[next_activity['start_time'], 'd_start_end'] == 'start':
+                        filtered_df.loc[next_activity['start_time'], 'd_start_end'] = np.nan
+                        filtered_df.loc[i, 'd_start_end'] = 'start'
                     # for dynamic centre calculation, we have to modify activity_index
                     # to include current sensor-action's timestamp in next activity
                     pos = act_index_list.index(next_activity['start_time'])
@@ -495,7 +524,7 @@ Output:
     for each activity (if there is not activity, location = None)
 """
 def locationInferenceFromActivity(annotated_df, activities, objects, sensors):
-    print 'Test location inference'
+    
     labeled_activities = annotated_df[annotated_df['annotated_label'] != 'None']
     i = 0
     index = labeled_activities.index
@@ -536,8 +565,167 @@ def locationInferenceFromActivity(annotated_df, activities, objects, sensors):
             
     return location_df
             
-
+"""
+Function to build the summary file. Information in the summary file:
+Activity:
+    name: the name of the activity (string) (this will be the key of the dict)
+    occurrences: occurrences in the dataset provided, as labeled by the learning system (int)
+    objects: list of objects and their frequencies (list of [freq, obj-name])
+    actions: list of actions and their frequencies (list of [freq. action-name])
+    patterns: activity patterns and their frequencies (list of [freq, [action0, ..., actionN])
+    duration: average duration and standard deviation (list [avg, std])
+Input:
+    resulting_df: pd.DataFrame with at least the following info 
+        [timestamp, sensor, action, annotated_label, a_start_end, assign, d_start_end]
+    activities: dict with activities from context_model
+    objects: dict with objects from context_model
+    sensors: dict with sensors from context_model
+Output:
+    summary_dict
+"""
+def buildSummaryDict(resulting_df, activities, objects, sensors):
+    
+    # store indexes from activities ('start' and 'end' indexes for 'a_start_end' labels)    
+    #activity_index = resulting_df[np.logical_or(resulting_df['d_start_end'] == 'start', resulting_df['d_start_end'] == 'end')].index
+    # Init empty dict for summary
+    summary = {}
+    
+    # Iterate through activities
+    for key in activities.keys():
+        key_index = resulting_df[np.logical_and(resulting_df['assign'] == key, np.logical_or(resulting_df['d_start_end'] == 'start', resulting_df['d_start_end'] == 'end'))].index
+        if len(key_index) > 0:
+            # For debugging purposes
+            #print 'Activity:', key
+            #print resulting_df.loc[key_index, 'assign']
+            activity_info = {}
+            # key_index is a list of indexes where start and end times for activity 
+            # 'key' are stored
             
+            # Calculate and store occurrences
+            activity_info['occurrences'] = len(key_index) / 2
+            print 'Activity:', key 
+            print '   occurrences:', activity_info['occurrences']
+            
+            # Find patterns and store in pattern_list
+            pattern_list = []
+            # Use the same loop to find used objects and actions and store their frequencies
+            object_list = []
+            action_list = []
+            duration_list = []
+            for i in xrange(len(key_index)):
+                if resulting_df.loc[key_index[i], 'd_start_end'] == 'end':
+                    continue
+                
+                pattern = resulting_df[resulting_df['assign'] == key].loc[key_index[i]:key_index[i+1], 'action'].tolist()
+                
+                # The following loop is to fill pattern_list
+                end_loop = False
+                j = 0
+                while not end_loop:
+                    if len(pattern_list) == 0:
+                        # Special case                        
+                        pattern_list.append([1, pattern])
+                        end_loop = True
+                    else:
+                        if j >= len(pattern_list):
+                            end_loop = True
+                        else:
+                            pos = isPatternInList(pattern, pattern_list)
+                            if pos != -1:
+                                #print '   Repeated pattern!'
+                                # Remember first element of a pattern is frequency
+                                pattern_list[pos][0] = pattern_list[pos][0] + 1
+                                end_loop = True
+                            else:
+                                # Add new pattern to pattern_list
+                                #print '   New pattern!'
+                                pattern_list.append([1, pattern])
+                                end_loop = True
+                    j = j + 1
+                
+                # store sensor activations for current activity in 'sensor_list'
+                sensor_list = resulting_df[resulting_df['assign'] == key].loc[key_index[i]:key_index[i+1], 'sensor'].tolist()
+                # Fill actions and objects in the following part
+                for j in xrange(len(pattern)):
+                    action = pattern[j]
+                    sensor = sensor_list[j]
+                    object_name = sensors[sensor]['attached-to']
+                    # Fill actions
+                    pos = findItemInFrequencyList(action, action_list)
+                    if pos == -1:
+                        action_list.append([1, action])
+                    else:
+                        action_list[pos][0] = action_list[pos][0] + 1
+                    # Fill objects
+                    pos = findItemInFrequencyList(object_name, object_list)
+                    if pos == -1:
+                        object_list.append([1, object_name])
+                    else:
+                        object_list[pos][0] = object_list[pos][0] + 1                    
+                
+                # Store duration
+                d = key_index[i+1] - key_index[i]                
+                duration_list.append(d.seconds)
+            
+            activity_info['patterns'] = pattern_list
+            activity_info['objects'] = object_list
+            activity_info['actions'] = action_list
+            activity_info['duration'] = [np.mean(duration_list), np.std(duration_list)]
+            # for debugging purposes
+            print '   objects:', activity_info['objects']
+            print '   actions:', activity_info['actions']
+            print '   duration:', activity_info['duration']
+            print '   patterns:'
+            for i in xrange(len(pattern_list)):
+                print '    ', pattern_list[i]
+                             
+        else:
+            continue
+        # Add activity_info to summary
+        summary[key] = activity_info
+    
+    return summary
+    
+
+"""
+function to find an item (a string), in a so-called frequency list
+[[freq, item0], [freq, item1],..., [freq, itemN]]
+Input:
+    item: name of the item to be found (string)
+    freq_list: a frequency list as described above
+Output:
+    pos: position of the item if it is in the list, -1 otherwise
+"""
+def findItemInFrequencyList(item, freq_list):
+    pos = -1
+    i = 0
+    while pos == -1 and i < len(freq_list):
+        if freq_list[i][1] == item:
+            pos = i
+        else:
+            i = i + 1
+    
+    return pos
+
+"""
+Function to find whether pattern is in pattern_list. If it is, return position
+If it is not, return -1
+Input:
+    pattern: [action0,..., actionN]
+    pattern_list: [[freq, [action0,...,actionN]], [freq, [action0,..., actionN]]]
+Output:
+    pos: -1 if pattern is not in pattern_list, else position of the pattern in the list
+"""
+def isPatternInList(pattern, pattern_list):
+    i = 0
+    pos = -1
+    while i < len(pattern_list) and pos == -1:
+        if pattern == pattern_list[i][1]:
+            pos = i
+        else:
+            i = i + 1
+    return pos    
+    
 """
 Main function
 """
@@ -574,8 +762,15 @@ def main(argv):
    # Decide whether outsider sensor-actions pertain to an activity
    resulting_df = computeOutsiders(filtered_df, activities, objects, sensors, time_approach)
    
+   # T!! comment only for some tests!
    resulting_df.to_csv(raw_data_file)
-
+   
+   # Build the summary dict
+   summary_dict = buildSummaryDict(resulting_df, activities, objects, sensors)   
+   
+   # Write the json file sumarry_file
+   with open(summary_file, 'w') as outfile:
+       json.dump(summary_dict, outfile)
    
 if __name__ == "__main__":   
     main(sys.argv)
