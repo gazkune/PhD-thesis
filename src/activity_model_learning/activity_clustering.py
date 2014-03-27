@@ -233,13 +233,11 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
     #for i in outsiders_df.index:
     for i in outsider_index:
         # Use next_j to store where we start iterating for activities
-        j = last_j
-        #while j < len(activity_df):
+        j = last_j        
         while j < len(activity_index):
             # Update j = j + 2, since two blocks form one activity (start, end)
             # Special case: j + 2 == len(activity_df) (last activity) and
-            # sensor-action is before that activity -> there is no next_activity
-            #if j + 2 == len(activity_df) and i > activity_df.index[j+1]:
+            # sensor-action is before that activity -> there is no next_activity            
             if j + 2 == len(activity_index) and i > activity_index[j+1]:
                 previous_activity = {'name' : filtered_df.loc[activity_index[j], 
                                                           'annotated_label'],
@@ -250,7 +248,7 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
                 # Update last_j
                 last_j = j
                 break
-            #if i < activity_df.index[j]:
+            
             if i < activity_index[j]:
                 if j == 0:
                     previous_activity = {}
@@ -282,7 +280,29 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
         #print '   next:', next_activity
         # Use location, type and time information to decide whether sensor-action
         # should be included in the annotated_label
-        sensor = filtered_df.loc[i, 'sensor']        
+        sensor = filtered_df.loc[i, 'sensor']
+        
+        # T!! WARNING! Due to dynamic activity centre calculation
+        # a sensor-action that was an outsider at the beginning can be an insider
+        # now, since a previous sensor-action could be included in the next activity
+        # In that case, current sensor-action would consider that the activity in which
+        # is located is a previous activity. Check whether the sensor-action is actually
+        # an insider of a expanded activity
+        if previous_activity != {}:
+            activity = previous_activity['name']
+            if previous_activity['start_time'] < i and i < previous_activity['end_time']:
+                print i, 'sensor:', sensor, 'is now an insider of', activity
+                # Treat it as an insider -> if location and type are compatible, assign activity
+                loc_ok  = previous_activity['location'] == objects[sensors[sensor]['attached-to']]['location']
+                type_ok = checkTypeCompatibility(activity, sensor, objects, sensors, activities)
+                if type_ok and loc_ok:
+                    filtered_df.loc[i, 'assign'] = activity
+                    print '   assign to', activity
+                else:
+                    filtered_df.loc[i, 'filter'] = 'Yes'
+                    print '   not compatible with', activity
+                continue
+        
         # Check location and type compatibility with previous activity (if it exists)        
         # TODO: for location compatibility: even though an activity may be perfomed
         # in several locations, it would be nice to infer from data where it has
@@ -770,7 +790,7 @@ def main(argv):
    
    # Write the json file sumarry_file
    with open(summary_file, 'w') as outfile:
-       json.dump(summary_dict, outfile)
+       json.dump(summary_dict, outfile, indent=0)
    
 if __name__ == "__main__":   
     main(sys.argv)
