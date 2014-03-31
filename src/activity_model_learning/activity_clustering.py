@@ -594,6 +594,7 @@ Activity:
     actions: list of actions and their frequencies (list of [freq. action-name])
     patterns: activity patterns and their frequencies (list of [freq, [action0, ..., actionN])
     duration: average duration and standard deviation (list [avg, std])
+    location: location where activity has been executed and frequency (list [freq, location])
 Input:
     resulting_df: pd.DataFrame with at least the following info 
         [timestamp, sensor, action, annotated_label, a_start_end, assign, d_start_end]
@@ -632,6 +633,7 @@ def buildSummaryDict(resulting_df, activities, objects, sensors):
             object_list = []
             action_list = []
             duration_list = []
+            locations = []
             for i in xrange(len(key_index)):
                 if resulting_df.loc[key_index[i], 'd_start_end'] == 'end':
                     continue
@@ -686,18 +688,33 @@ def buildSummaryDict(resulting_df, activities, objects, sensors):
                 # Store duration
                 d = key_index[i+1] - key_index[i]                
                 duration_list.append(d.seconds)
+                
+                # Store location information
+                # store sensor activations for current activity in 'sensor_list'
+                location_list = resulting_df[resulting_df['assign'] == key].loc[key_index[i]:key_index[i+1], 'location'].tolist()
+                for j in xrange(len(location_list)):
+                    if location_list[j] != 'None':
+                        pos = findItemInFrequencyList(location_list[j], locations)
+                        if pos == -1:
+                            locations.append([1, location_list[j]])
+                            break
+                        else:
+                            locations[pos][0] = locations[pos][0] + 1
+                            break
             
             activity_info['patterns'] = pattern_list
             activity_info['objects'] = object_list
             activity_info['actions'] = action_list
             activity_info['duration'] = [np.mean(duration_list), np.std(duration_list)]
+            activity_info['locations'] = locations
             # for debugging purposes
+            print '   patterns:'
+            for i in xrange(len(pattern_list)):
+                print '    ', pattern_list[i]            
             print '   objects:', activity_info['objects']
             print '   actions:', activity_info['actions']
             print '   duration:', activity_info['duration']
-            print '   patterns:'
-            for i in xrange(len(pattern_list)):
-                print '    ', pattern_list[i]
+            
                              
         else:
             continue
@@ -790,7 +807,7 @@ def main(argv):
    
    # Write the json file sumarry_file
    with open(summary_file, 'w') as outfile:
-       json.dump(summary_dict, outfile, indent=0)
+       json.dump(summary_dict, outfile, indent=4)
    
 if __name__ == "__main__":   
     main(sys.argv)
