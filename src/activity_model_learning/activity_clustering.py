@@ -28,6 +28,8 @@ Output:
     [timestamp, sensor, action, activity, start_end]
     summary_file -> json file where final result summary will be provided
     {activity_name: format to be decided!}
+    learnt_patterns -> json file where learnt action patterns and their frequencies
+        will be stored
 """
 
 def parseArgs(argv):
@@ -36,6 +38,7 @@ def parseArgs(argv):
    time_approach = -1
    raw_data_file = ''
    summary_file = ''
+
    try:
       opts, args = getopt.getopt(argv,"ha:c:t:r:s:",["annotated=","context=","time=","raw=","summary="])      
    except getopt.GetoptError:
@@ -775,7 +778,7 @@ def main(argv):
    print '   ', context_file
    print '   ', time_approach
    print '   ', raw_data_file
-   print '   ', summary_file
+   print '   ', summary_file   
    
    # Read the annotated_file and build a DataFrame 
    annotated_df = pd.read_csv(annotated_file, parse_dates=0, index_col=0)

@@ -26,31 +26,35 @@ Output:
     dataset_file -> csv file where timestamped sensor activation are listed where
         [timestamp, sensor, action, annotated_label, a_start_end, location, filter, assign, d_start_end]
         has to be at least
-    context_file -> file where activities, objects and sensors are described (json format)    
+    context_file -> file where activities, objects and sensors are described (json format)
+    patterns_file -> file where learnt patterns will be stored (json format)
 """
 
 def parseArgs(argv):
    summary_file = ''
    dataset_file = ''
    context_file = ''
+   patterns_file = ''
    
    try:
-      opts, args = getopt.getopt(argv,"hs:d:c:",["summary=","dataset=","context="])      
+      opts, args = getopt.getopt(argv,"hs:d:c:p:",["summary=","dataset=","context=", "patterns="])
    except getopt.GetoptError:
-      print 'activity_model_learner.py -s <summary_file> -d <dataset_file> -c <context_model>'      
+      print 'activity_model_learner.py -s <summary_file> -d <dataset_file> -c <context_model> -p <patterns>'
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print 'activity_model_learner.py -s <summary_file> -d <dataset_file> -c <context_model>'         
+         print 'activity_model_learner.py -s <summary_file> -d <dataset_file> -c <context_model> -p <patterns>'
          sys.exit()
       elif opt in ("-s", "--summary"):
          summary_file = arg      
       elif opt in ("-d", "--dataset"):
          dataset_file = arg
       elif opt in ("-c", "--context"):
-         context_file = arg   
+         context_file = arg
+      elif opt in ("-p", "--patterns"):
+         patterns_file = arg
        
-   return summary_file, dataset_file, context_file
+   return summary_file, dataset_file, context_file, patterns_file
 
 """
 Function to visualize (print) learn activities in a convenient form
@@ -122,15 +126,20 @@ Initial idea:
 4) Calculate mean and standard deviation of pattern distances for an activity and 
    build a threshold (heuristic), such that patterns with distances bellow that threshold should
    be fused into a pattern
+Input:
+    learnt_activities: dict with patterns extracted by activity_clustering for each activity
+Output:
+    learnt_patterns: dict with the final patterns learnt by function
 """
 def calculateDefinitiveActionPatterns(learnt_activities):
     print 'Calculate definitive patterns'
+    learnt_patterns = {}
     
     # Iterate through activities and implement the 4 step process for each of them
     for key in learnt_activities:
         print '---------------------------------------------'
         print '---------------------------------------------'
-        print 'Activity', str(key)
+        print 'Activity', str(key)        
         patterns0 = learnt_activities[key]['patterns']
         
         # Step 1: remove repeated actions
@@ -277,21 +286,31 @@ def calculateDefinitiveActionPatterns(learnt_activities):
                 except ValueError:
                     patterns3_2.append(aux_2[i])
                     
-            # patterns3 has the definitive patterns
-            # Print patterns3 as output for criterion 1 and 2
-            print '  Number of patterns after step 4, criterion 1:', len(patterns3_1)
-            for i in xrange(len(patterns3_1)):
-                print '  ', float(patterns3_1[i][0]) / float(learnt_activities[key]['occurrences']), patterns3_1[i][1]
-            
-            
-            print '  Number of patterns after step 4, criterion 2:', len(patterns3_2)
-            for i in xrange(len(patterns3_2)):
-                print '  ', float(patterns3_2[i][0]) / float(learnt_activities[key]['occurrences']), patterns3_2[i][1]
+            # patterns3 has the definitive patterns            
                     
         else:
-            print 'Activity', key, 'has already two or less patterns'            
+            patterns3_1 = deepcopy(patterns2)
+            patterns3_2 = deepcopy(patterns2)
+            print 'Activity', key, 'has already two or less patterns'
         
+        # Print patterns3 as output for criterion 1 and 2            
+        print '  Number of patterns after step 4, criterion 1:', len(patterns3_1)
+        for i in xrange(len(patterns3_1)):
+            patterns3_1[i][0] = float(patterns3_1[i][0]) / float(learnt_activities[key]['occurrences'])
+            print '  ', patterns3_1[i][0], patterns3_1[i][1]
+                        
+        print '  Number of patterns after step 4, criterion 2:', len(patterns3_2)
+        for i in xrange(len(patterns3_2)):
+            patterns3_2[i][0] = float(patterns3_2[i][0]) / float(learnt_activities[key]['occurrences'])
+            print '  ', patterns3_2[i][0], patterns3_2[i][1]
         
+        # Add patterns3 to learnt_patterns
+        cr = {}
+        cr['criterion1'] = patterns3_1        
+        cr['criterion2'] = patterns3_2
+        learnt_patterns[key] = cr
+    
+    return learnt_patterns
         
 """
 Main function
@@ -299,7 +318,7 @@ Main function
 
 def main(argv):
     # call the argument parser
-    [summary_file, dataset_file, context_file] = parseArgs(argv[1:])
+    [summary_file, dataset_file, context_file, patterns_file] = parseArgs(argv[1:])
     
     # Read the dataset_file and build a DataFrame 
     df = pd.read_csv(dataset_file, parse_dates=0, index_col=0)
@@ -308,10 +327,30 @@ def main(argv):
     learnt_activities = json.loads(open(summary_file).read())
     
     # For debugging purposes, visualize learnt_activities
-    visualizeLearntActivities(learnt_activities)
+    #visualizeLearntActivities(learnt_activities)
     
     # Calculate definitive pattern for every activity
-    calculateDefinitiveActionPatterns(learnt_activities)
+    learnt_patterns = calculateDefinitiveActionPatterns(learnt_activities)
+    
+    print '------------------------------'
+    print '------------------------------'
+    print 'Learnt patterns for each activity:'
+    for key in learnt_patterns:
+        print 'Activity', key
+        print '  Criterion 1:'
+        patterns = learnt_patterns[key]['criterion1']
+        for i in xrange(len(patterns)):
+            print '    ', patterns[i][0], patterns[i][1]
+            
+        print '  Criterion 2:'
+        patterns = learnt_patterns[key]['criterion2']
+        for i in xrange(len(patterns)):
+            print '    ', patterns[i][0], patterns[i][1]
+            
+    # Write learnt_patterns to patterns_file
+    # Write the json file sumarry_file
+    with open(patterns_file, 'w') as outfile:
+       json.dump(learnt_patterns, outfile, indent=4)
    
 if __name__ == "__main__":   
     main(sys.argv)
