@@ -32,7 +32,7 @@ def parseArgs(argv):
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print 'evaluation_tool.py -i <inputfile>'
+         print 'evaluation_tool.py -i <inputfile> -o <outputfile>'
          sys.exit()
       elif opt in ("-i", "--input"):
          inputfile = arg

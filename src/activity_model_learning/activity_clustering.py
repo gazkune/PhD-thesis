@@ -243,7 +243,7 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
             # sensor-action is before that activity -> there is no next_activity            
             if j + 2 == len(activity_index) and i > activity_index[j+1]:
                 previous_activity = {'name' : filtered_df.loc[activity_index[j], 
-                                                          'annotated_label'],
+                                                          'assign'],
                                      'start_time' : activity_index[j], 
                                      'end_time' : activity_index[j+1],
                                      'location' : filtered_df.loc[activity_index[j], 'location']}
@@ -256,18 +256,18 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
                 if j == 0:
                     previous_activity = {}
                     next_activity = {'name' : filtered_df.loc[activity_index[j], 
-                                                          'annotated_label'], 
+                                                          'assign'], 
                                      'start_time' : activity_index[j], 
                                      'end_time' : activity_index[j+1],
                                      'location' : filtered_df.loc[activity_index[j], 'location']}
                 if j > last_j:
                     previous_activity = {'name' : filtered_df.loc[activity_index[j-1],
-                                                                  'annotated_label'],
+                                                                  'assign'],
                                         'start_time' : activity_index[j-2],
                                         'end_time' : activity_index[j-1],
                                         'location' : filtered_df.loc[activity_index[j-1], 'location']}
                     next_activity = {'name' : filtered_df.loc[activity_index[j], 
-                                                          'annotated_label'], 
+                                                          'assign'], 
                                      'start_time' : activity_index[j], 
                                      'end_time' : activity_index[j+1],
                                      'location' : filtered_df.loc[activity_index[j], 'location']}
@@ -435,7 +435,8 @@ def computeOutsiders(filtered_df, activities, objects, sensors, time_approach):
                     print '   Assigned to next activity'
                     # Change 'd_start_end' column value for next activity
                     if filtered_df.loc[next_activity['start_time'], 'd_start_end'] == 'start':
-                        filtered_df.loc[next_activity['start_time'], 'd_start_end'] = 'harl'
+                        #filtered_df.loc[next_activity['start_time'], 'd_start_end'] = 'harl'
+                        filtered_df.loc[next_activity['start_time'], 'd_start_end'] = np.nan
                         filtered_df.loc[i, 'd_start_end'] = 'start'
             elif time_approach == 2:
                 # Distance to dynamic centre

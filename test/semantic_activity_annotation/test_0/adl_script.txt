@@ -22,8 +22,8 @@ WashHands 2
 0.85 btapSens@0 bsoapSens@15 handcreamSens@40
 0.15 btapSens@0 bsoapSens@15
 ReadBook 2
-0.9 bookaSens@0 bedSens@10 blampSens@5
-0.1 bookbSens@0 sofaSens@10
+0.9 bookbSens@0 bedSens@10 blampSens@5
+0.1 bookaSens@0 sofaSens@10
 # Activity patterns: describe how a day is
 Prob 0.43 4
 S 7:00-7:30 MakeChocolate@0 BrushTeeth@120 WashHands@30

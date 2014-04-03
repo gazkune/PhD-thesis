@@ -120,8 +120,19 @@ def buildSeedActivityModelsFromContext(context_model):
 
 """
 Function to check whether a list of actions is complete respect to a seed activity definition
+New criterion: check whether the actions pertaining to seed activity models occur in the same
+location and that location is consistent with the location information from the activity
+Input:
+    activity_start: index for sensor-action that starts the activity sequence (int)
+    activity_end: index for sensor-action that ends the activity sequence (int)
+    activity: name of the activity (string)
+    activity_df: pd.DataFrame where sensor-actions and respective activities are
+    seed_activities: a list of lists that describes the seed activity models
+    context_model: a dict where activities, objects and sensors are decribed (extracted
+Output:
+    True/False: True if the action sequence descibes an activity / False otherwise
 """
-def completeActivity(activity_start, activity_end, activity, activity_df, seed_activities):
+def completeActivity(activity_start, activity_end, activity, activity_df, seed_activities, context_model):
     action_col = activity_df.columns.tolist().index('action')
     actions = activity_df.iloc[activity_start:activity_end+1, action_col].values
     for i in xrange(len(seed_activities)):
@@ -129,7 +140,38 @@ def completeActivity(activity_start, activity_end, activity, activity_df, seed_a
             seed_actions = np.array(seed_activities[i][2]) # 0 element: name, 1 element: duration
             
     inter = np.intersect1d(actions, seed_actions)
-    if len(inter) == len(seed_actions):
+    # Check location consistence
+    objects = context_model['objects']
+    sensors = context_model['sensors']
+    activities = context_model['activities']
+    alocations = activities[activity]['location']
+    olocations = []
+    for i in xrange(len(seed_actions)):        
+        j = activity_start
+        end_loop = False
+        while not end_loop and j <= activity_end:
+            sensor_col = activity_df.columns.tolist().index('sensor')
+            sensor = activity_df.iloc[j, sensor_col]
+            if sensors[sensor]['action'] == seed_actions[i]:
+                olocation = objects[sensors[sensor]['attached-to']]['location']
+                try:
+                    alocations.index(olocation)
+                    if olocations != []:
+                        if olocations[0] == olocation:
+                            olocations.append(olocation)
+                            end_loop = True
+                        else:
+                            j = j + 1
+                    else:
+                        olocations.append(olocation)
+                        end_loop = True
+                    
+                except ValueError:
+                    j = j + 1
+            else:
+                j = j + 1
+                    
+    if len(inter) == len(seed_actions) and len(olocations) == len(seed_actions):
         return True
     else:
         return False
@@ -167,12 +209,13 @@ Function to annotate actions with activities, from seed_activity_models
 Input:
     activity_df: pd.DataFrame with sensors, actions and activities (real label)
     seed_activities: list of seed models for activities [Activity, Duration [action0, action1...]]
+    context_model: dict where activities, sensors and objects are described
 Output:
     annotated_activities: a list of annotated activities which the following structure
     [[Activity, Completed, StartIndex, EndIndex], [Activity, Completed, StartIndex, EndIndex], ...]
 """
        
-def annotateActivities(activity_df, seed_activities):
+def annotateActivities(activity_df, seed_activities, context_model):
     # Implements approach 2
     print 'annotateActivities approach 2'
     
@@ -212,7 +255,7 @@ def annotateActivities(activity_df, seed_activities):
                 if not rightActivityDuration(start_index, start_index + incr, activity, activity_df, seed_activities):
                     time_out = True
                 else:
-                    if completeActivity(start_index, start_index + incr, activity, activity_df, seed_activities):
+                    if completeActivity(start_index, start_index + incr, activity, activity_df, seed_activities, context_model):
                         activity_detected = True
                         end_index = start_index + incr
                         detected_activity = activity
@@ -330,7 +373,7 @@ def main(argv):
    activity_df = activity_df[cols]   
    
    # Call annotateActivities function
-   annotated_activities = annotateActivities(activity_df, seed_activities)   
+   annotated_activities = annotateActivities(activity_df, seed_activities, context_model)   
       
    # Use only complete activities to create the annotated pd.DataFrame
    # Each row will be: [timestamp, action, real_label, r_start_end, annotated_label, a_start_end]
