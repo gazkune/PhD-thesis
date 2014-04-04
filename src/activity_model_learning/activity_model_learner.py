@@ -170,27 +170,65 @@ def calculateDefinitiveActionPatterns(learnt_activities):
         print '  Fusion matrix:'
         print to_fuse
         
-        # Use to_fuse matrix to fuse patterns and store in patterns2
-        removed = []
+        # Use to_fuse matrix to fuse patterns and store in patterns2        
+        #patterns2 = fusePatterns(patterns1, to_fuse)
+        
         patterns2 = []
+        action_patterns = []
+        freq_patterns = []
+        targets = {}
         for i in xrange(len(to_fuse)):
-            try:
-                removed.index(i)
-                continue
-            except ValueError:
-                # Insert this pattern
-                patterns2.append(patterns1[i])
-                for j in xrange(len(to_fuse[i])):
-                    if to_fuse[i][j] == 1:
-                        # Sum frequencies
-                        patterns2[i][0] = patterns2[i][0] + patterns1[j][0]
-                        # Mark j to be removed
-                        removed.append(j)
+            one = max(to_fuse[i])
+            one_index = to_fuse[i].tolist().index(one)
+            
+            if one == 0:
+                # this pattern doesn't have to be fused, but append it
+                action_patterns.append(patterns1[i][1])
+                freq_patterns.append(patterns1[i][0])
+            elif one == 1:
+                if patterns1[i][0] > patterns1[one_index][0]:                
+                    # Check whether i is already in targets dict
+                    try:
+                        target = targets[i]
+                    except KeyError:
+                        target = i
+                    
+                    actions = patterns1[target][1]
+                    try:
+                        index = action_patterns.index(actions)
+                        freq_patterns[index] = freq_patterns[index] + patterns1[one_index][0]
+                    
+                    except ValueError:
+                        action_patterns.append(actions)
+                        freq_patterns.append(patterns1[target][0] + patterns1[one_index][0])
                         
-        print '  Number of patterns after step 2:', len(patterns2)
-        for i in xrange(len(patterns2)):
-            if len(patterns2) < len(patterns1):
-                print '  ', patterns2[i][0], patterns2[i][1]
+                    to_fuse[one_index][i] = 2 # Don't fuse again, but don't be zero either
+                    targets[one_index] = target
+                else:
+                    # Check whether one_index is already in targets dict
+                    try:
+                        target = targets[one_index]
+                    except KeyError:
+                        target = one_index
+                    
+                    actions = patterns1[target][1]
+                    try:
+                        index = action_patterns.index(actions)
+                        freq_patterns[index] = freq_patterns[index] + patterns1[i][0]
+                    
+                    except ValueError:
+                        action_patterns.append(actions)
+                        freq_patterns.append(patterns1[i][0] + patterns1[target][0])
+                    
+                    
+                    to_fuse[one_index][i] = 2 # Don't fuse again, but don't be zero either
+                    targets[i] = target
+                    
+        # action_patterns and freq_patterns have to aligned index-wise
+        # build fused_patterns combining both
+        for i in xrange(len(action_patterns)):
+            patterns2.append([freq_patterns[i], action_patterns[i]])
+                            
             
         # Step 3: calculate Jaccard based pattern distance between every two activities        
         # Initialize jaccard_matrix with -1 values
@@ -230,22 +268,7 @@ def calculateDefinitiveActionPatterns(learnt_activities):
             #print ef_matrix
         
             # Step 4: Implement the heuristic to fuse patterns. Fuse those patterns whose
-            # JF coefficient is higher than mean(JF) + (std(JF)/2)
-            # Obtain the up and down triangle of the jf_matrix
-            #[up_triangle, down_triangle] = obtainBothTriangles(jf_matrix)            
-                
-            # Obtain a list with bot triangles to calculate the mean and std without
-            # diagonal values of the jf_matrix
-            #both_triangles = up_triangle + down_triangle
-            #print '  JF mean:', np.mean(both_triangles), 'std:', np.std(both_triangles), 'median:', np.median(both_triangles)
-            #print '  JF score at percentile 75:', stats.scoreatpercentile(both_triangles, 75)
-            # T!! It seems this last metrics can be the good one: 
-            # max_i {Jaccard(P1, Pi) / Freq(P1)}
-            # Initial tests suggest that we can use that metric and the 
-            # combination of (mean, std) heuristic for the fourth step of the algorithm!
-            # Criterion 1: use mean + std/2 on the JF matrix -> fusing_threshold_1
-            # Criterion 2: use 75 percentil on the JF matrix -> fusing_threshold_2
-            # Fuse patterns and store them in patterns3
+            # JF coefficient is higher than mean(JF) + (std(JF)/2)   
             
             # test a new approach -> outlier detection with leave one-out method
             #new_patterns = leaveOneOut(patterns2, learnt_activities[key]['occurrences'])
@@ -295,6 +318,77 @@ def calculateDefinitiveActionPatterns(learnt_activities):
     
     return learnt_patterns
 
+"""
+Function to fuse patterns (suming their frequencies) based on the
+fusion_matrix provided
+Input:
+    patterns: a list of patterns to be fused
+        [[freq, [action0,..., actionN]], [freq, [action0,..., actionN]]]
+    fusion_matrix: a matrix of len(patterns) x len(patterns) size
+        if fusion_matrix[i, j] == 1, fuse pattern i with j
+Output:
+    fused_patterns: the new list of fused patterns
+"""
+# TODO: Check this function to use where needed. It seems there is a problem
+# when calling, since frequencies were not well sumed in a test I did
+def fusePatterns(patterns, fusion_matrix):
+    fused_patterns = []
+    action_patterns = []
+    freq_patterns = []
+    targets = {}
+    for i in xrange(len(fusion_matrix)):
+        one = max(fusion_matrix[i])
+        one_index = fusion_matrix[i].tolist().index(one)
+            
+        if one == 0:
+            # this pattern doesn't have to be fused, but append it
+            action_patterns.append(patterns[i][1])
+            freq_patterns.append(patterns[i][0])
+        elif one == 1:
+            if patterns[i][0] > patterns[one_index][0]:                
+                # Check whether i is already in targets dict
+                try:
+                    target = targets[i]
+                except KeyError:
+                    target = i
+                    
+                actions = patterns[target][1]
+                try:
+                    index = action_patterns.index(actions)
+                    freq_patterns[index] = freq_patterns[index] + patterns[one_index][0]
+                    
+                except ValueError:
+                    action_patterns.append(actions)
+                    freq_patterns.append(patterns[target][0] + patterns[one_index][0])
+                        
+                fusion_matrix[one_index][i] = 2 # Don't fuse again, but don't be zero either
+                targets[one_index] = target
+            else:
+                # Check whether one_index is already in targets dict
+                    try:
+                        target = targets[one_index]
+                    except KeyError:
+                        target = one_index
+                    
+                    actions = patterns[target][1]
+                    try:
+                        index = action_patterns.index(actions)
+                        freq_patterns[index] = freq_patterns[index] + patterns[i][0]
+                    
+                    except ValueError:
+                        action_patterns.append(actions)
+                        freq_patterns.append(patterns[i][0] + patterns[target][0])
+                    
+                    
+                    fusion_matrix[one_index][i] = 2 # Don't fuse again, but don't be zero either
+                    targets[i] = target
+                    
+        # action_patterns and freq_patterns have to aligned index-wise
+        # build fused_patterns combining both
+        for i in xrange(len(action_patterns)):
+            fused_patterns.append([freq_patterns[i], action_patterns[i]])
+
+    return fused_patterns
 
 """
 """
