@@ -395,12 +395,13 @@ def fusePatterns(patterns, fusion_matrix):
 def medianBasedOutliers(patterns, matrix):
     #print patterns
     #print matrix
+    THRESHOLD_MIN = 0.75
     [up_triangle, down_triangle] = obtainBothTriangles(matrix)    
     both_triangles = up_triangle + down_triangle
     median = np.median(both_triangles)
     dist = np.abs(both_triangles - median)
     deviation = sum(dist) / len(dist)
-    fusing_threshold = max(0.7, median + deviation)
+    fusing_threshold = max(THRESHOLD_MIN, median + deviation)
     print '  Jaccard median:', median, 'std:', deviation
     print '  Jaccard fusing threshold:', fusing_threshold
 
