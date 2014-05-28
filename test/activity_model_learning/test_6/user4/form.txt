@@ -1,0 +1,116 @@
+--------------------------------------------------------
+MakeCoffee
+-----------------------------------------------------
+Place: --
+
+Patterns: --
+
+Names: --
+
+Objects used: --
+
+Description: --
+
+Duration: --
+
+
+--------------------------------------------------------
+MakeChocolate
+--------------------------------------------------------
+Place: kitchen
+
+Patterns: 1
+
+Names: MakeChocolate
+
+Objects: chocolate, leche, taza, cazo, cucharón , vitrocerámica, frigorífico, armario
+
+Description: Abro el frigorico y cojo la leche. Después cojo el chocolate  y echo 2 cucharadas en la taza. A continuacion vierto un poco de leche y lo remuevo hasta que los polvos se disuelven. Por último termino de llenar  la taza y lo caliente 1 minuto y medio en el microondas
+
+Duration: 3 min
+
+--------------------------------------------------------
+MakePasta
+--------------------------------------------------------
+Place: Kitchen
+
+Patterns: 2
+
+Names: 1.- Pasta
+2.- Pasta a la bolognesa o carbonara
+
+Objects: Cazuela, cuchara, vitroceramica, sarten, tomate frito, salsa
+
+
+Description:
+1.- Pasta
+Pongo agua con sal a hervir en una cazuela. Una vez llegue al punto de ebullición vierto la pasta en la cazuela y la dejo cociendo alrededor de 7 minutos. Mientras se cuece en una sarten frio salchichas y chorizo y caliento tomate frito. Una vez la pasta este cocida la pongo en un plato y le añado el contenido de la sarten.
+
+1.- Pasta con Salsa
+Pongo agua con sal a hervir en una cazuela. Una vez llegue al punto de ebullición vierto la pasta en la cazuela y la dejo cociendo alrededor de 7 minutos. Mientras se cuece la pasta caliento la pasta precocinada en una sarten. Una vez la pasta este cocida la pongo en un plato y le añado el contenido de la sarten.
+
+
+Duration: 12 min
+
+
+-------------------------------------------------------------
+BrushTeeth
+-------------------------------------------------------------
+Location: bathroom
+
+Patterns: 1
+
+Names: BrushTeeth
+
+Objects: Cepillo, pasta de dientes,  lavabo
+
+Description: Pongo pasta de dientes sobre el cepillo y le echo un par de gotas de agua del lavabo. Me cepillo los dientes y despues limpio el cepillo.
+
+Duration: 3 min
+
+
+-------------------------------------------------------------
+WatchTelevision
+-------------------------------------------------------------
+
+Location: Lounge
+
+Patterns: 1
+
+Names: WatchTelevision
+
+Objects: Sofa, tele, mando a distancia
+
+Description: Me siento o me tumbo en el sofa, enciendo la tele con el mando a distancia y veo la tele.
+
+Duration: 1 hora - 1 hora y media
+
+-------------------------------------------------------------
+WashHands
+-------------------------------------------------------------
+
+Location: Bathroom 
+
+Patterns: 1
+
+Names: WashHands
+
+Objects: Lavabo, jabon
+
+Description: Me mojo las manos, despues me echo jabon en ellas y froto hasta limpiarmelas. Por último me las aclaro con agua.
+
+Duration: 1.5 min
+
+-------------------------------------------------------------
+ReadBook
+-------------------------------------------------------------
+
+Location: Bedroom
+
+Patterns: 1
+
+Objects: cama
+
+Description: Me meto en la cama y abro el libro para leerlo. Una vez leido suficiente lo dejo en la mesilla
+
+Duration: 20 min
