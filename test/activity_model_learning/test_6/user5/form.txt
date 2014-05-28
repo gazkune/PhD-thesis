@@ -1,0 +1,117 @@
+--------------------------------------------------------
+MakeCoffee
+-----------------------------------------------------
+Place: kitchen
+
+Patterns: 2
+
+Names: Coffe with milk, ice coffee
+
+Objects used:
+  Coffe with milk: cafetera, taza, café, azúcar, leche, cucharilla, nevera, vitrocerámica
+  Ice coffee: cafetera, café, azúcar, hielo, vaso, leche, cucharilla, congelador, vitrocerámica
+
+Description:
+"Café con leche" -> abro el frigorífico y cojo la leche. Después cojo el café de la despensa. Saco la cafetera del armario y la lleno de agua y café. La pongo en la vitrocerámica hasta que hierve. Vierto en la taza el café y la leche. Echo el azúcar y remuevo.
+
+"Café con hielo" ->  cojo el café de la despensa. Saco la cafetera del armario y la lleno de agua y café. La pongo en la vitrocerámica hasta que hierve. Vierto el café en el vaso, le echo azúcar y remuevo. Cuando se ha disuelto el azúcar echo hielos.
+
+Duration:
+Café con leche 10 min.
+Café con hielo 10 min.
+
+
+--------------------------------------------------------
+MakeChocolate
+--------------------------------------------------------
+Place: kitchen
+
+Patterns: 1
+
+Names: MakeChocolate
+
+Objects: vitrocerámica, cazo, leche, chocolate, frigorífico, cuchara, tazón
+
+Description: Chocolate a la taza -> Saco la leche del frigorífico y el chocolate de la despensa. Vierto leche en el cazo junto con unas onzas de chocolate. Remuevo la mezcla hasta que el chocolate se derrite. Cuando está totalmente derretido lo vierto en el cazo.
+
+Duration: 15 min
+
+--------------------------------------------------------
+MakePasta
+--------------------------------------------------------
+Place: Kitchen
+
+Patterns: 1
+
+Names: Pasta with tomato
+
+Objects: Cazuela, macarrones, agua, sal, tomate, vitrocerámica, escurridor
+
+Description: Saco el tomate de la nevera y los macarrones de la despensa. Pongo agua con sal a hervir en la cazuela hasta que la pasta está a punto. Escurro los macarrones y les echo el tomate.
+
+Duration: 20 min
+
+-------------------------------------------------------------
+BrushTeeth
+-------------------------------------------------------------
+Location: bathroom
+
+Patterns: 1
+
+Names: BrushTeeth
+
+Objects: cepillo, pasta , agua
+
+Description: Pongo pasta en el cepillo, me cepillo, me enjuago, aclaro el cepillo y lo guardo.
+
+Duration: 5 min
+
+
+-------------------------------------------------------------
+WatchTelevision
+-------------------------------------------------------------
+
+Location: Lounge
+
+Patterns: 2
+
+Names: Ver la tele.
+Ver series/películas.
+
+Objects: Ver la tele: tele, mando, sofá.
+Ver series/películas: tele, mando, sofá, raspberry pi, NAS.
+
+Description: Ver la tele: me siento en el sofá y enciendo la tele con el mando.
+Ver series/películas: enciendo el NAS y la raspberry. Después me siento en el sofá y con el mando de la tele selecciono el HDMI.
+
+Duration: 40 min - 2 h
+
+-------------------------------------------------------------
+WashHands
+-------------------------------------------------------------
+
+Location: Bathroom 
+
+Patterns: 1
+
+Names: WashHands
+
+Objects: agua, grifo, jabón, toalla
+
+Description: Me echo jabón en las manos, las mojo con agua, las froto y las aclaro con agua de nuevo. Me las seco con la toalla.
+
+Duration: 2 min
+
+-------------------------------------------------------------
+ReadBook
+-------------------------------------------------------------
+
+Location: Bedroom
+
+Patterns: 1
+
+Objects: libro, cama, lampara
+
+Description: Enciendo la lámpara, me tumbo en la cama y leo.
+
+Duration: 1 hora
