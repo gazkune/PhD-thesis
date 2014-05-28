@@ -1,0 +1,49 @@
+# Days to be simulated
+60
+# ADL names
+MakeCoffee MakeChocolate MakePasta BrushTeeth WatchTelevision WashHands ReadBook
+# Sensor activation patterns
+MakeCoffee 3
+0.49 afcoffeeSens@0 coffeePotSens@10 ktapSens@10 cookerSens@20 cupSens@200
+0.49 afcoffeeSens@0 coffeePotSens@10 ktapSens@10 cookerSens@20 cupSens@200 fridgeSens@10 smilkSens@5 microwaveSens@10
+0.02 afcoffeeSens@0 coffeePotSens@10 cookerSens@20 cupSens@200 fridgeSens@10 smilkSens@5 microwaveSens@10
+MakeChocolate 3
+0.97 storeSens@0 chocoSens@5 fridgeSens@30 wmilkSens@5 potSens@10 cookerSens@20 mugSens@300
+0.01 storeSens@0 chocoSens@5 fridgeSens@30 wmilkSens@5 potSens@10 cookerSens@20
+0.02 storeSens@0 chocoSens@5 wmilkSens@35 potSens@10 cookerSens@20 mugSens@300
+MakePasta 3
+0.97 fridgeSens@0 ftomatoSens@5 baconSens@5 storeSens@15 potSens@5 ktapSens@20 cookerSens@30 macaroniSens@200 drainerSens@600
+0.02 ftomatoSens@0 baconSens@5 storeSens@15 potSens@5 ktapSens@20 cookerSens@30 macaroniSens@200 drainerSens@600
+0.01 fridgeSens@0 ftomatoSens@5 baconSens@5 storeSens@15 ktapSens@20 cookerSens@30 macaroniSens@200 drainerSens@600
+BrushTeeth 2
+0.7 brusherSens@0 toothpasteSens@5 btapSens@5
+0.3 brusherSens@0 toothpasteSens@5 btapSens@5 dentalflossSens@15
+WatchTelevision 2
+0.9 sofaSens@0 rcontrolSens@5 tvSens@10
+0.1 rcontrolSens@0 tvSens@10
+WashHands 2
+0.98 bsoapSens@0 btapSens@5 towelSens@40
+0.02 bsoapSens@0 towelSens@45
+ReadBook 3
+0.5 bedSens@0 bookbSens@10
+0.4 sofaSens@0 bookaSens@10
+0.1 bookbSens@0
+# Activity patterns: describe how a day is
+Prob 0.43 4
+S 7:00-7:30 MakeChocolate@0 BrushTeeth@600 WashHands@40
+S 13:00-13:30 MakePasta@0 MakeCoffee@900 BrushTeeth@1800
+S 20:00-20:30 MakePasta@0 BrushTeeth@900 ReadBook@150
+A 18:00-19:30 WatchTelevision 0.8
+Prob 0.28 2
+S 7:00-7:30 MakeChocolate@0 BrushTeeth@600 WashHands@40
+S 20:30-21:00 BrushTeeth@0 ReadBook@100
+Prob 0.29 5
+S 9:00-10:00 MakeChocolate@0 WatchTelevision@30 BrushTeeth@1800
+S 13:30-14:30 MakePasta@0 BrushTeeth@900
+S 22:00-23:00 BrushTeeth@0 WashHands@10
+A 15:00-16:00 WatchTelevision 0.75
+A 18:00-20:00 ReadBook 0.5
+# Noise specification; Meaning -> Probability of sensor occurrence in an hour interval
+0.05 cupSens bookaSens bedSens sofaSens brusherSens saucepanSens towelSens spaghettiSens
+0.05 potSens baconSens bsugarSens rcontrolSens ktapSens
+# Finish always with a comment

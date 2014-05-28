@@ -1,0 +1,128 @@
+--------------------------------------------------------
+MakeCoffee
+-----------------------------------------------------
+Place: kitchen
+
+Patterns: 2
+
+Names: Coffe with milk, black coffee
+
+Objects used: fuegos, nevera, leche, tarro cafe, taza, cafetera
+
+Description:
+   Cafe: cojo cafe, cojo cafetera, lleno cafetera con cafe, lleno cafetera con agua, pongo en el fuego. Cojo taza, tiro cafe.
+
+   Cafe con leche: cojo cafe, cojo cafetera, lleno cafetera con cafe, lleno cafetera con agua, pongo en el fuego. Cojo taza, cojo leche del frigo, pongo leche en taza, meto taza en el microondas, la caliento y al final tiro el cafe.
+
+
+Duration:
+  Coffee with milk: 7 min
+  Black coffee: 7 min
+
+
+--------------------------------------------------------
+MakeChocolate
+--------------------------------------------------------
+Place: kitchen
+
+Patterns: 1
+
+Names: MakeChocolate
+
+Objects: chocolate, leche, taza, cazo, cucharón , vitrocerámica, frigorífico, armario
+
+Description: cojo la tableta de chocolate, cojo la tabla de cortar, cojo cuchillo, parto el chocolate en trozos pequeños. Cojo leche, cojo cazo, caliento leche, voy echando chocolate, vuelvo a echar leche las veces que haga falta.
+
+Duration: 10-15 min
+
+--------------------------------------------------------
+MakePasta
+--------------------------------------------------------
+Place: Kitchen
+
+Patterns: 1
+
+Names: Pasta with tomato
+
+Objects: cuchillo, tabla cortar, sarten, cazuela, armario, nevera, horno
+
+
+Description: Abro nevera, cojo tomates, cebolla y ajos, cojo cuchillo, cojo tabla de cortar, corto tomates cebolla y ajos. Cojo sarten, abro armario, cojo aceite, tiro en sarten, abro nevera, saco taquitos de jamos, frio tacos en sarten, tiro ajos, cebolla y tomate, hago tomate. 
+
+Pongo cazo, abro nevera, cojo huevos, hiervo huevos.
+
+Cojo olla, echo agua, abro armario, cojo sal, tiro en agua, hiervo agua, tiro macarrones, Cuelo macarrones.
+
+Cojo sarten, frio chorizo. Corto huevo. Mezclo macarrones, tomate, chorizo. Abro armario, cojo queso gratinar, tiro encima. Caliento horno, gratino queso.
+
+
+Duration: 30 min
+
+
+-------------------------------------------------------------
+BrushTeeth
+-------------------------------------------------------------
+Location: bathroom
+
+Patterns: 2
+
+Names: BrushTeeth with dental floss, without dental floss
+
+Objects:
+   sin hilo->cepillo, pasta de dientes, grifo
+   con hilo-> Cepillo, pasta, hilo dental, gri
+
+Description: 
+   sin hilo-> cojo cepillo, echo pasta, cepillo dientes, enjuago
+   Con hilo -> Cojo hilo, uso hilo, enjuago. Cojo cepillo, echo pasta, cepillo dientes, enjuago
+
+Duration:
+   sin hilo: 2 min
+   con hilo: 5 min 
+
+
+-------------------------------------------------------------
+WatchTelevision
+-------------------------------------------------------------
+
+Location: Lounge
+
+Patterns: 1
+
+Names: WatchTelevision
+
+Objects: sofa, tele
+
+Description: siento sofa, veo tele
+
+Duration: 30 min - 2 horas
+
+-------------------------------------------------------------
+WashHands
+-------------------------------------------------------------
+
+Location: Bathroom 
+
+Patterns: 1
+
+Names: WashHands
+
+Objects: grifo, jabón, toalla
+
+Description: cojo jaboneta, enciendo grifo, limpio manos, seco toalla
+
+Duration: 2 min
+
+-------------------------------------------------------------
+ReadBook
+-------------------------------------------------------------
+
+Location: Lounge, Bedroom
+
+Patterns: 1
+
+Objects: libro, sofá
+
+Description: siento sofa, leo libro
+
+Duration: 30 min - 2 horas
