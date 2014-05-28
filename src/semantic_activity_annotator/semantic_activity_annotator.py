@@ -140,6 +140,8 @@ def completeActivity(activity_start, activity_end, activity, activity_df, seed_a
             seed_actions = np.array(seed_activities[i][2]) # 0 element: name, 1 element: duration
             
     inter = np.intersect1d(actions, seed_actions)
+    print 'Actions:', actions
+    print 'Seed actions:', seed_actions
     # Check location consistence
     objects = context_model['objects']
     sensors = context_model['sensors']
@@ -154,6 +156,7 @@ def completeActivity(activity_start, activity_end, activity, activity_df, seed_a
             sensor = activity_df.iloc[j, sensor_col]
             if sensors[sensor]['action'] == seed_actions[i]:
                 olocation = objects[sensors[sensor]['attached-to']]['location']
+                print 'Location of sensor', sensor, olocation
                 try:
                     alocations.index(olocation)
                     if olocations != []:
@@ -233,14 +236,34 @@ def annotateActivities(activity_df, seed_activities, context_model):
         
         # Iterate through seed_activities and check whether action
         # is contained in any of the activities
+        print 'Current action:', action
         activities = actionInSeedActivities(action, seed_activities)
+        print 'Activities:', activities
         
+        aux = []        
+        # Check location of the action and compatibility with activities
+        for j in xrange(len(activities)):
+            # Check location consistence
+            objects = context_model['objects']
+            sensors = context_model['sensors']
+            modeled_activities = context_model['activities']
+            alocations = modeled_activities[activities[j]]['location']
+            sensor_col = cols.index('sensor')
+            sensor = activity_df.iloc[i, sensor_col]
+            olocation = objects[sensors[sensor]['attached-to']]['location']
+            try:
+                alocations.index(olocation)
+                aux.append(activities[j])
+            except ValueError:
+                pass
+
         # To use intersection functions, use np.array
-        activities = np.array(activities)
-        
+        activities = np.array(aux)
+                
         if len(activities) == 0:
             i = i + 1
-            continue        
+            continue
+        
         
         # Activity start index
         start_index = i

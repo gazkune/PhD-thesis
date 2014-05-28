@@ -553,6 +553,9 @@ def generateTimedSensorActivationsForSequence(selected_pattern, sensor_activatio
         for j in xrange(len(sensors)):
             sensor_array.append(sensors[j])
     
+    print 'Sensor array length:', len(sensor_array), 'Dates length:', len(dates)
+    print 'Dates:', dates
+    print 'Sensor activations:', sensor_array
     timed_sensor_activations = pd.DataFrame(sensor_array, index=dates)
     
     print 'Timed sensor activation for selected sequence:'

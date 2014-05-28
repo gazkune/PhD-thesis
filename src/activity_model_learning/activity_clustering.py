@@ -514,8 +514,9 @@ def timeManagement(sensor_timestamp, activity, previous, activities):
         a_duration = activities[activity['name']]['duration'] # int
         a_half_duration = a_duration / 2.0 # float
         h_centre = activity['start_time'] + datetime.timedelta(seconds=a_half_duration)
+        
         if h_centre > sensor_timestamp:
-            h_delta = h_centre - sensor_timestamp
+            h_delta = datetime.timedelta(seconds=0) #h_centre - sensor_timestamp
         else:
             h_delta = sensor_timestamp - h_centre
         dyn_time_dist = h_delta.seconds / float(a_duration)
