@@ -1,0 +1,121 @@
+--------------------------------------------------------
+MakeCoffee
+-----------------------------------------------------
+Place: kitchen
+
+Patterns: 2
+
+Names: Coffe with milk, black coffee
+
+Objects used:
+  Coffe with milk: taza, cucharilla, cafetera, vitrocerámica, grifo, azucarero, leche, agua, café molido, azúcar
+  Black coffee: taza, cucharilla, cafetera, vitrocerámica,grifo, azucarero, agua, café molido, azúcar
+
+Description:
+  Coffee with milk: cojo cafetera, abro cafetera, voy al grifo, vierto agua en la cafetera, cierro cafetera, cojo café, lleno cafetera de café, pongo cafetera en vitrocerámica, enciendo vitrocerámica, retiro cafetera de la vitrocerámica, apago vitrocerámica, vierto café en la taza,abro frigorífico, cojo bric de leche, vierto leche en la taza, cojo azucarero, cojo cucharilla, vietro azúcar en la taza, revuelvo con cucharilla la taza.
+  Black coffee: cojo cafetera, abro cafetera, voy al grifo, vierto agua en la cafetera, cierro cafetera, cojo cafá, lleno cafetera de cafá, pongo cafetera en vitrocerámica, enciendo vitrocerámica, retiro cafetera de la vitrocerámica, apago vitrocerámica, vierto café en la taza, cojo azucarero, cojo cucharilla, vierto azúcar en la taza, revuelvo con cucharilla la taza.
+
+Duration:
+  Coffee with milk: 5 min
+  Black coffee: 4 min
+
+
+--------------------------------------------------------
+MakeChocolate
+--------------------------------------------------------
+Place: kitchen
+
+Patterns: 1
+
+Names: MakeChocolate
+
+Objects: chocolate, leche, taza, cazo, cucharón , vitrocerámica, frigorífico, armario
+
+Description: abro armario, cojo cazo, cierro aramario, pongo cazo en vitrocerámica, enciendo vitrocerámica, abro frigorifico, cojo bric de leche, cierro frigorífico, vierto leche en el cazo, abro armario, cojo chocolate, cierro aramario, abro chocolate, parto chocolate, echo trozos chocolate en la leche, cojo cucharón, revolver chocolate del cazo, retiro cazo de la vitrocerámica, apago vitrocerámica, vietro chocolate en la taza.
+
+Duration: 15 min
+
+--------------------------------------------------------
+MakePasta
+--------------------------------------------------------
+Place: Kitchen
+
+Patterns: 2
+
+Names: Pasta with tomato, pasta carbonara
+
+Objects:
+   Pasta with tomato: pasta, tomate, agua, sal, aceite, cazo, sartén, colador, vitrocerámica, plato, armario, grifo
+   Pasta carbonara: pasta, nata, bacon, agua, sal, aceite,colador, cazo, sartén vitrocerámica, armario, grifo, frigorífico
+
+Description:
+   Pasta with tomato: abro aramario, cojo cazo, cierro armario, abro grifo, vierto agua en el cazo, cierro grifo, pongo cazo en vitrocerámica, enciendo vitrocerámica, abro aramario, cojo pasta, tomate y sal, cierro aramario, echo pasta en el agua, espero 20 min, cojo cazo, apago vitrocerámica, vierto el gua en el grifo, vietro la pasta en el colador, abro grifo, vierto agua fía sobre pasta, pongo sartén en la vitrocerámica, enciendo vitrocerámica, echo aceite en la sartén, echo tomate en sartén, echo pasta en la sartén, apago vitrocerámica, aparto sartén, echo pasta en el plato.
+
+   Pasta carbonara: abro aramario, cojo cazo, cierro armario, abro grifo, vierto agua en el cazo, cierro grifo, pongo cazo en vitrocerámica, enciendo vitrocerámica, abro aramario, cojo pasta, aceite y sal, cierro aramario, echo pasta en el agua, espero 20 min, cojo cazo, apago vitrocerámica, vierto el agua en el grifo, vierto la pasta en el colador, abro grifo, vierto agua fría sobre pasta, pongo sartén en la vitrocerámica, enciendo vitrocerámica, echo aceite en la sartén, abro frigorífico, cojo bacon y nata, echo bacon y nata en sartén echo pasta en la sartén, apago vitrocerámica, aparto sartén, echo pasta en el plato.
+
+Duration:
+   Pasta with tomato: 25 min
+   Pasta carbonara: 30 min
+
+
+-------------------------------------------------------------
+BrushTeeth
+-------------------------------------------------------------
+Location: bathroom
+
+Patterns: 1
+
+Names: BrushTeeth
+
+Objects: cepillo, pasta , agua, grifo, toalla
+
+Description: cojo cepillo, cojo pasta, abro pasta, pongo pasta en el cepillo, cierro pasta, abro grifo, pongo cepillo bajo grifo, cierro grifo, me cepillo,  escupo pasta, abro grifo, me enjuago, limpio cepillo, cierro grifo, cojo toalla, seco boca, seco cepillo.
+
+Duration: 5 min
+
+
+-------------------------------------------------------------
+WatchTelevision
+-------------------------------------------------------------
+
+Location: Lounge, Kitchen
+
+Patterns: 1
+
+Names: WatchTelevision
+
+Objects: mesa cocina, mando, televisión, sofá
+
+Description: cojo mando, enciendo television, me siento  sofá, ver tele Ver televisión cocina : cojo mando, enciendo television, me siento mesa de cocina, ver tele
+
+Duration: 1 min
+
+-------------------------------------------------------------
+WashHands
+-------------------------------------------------------------
+
+Location: Kitchen, Bathroom 
+
+Patterns: 1
+
+Names: WashHands
+
+Objects: agua, grifo, jabón, toalla
+
+Description: abro grifo, mojo manos, cierro grifo, cojo jabón, me enjabono manos, abro grifo, aclaro manos, cierro grifo, cojo toalla, seco manos, dejo toalla,
+
+Duration: 2 min
+
+-------------------------------------------------------------
+ReadBook
+-------------------------------------------------------------
+
+Location: Lounge, Bedroom
+
+Patterns: 1
+
+Objects: libro, sofá, lamparilla, cama
+
+Description: (sala) sentar en el sofá, encender lamparilla, coger libro, abrir libro, leer (dormitorio) meterme en la cama,  encender lamparilla, coger libro, abrir libro, leer
+
+Duration: 1 min
