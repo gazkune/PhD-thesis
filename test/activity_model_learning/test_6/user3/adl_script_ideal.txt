@@ -1,0 +1,41 @@
+# Days to be simulated
+60
+# ADL names
+MakeCoffee MakeChocolate MakePasta BrushTeeth WatchTelevision WashHands ReadBook
+# Sensor activation patterns
+MakeCoffee 2
+0.50 storeSens@0 mugSens@5 fridgeSens@10 smilkSens@5 afcoffeeSens@5 coffeePotSens@15 potSens@20 microwaveSens@20
+0.50 storeSens@0 cupSens@5 fridgeSens@10 smilkSens@5 afcoffeeSens@5 coffeePotSens@15 potSens@20 microwaveSens@20
+MakeChocolate 1
+1 mugSens@0 wmilkSens@20 microwaveSens@20 chocoSens@120
+MakePasta 3
+0.4 potSens@0 ktapSens@20 cookerSens@30 macaroniSens@120 drainerSens@600 ftomatoSens@30
+0.3 spaghettiSens@0 potSens@20 ktapSens@25 cookerSens@30 baconSens@50 drainerSens@600 saucepanSens@10 creamSens@30
+0.3 macaroniSens@0 potSens@20 ktapSens@25 cookerSens@30 drainerSens@600 pestoSens@30
+BrushTeeth 1
+1 brusherSens@0 toothpasteSens@5 btapSens@5
+WatchTelevision 2
+0.91 sofaSens@0 rcontrolSens@5 tvSens@10
+0.09 rcontrolSens@0 tvSens@10
+WashHands 1
+1 btapSens@0 bsoapSens@15
+ReadBook 2
+0.6 bookbSens@0 bedSens@10 blampSens@5
+0.4 bookaSens@0 sofaSens@10
+# Activity patterns: describe how a day is
+Prob 0.43 3
+S 7:00-7:30 MakeCoffee@0 BrushTeeth@600 WashHands@40
+S 13:00-13:30 MakePasta@0 MakeCoffee@600 BrushTeeth@1800
+S 20:00-20:30 MakePasta@0 BrushTeeth@600 ReadBook@150
+Prob 0.28 2
+S 7:00-7:30 MakeCoffee@0 BrushTeeth@600 WashHands@30
+S 20:30-21:00 BrushTeeth@0 ReadBook@100
+Prob 0.29 4
+S 9:00-10:00 MakeCoffee@0 BrushTeeth@1800 ReadBook@120
+S 13:30-14:30 MakePasta@0 BrushTeeth@600
+S 22:00-23:00 BrushTeeth@0 WashHands@10
+A 18:00-20:00 ReadBook 0.5
+# Noise specification; Meaning -> Probability of sensor occurrence in an hour interval
+#0.05 mugSens pestoSens dentalflossSens sofaSens brusherSens saucepanSens
+#0.06 chocoSens baconSens bsugarSens rcontrolSens
+# Finish always with a comment

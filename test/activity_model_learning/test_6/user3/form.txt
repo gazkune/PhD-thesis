@@ -1,0 +1,114 @@
+--------------------------------------------------------
+MakeCoffee
+-----------------------------------------------------
+Place: kitchen
+
+Patterns: 1
+
+Names: Coffe with milk
+
+Objects used: taza, cafetera italiana, cazo para calentar la leche en vitrocerámica, café en povo, leche en tetrabrick
+
+Description: saco vaso o taza del armario, saco la leche y el café de la nevera, lleno de agua el tanque de la cafetera, añado el café en polvo en su compartimento, cojo un cazo del armario lo lleno con leche y lo pongo en la vitro (uso el fogón grande para que quepa cafetera y cazo conjuntamente). Cuando ambos terminan de realizarse, los sirvo en cantidades similares en la taza y me siento a tomar el café en la mesa.
+
+Duration: 8 min
+
+
+--------------------------------------------------------
+MakeChocolate
+--------------------------------------------------------
+Place: --
+
+Patterns: --
+
+Names: --
+
+Objects: --
+
+Description: --
+
+Duration: --
+
+--------------------------------------------------------
+MakePasta
+--------------------------------------------------------
+Place: Kitchen
+
+Patterns: 4
+
+Names:
+   Ajo, aceite y guindilla
+   con verduras
+   carbonara
+   al horno
+
+Objects: olla, escurre pasta, tenedor para servir pasta, cuchara de madera, sartén, cuchillo, tabla de cortar ingredientes, vitrocerámica.
+
+Description:
+Lleno de agua la olla, dejo que rompa a hervir, añado la sal, remuevo, añado la pasta hasta su cocción. Escurro la pasta en el fregadero y la condimento con el acompañamiento deseado.
+
+Duration: 20 min
+
+
+
+-------------------------------------------------------------
+BrushTeeth
+-------------------------------------------------------------
+Location: bathroom
+
+Patterns: 1
+
+Names: BrushTeeth
+
+Objects: cepillo, dentífrico, lavabo.
+
+Description: cojo el cepillo de dientes, añado a las cerdas un poco de dentífrico, le pongo un poco de agua para refrescarlo y me cepillo los dientes. cuando termino, me enjuago en el lavabo, limpio el cepillo y lo dejo en el porta cepillos.
+
+Duration: 4 min
+
+
+-------------------------------------------------------------
+WatchTelevision
+-------------------------------------------------------------
+
+Location: --
+
+Patterns: --
+
+Names: --
+
+Objects: --
+
+Description: --
+
+Duration: --
+
+-------------------------------------------------------------
+WashHands
+-------------------------------------------------------------
+
+Location: Kitchen, Bathroom 
+
+Patterns: 2
+
+Names: sólo con agua, con agua y jabón
+
+Objects: lavabo y fregadero
+
+Description: abro el grifo, pongo jabón en las manos, echo algo de agua, cierro el grifo, froto las manos, abro el grifo y las enjuago bajo éste hasta que desaparece el jabón.
+
+Duration: 1 min
+
+-------------------------------------------------------------
+ReadBook
+-------------------------------------------------------------
+
+Location: Lounge, Bedroom, Kitchen
+
+Patterns: 1
+
+Objects: libro, lámpara si es de noche, sillón o cama o silla (depende de dónde lea)
+
+Description: Me acomodo, abro el libro, leo, cierro el libro, me levanto o me quedo en el sitio si éste es la cama y es de noche.
+
+Duration: 20 min
