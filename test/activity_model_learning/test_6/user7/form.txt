@@ -1,0 +1,151 @@
+--------------------------------------------------------
+MakeCoffee
+-----------------------------------------------------
+Place: kitchen
+
+Patterns: 1
+
+Names: Coffe with milk
+
+Objects used: taza de café, leche, soluble, microondas, cuchara
+
+Description: abro frigorífico y cojo el bric de leche. Después cojo una taza de café, vierto la leche, lo meto en el microondas. Lo saco del microondas, vierto el café soluble y lo remuevo.
+
+Duration: 2 min
+
+--------------------------------------------------------
+MakeChocolate
+--------------------------------------------------------
+Place: kitchen
+
+Patterns: 1
+
+Names: MakeChocolate
+
+Objects: taza, leche, colacao, cuchara
+
+Description: abro el frigorífico y cojo el bric de leche. Después cojo una taza, vierto la leche, vierto el colacao, y remuevo.
+
+Duration: 2 min
+
+--------------------------------------------------------
+MakePasta
+--------------------------------------------------------
+Place: Kitchen
+
+Patterns: 3
+
+Names: 1. Pasta de sobre
+2. Pasta oriental de sobre
+3. Pasta normal con salsa envasada
+
+Objects: 
+1. Pasta de sobre: cazuela, agua, sobre, cuchara de madera, vitrocerámica, medidor agua, plato
+2. Pasta oriental de sobre: cazuela, agua, sobre, cuchara de madera, vitrocerámica, medidor agua, plato
+3. Pasta normal con salsa envasada: cazuela, agua, sobre, cuchara de madera, 2 platos, salsa envasada, vitrocerámica, fregadero
+
+Description: 
+1. Pasta de sobre: abrir armario y sacar cazuela y medidor de agua. Llenar medidor con 700 ml. Vertir agua en cazuela. Poner cazuela en vitrocerámica. Calentar vitrocerámica. Sacar pasta sobre de armario. Esperar a que hierva el agua. Vertir la pasta y el polvo en la cazuela. Remover durante 10 minutos. Apagar fuego. Vertir la pasta en un plato.
+
+2. Pasta oriental sobre: abrir armario y sacar cazuela y medidor de agua. Llenar medidor con 700 ml. Vertir agua en cazuela. Poner cazuela en vitrocerámica. Calentar vitrocerámica. Sacar pasta sobre de armario. Echar uno de los sobres. Esperar a que hierva el agua. Vertir el resto de sobres y pasta en la cazuela. Remover durante 4 minutos. Apagar fuego. Vertir la pasta en un plato.
+
+3. Pasta normal con salsa envasada: abrir armario y sacar cazuela. Llenar agua en cazuela. Poner cazuela en vitrocerámica. Calentar vitrocerámica. Sacar pasta y salsa de armario. Esperar a que hierva el agua. Vertir la pasta en la cazuela. Mover a veces durante unos minutos hasta que esté blanda. Apagar fuego. Con un plato en una mano encima de la cazuela, sacar todo el agua de la cazuela y vertirlo en el fregadero. Echar la salsa en la cazuela. Mezclar. Echar en el otro plato.
+
+Duration: 
+1. Pasta de sobre 20 minutos
+2. Pasta oriental de sobre 15 minutos
+3. Pasta normal con salsa envasada 20 minutos
+
+-------------------------------------------------------------
+BrushTeeth
+-------------------------------------------------------------
+Location: bathroom
+
+Patterns: 1
+
+Names: BrushTeeth
+
+Objects: pasta de dientes, cepillo de dientes, lavabo
+
+Description: Coger la pasta de dientes y el cepillo de dientes de un tarro. Mojar la parte de cepillo del cepillo de dientes. Echar pasta de dientes en la parte mojada. Llevar a boca y mover hasta haber cepillado los dientes. Escupir la pasta en el lavabo, llenar la boca de agua, enjuagar y volver a escupir. Limpiar el cepillo de dientes en el lavabo. Cerrar el cepillo y la pasta de dientes. Poner cada cosa en su sitio.
+
+Duration: 3 min
+
+
+-------------------------------------------------------------
+WatchTelevision
+-------------------------------------------------------------
+
+Location: cocina, sala de estar, habitación
+
+Patterns: 2
+
+Names: 
+1. En televisión
+2. En tablet u ordenador
+
+Objects: 
+1. En televisión. Sofá o silla, televisión.
+2. En tablet u ordenador. Tablet u ordenador. Silla, cama, o sofá.
+
+Description: 
+1. En TV: sentarme en sofá o silla, coger mando a distancia, presionar una tecla en el mando a distancia, dejar mando a distancia al lado. Tener en todo momento la cabeza apuntando a la televisión.
+
+2. En tablet u ordenador: poner el tablet u ordenador en una posición estable (en una mesa o donde sea), arrancar la aplicación de TV bajo demanda, seleccionar haciendo click o tocando el programa elegido, mantener la cabeza mirando el ordenador o tablet.
+
+Duration: 
+1. 1 minuto. (más tiempo viéndola, que varía entre 20 minutos y 2 horas)
+2. 3-5 minutos. (más tiempo viéndola, que suele ser entre 40 minutos y una hora)
+
+-------------------------------------------------------------
+WashHands
+-------------------------------------------------------------
+
+Location: Bathroom, Kitchen
+
+Patterns: 2
+
+Names:
+1. Lavarme manos en cocina
+2. Lavarme manos en baño
+
+Objects: 
+1. Lavarme manos en cocina. Fairy o similar, fregadero, trapo de cocina.
+2. Lavarme manos en baño. Pastilla de jabón, lavabo, toalla o secador.
+
+Description: 
+1. Lavarme manos en cocina: abro el grifo del agua y mojo las manos. Cierro el grifo. Me echo fairy o similar en las manos y froto las manos. Abro grifo y mojo frotando hasta que me aseguro de que las manos están limpias del jabón. Cierro grifo. Cojo un trapo de cocina. Me seco las manos con él.
+
+2. Lavarme manos en baño: abro el grifo del agua y mojo las manos. Si puedo, cierro el grifo (en universidad no se puede, por ejemplo). Me echo jabón o cojo una pastilla de jabón y froto las manos con este jabón. Abro grifo y mojo frotando hasta que me aseguro de que las manos están limpias del jabón. Cierro grifo. Cojo una toalla si hay y me seco las manos con ella, o bien con secador fuera de casa.
+
+Duration: 1-2 min
+
+-------------------------------------------------------------
+ReadBook
+-------------------------------------------------------------
+
+Location: cocina, sala de estar, habitación
+
+Patterns: 2
+
+Names:
+1. Leer en un libro
+2. Leer en un móvil o tablet
+3. Leer artículos impresos
+
+Objects: 
+1. El libro y sofá, silla o cama
+2. El móvil o tablet, y sofá, silla o cama
+3. En sofá, silla o cama
+
+Description: 
+1. Sentarme en silla, sofá o tumbarme en cama, abrir el libro por donde estuviese leyendo (marcándolo con un marcador), mirar cada página hasta que la leo, e ir moviendo a la siguiente página de derecha a izquierda cuando paso a la siguiente y habiendo movido la cabeza de una página (la de la izquierda) a la derecha (para leer la de la derecha) previamente. A veces mirar arriba para despejar la vista o cabeza.
+
+2. Sentarme en silla, sofá o tumbarme en cama, encender el móvil o tablet y elegir el libro. Esperar a que sincronice en qué página estaba. Mirar a pantalla leyendo hasta que paso de página haciendo un gesto de derecha a izquierda con el dedo encima de la pantalla. A veces mirar arriba para despejar la vista o cabeza.
+
+3. Sentarme en silla, sofá o tumbarme en cama, y coger una serie de folios, normalmente grapados aunque no necesariamente. Ir leyendo la página de arriba abajo (moviendo la cabeza), y al pasar de página mover la hoja al final del montón de hojas que esté leyendo. A veces mirar arriba para despejar la vista o cabeza.
+
+Duration: 
+1. desde 5 minutos a 2 horas.
+2. desde 5 minutos a 2 horas.
+3. desde 5 minutos a 30 minutos (depende cuántos artículos o lo que sea)
