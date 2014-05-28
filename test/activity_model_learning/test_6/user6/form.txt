@@ -1,0 +1,131 @@
+--------------------------------------------------------
+MakeCoffee
+-----------------------------------------------------
+Place: kitchen
+
+Patterns: 2
+
+Names: Café con leche.
+Café con leche condensada.
+
+Objects used:
+Café con leche: taza, cafetera, nevera, cápsula de café, bric de leche, microondas, azúcar, cucharilla.
+Café con leche condensada: taza, cafetera, nevera, cápsulas de café, bote de leche condensada, cucharilla.
+
+Description:
+Café con leche: Enciendo la cafetera. Abro el armario y cojo una taza. Abro la nevera, cojo el bric de leche, vierto leche en la taza y la meto en el microondas. Guardo la leche en la nevera. Abro el armario y cojo una cápsula de café y la meto en la cafetera. Saco la taza con leche caliente del microondas, pongo la taza en la cafetera y pongo la máquina en funcionamiento. Abro un cajón y cojo una cucharilla. Una vez que ha terminado la cafetera, la apago, cojo el azúcar del armario, hecho una cucharada en la taza y vuelvo a guardar el azúcar. Por último remuevo el café con leche y azúcar.
+
+Café con leche condensada: Enciendo la cafetera. Abro el armario y cojo una taza. Abro la nevera, cojo el bote de leche condensada y vierto leche condensada en la taza. Guardo la leche condensada en la nevera. Abro el armario y cojo una cápsula de café y la meto en la cafetera. Pongo la taza en la cafetera y pongo la máquina en funcionamiento. Abro un cajón y cojo una cucharilla. Una vez que ha terminado la cafetera, la apago y remuevo el café con leche condensada.
+
+Duration:
+Café con leche: 4 minutos
+Café con leche condensada: 3 min
+
+
+--------------------------------------------------------
+MakeChocolate
+--------------------------------------------------------
+Place: --
+
+Patterns: --
+
+Names: --
+
+Objects: --
+
+Description: --
+
+Duration: --
+
+--------------------------------------------------------
+MakePasta
+--------------------------------------------------------
+Place: Kitchen
+
+Patterns: 4
+
+Names: 
+Pasta con tomate
+Pasta con tomate y ajo
+Pasta con salsa pesto
+Pasta con chatka
+
+Objects: 
+Pasta con tomate: escurridor, vitrocerámica, cazuela, cuchara, dispensador de sal, fregadera y la nevera.
+Pasta con tomate y ajo: escurridor, vitrocerámica, cazuela, cuchara, dispensador de sal, fregadera, tabla de cocina, cuchillo y nevera.
+Pasta con salsa pesto: escurridor, vitrocerámica, cazuela, cuchara, la pasta, dispensador de sal, fregadera, picadora y la nevera, planta de albahaca.
+Pasta con chatka: escurridor, vitrocerámica, cazuela, sartén, cuchara, la pasta, dispensador de sal, fregadera, nevera.
+
+Description: 
+Pasta con tomate: abro el cajón, cojo una cazuela, la lleno de agua y la pongo en la vitrocerámica a hervir. Cuando empieza a hervir, le echo la pasta y la sal y la dejo a fuego bajo durante 7-8 minutos. Después echo la pasta al escurridor y la vuelvo a echar a la cazuela, donde añado el tomate que he sacado de la nevera. Lo revuelvo y listo.
+Pasta con tomate y ajo: abro el cajón, cojo una cazuela, la lleno de agua y la pongo en la vitrocerámica a hervir. Cuando empieza a hervir, le echo la pasta y la sal y la dejo a fuego bajo durante 7-8 minutos. Mientras tanto, abro la nevera, cojo tomates naturales y ajo y lo pico todo en la tabla de cocina. Luego lo mezclo con aceite y orégano. Después echo la pasta al escurridor y la vuelvo a echar a la cazuela, donde le echo la mezcla que de tomate y ajo que he hecho.
+Pasta con salsa pesto: abro el cajón, cojo una cazuela, la lleno de agua y la pongo en la vitrocerámica a hervir. Cuando empieza a hervir, le echo la pasta y la sal y la dejo a fuego bajo durante 7-8 minutos. Mientras tanto, abro la nevera y cojo queso parmesano, cojo unas hojas de la planta de albahaca y unos piñones. Lo meto todo en la picadora y al resultado le echo aceite. Después echo la pasta al escurridor y la vuelvo a echar a la cazuela, donde le echo la salsa pesto que he hecho.
+Pasta con chatka: abro el cajón, cojo una cazuela, la lleno de agua y la pongo en la vitrocerámica a hervir. Cuando empieza a hervir, le echo la pasta y la sal y la dejo a fuego bajo durante 7-8 minutos. Mientras tanto, abro la nevera y cojo unos ajos que pico después y unos palitos de chatka que desmenuzo. Pongo ambas cosas en la sartén. Después echo la pasta al escurridor y la vuelvo a echar a la cazuela, donde le echo el sofrito de ajo y chatka que he hecho.
+
+Duration: 
+Pasta con tomate: 10 min
+Pasta con tomate y ajo: 15 min
+Pasta con salsa pesto: 15 min
+Pasta con chatka: 15 min
+
+-------------------------------------------------------------
+BrushTeeth
+-------------------------------------------------------------
+Location: bathroom
+
+Patterns: 1
+
+Names: BrushTeeth
+
+Objects: Cepillo eléctrico, lavabo, toalla y pasta de dientes.
+
+Description: Cojo el tubo de pasta de dientes y el cepillo de dientes. Echo pasta de dientes en el cepillo. Me meto el cepillo en la boca, lo pongo en funcionamiento y me limpio los dientes. Paro el cepillo de dientes, lo saco de la boca, abro el grifo del lavabo y limpio el cepillo. Me enjuago la boca y me seco con la toalla.
+
+Duration: 2 min
+
+
+-------------------------------------------------------------
+WatchTelevision
+-------------------------------------------------------------
+
+Location: Lounge, Kitchen
+
+Patterns: 1
+
+Names: Ver la tele.
+
+Objects: El mando de la televisión y la televisión
+
+Description: Cojo el mando de la televisión y le doy al botón de encender.
+
+Duration: 5 segundos
+
+-------------------------------------------------------------
+WashHands
+-------------------------------------------------------------
+
+Location: Bathroom 
+
+Patterns: 1
+
+Names: WashHands
+
+Objects: dispensador de jabón, lavabo y toalla.
+
+Description: me echo jabón en la mano, abro el grifo del lavabo, me mojo las manos, me froto las manos, me aclaro las manos, cierro el grifo y me aclaro con la toalla.
+
+Duration: 1 min
+
+-------------------------------------------------------------
+ReadBook
+-------------------------------------------------------------
+
+Location: Bedroom
+
+Patterns: 1
+
+Objects: libro electrónico y lámpara.
+
+Description: Enciendo la lampara de la mesilla, cojo el libro, lo enciendo y leo.
+
+Duration: 30 segundos

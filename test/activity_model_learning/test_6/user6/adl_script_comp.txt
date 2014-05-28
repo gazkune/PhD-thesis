@@ -1,0 +1,47 @@
+# Days to be simulated
+60
+# ADL names
+MakeCoffee MakeChocolate MakePasta BrushTeeth WatchTelevision WashHands ReadBook
+# Sensor activation patterns
+MakeCoffee 4
+0.74 storeSens@0 mugSens@5 fridgeSens@20 smilkSens@5 microwaveSens@20 afcoffeeSens@120 wsugarSens@20
+0.25 storeSens@0 cupSens@6 ktapSens@20 microwaveSens@15 wsugarSens@90 afcoffeeSens@30
+0.005 mugSens@0 fridgeSens@20 smilkSens@5 microwaveSens@20 afcoffeeSens@120 wsugarSens@20
+0.005 storeSens@0 mugSens@5 fridgeSens@20 smilkSens@5 microwaveSens@20 wsugarSens@140
+MakeChocolate 1
+1 mugSens@0 wmilkSens@20 microwaveSens@20 chocoSens@120
+MakePasta 4
+0.495 storeSens@0 potSens@5 ktapSens@20 cookerSens@30 macaroniSens@120 drainerSens@480 fridgeSens@20 ftomatoSens@5
+0.495 storeSens@0 potSens@5 ktapSens@20 cookerSens@30 macaroniSens@120 drainerSens@480 pestoSens@20
+0.005 potSens@0 ktapSens@20 cookerSens@30 macaroniSens@120 drainerSens@480 fridgeSens@20 ftomatoSens@5
+0.005 storeSens@0 potSens@5 ktapSens@20 macaroniSens@150 drainerSens@480 pestoSens@20
+BrushTeeth 2
+0.99 toothpasteSens@0 brusherSens@5 btapSens@10 towelSens@40
+0.01 toothpasteSens@0 brusherSens@5 btapSens@10
+WatchTelevision 1
+1 rcontrolSens@0 tvSens@10
+WashHands 2
+0.98 bsoapSens@0 btapSens@5 towelSens@40
+0.02 bsoapSens@0 btapSens@5
+ReadBook 2
+0.95 blampSens@0 bedSens@10 bookbSens@5
+0.05 blampSens@0 bookbSens@15
+# Activity patterns: describe how a day is
+Prob 0.43 4
+S 7:00-7:30 MakeCoffee@0 BrushTeeth@600 WashHands@40
+S 13:00-13:30 MakePasta@0 MakeCoffee@900 BrushTeeth@1800
+S 20:00-20:30 MakePasta@0 BrushTeeth@900 ReadBook@150
+A 18:00-19:30 WatchTelevision 0.8
+Prob 0.28 2
+S 7:00-7:30 MakeCoffee@0 BrushTeeth@600 WashHands@40
+S 20:30-21:00 BrushTeeth@0 ReadBook@100
+Prob 0.29 5
+S 9:00-10:00 MakeCoffee@0 WatchTelevision@30 BrushTeeth@1800
+S 13:30-14:30 MakePasta@0 BrushTeeth@600
+S 22:00-23:00 BrushTeeth@0 WashHands@10
+A 15:00-16:00 WatchTelevision 0.75
+A 18:00-20:00 ReadBook 0.5
+# Noise specification; Meaning -> Probability of sensor occurrence in an hour interval
+0.05 cupSens bookbSens bedSens brusherSens saucepanSens spaghettiSens
+0.03 afcoffeeSens pestoSens bsugarSens rcontrolSens towelSens
+# Finish always with a comment
