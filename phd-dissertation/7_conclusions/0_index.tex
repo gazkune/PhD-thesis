@@ -1,0 +1,22 @@
+
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+%: ----------------------- introduction file header -----------------------
+\begin{savequote}[50mm]
+Write here a quote
+\qauthor{Quote author}
+\end{savequote}
+
+
+\chapter{Conclusions and Future Work}
+\label{cha:conclusions}
+
+% the code below specifies where the figures are stored
+\ifpdf
+    \graphicspath{{7_conclusions/figures/PDF/}{7_conclusions/figures/PNG/}{7_conclusions/figures/}}
+\else
+    \graphicspath{{7_conclusions/figures/EPS/}{7_conclusions/figures/}}
+\fi
+
+\letra{T}{his} chapter presents the conclusions of the dissertation. Additionally, provide some hints for future research.

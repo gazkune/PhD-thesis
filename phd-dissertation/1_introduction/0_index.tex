@@ -1,0 +1,36 @@
+
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+%: ----------------------- introduction file header -----------------------
+
+
+\begin{savequote}[50mm]
+The first step, my son, which one makes in the world, is the one on which depends the rest of our days.
+\qauthor{François Marie Arouet, Voltaire}
+\end{savequote}
+
+\chapter{Introduction}
+\label{cha:introduction}
+
+% the code below specifies where the figures are stored
+\ifpdf
+    \graphicspath{{1_introduction/figures/PDF/}{1_introduction/figures/PNG/}{1_introduction/figures/}}
+\else
+    \graphicspath{{1_introduction/figures/EPS/}{1_introduction/figures/}}
+\fi
+
+\sloppy \letra{E}{xplain} briefly the concept of activity recognition and its relevance, citing some important papers (1 paragraph). 
+
+Describe how activity recognition can be done using sensors to monitor human actions and the two main currents in activity recognition: data-driven and knowledge-driven (1 paragraph).
+
+Describe briefly the main contributions of this dissertation (1 paragraph).
+
+Describe the structure of the chapter.
+
+%The remainder of this chapter is structured as follows: \mysec{sec:intro:context} explains the context of the research. \mysec{sec:intro:statement} presents the core statement of this dissertation, and finally \mysec{sec:intro:contributions} summarizes the rest of the contributions of this dissertation.
+
+Describe the structure of the whole dissertation.
+
+%The dissertation is structured as follows: \mycha{cha:sota} describes the state of the art relevant to the dissertation, \mycha{cha:weblab-deusto} describes the WebLab-Deusto system, on which the federation model has been implemented, \mycha{cha:federation-model} describes the proposed federation model, and \mycha{cha:evaluation} evaluates both the federation model and its implementation in WebLab-Deusto. Finally, \mycha{cha:conclusions} summarizes the dissertation and shows the related future lines of work.
+

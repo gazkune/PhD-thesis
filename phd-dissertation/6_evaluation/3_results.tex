@@ -1,0 +1,76 @@
+\section{Results}
+\label{sec:evaluation:results}
+
+\begin{table}[htbp]\scriptsize
+    \begin{center}    
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AC$ & $SA^3$ & $AC$ & $SA^3$ & $AC$ \\
+            \hline
+            MakeChocolate   & 55.05 & 98.67 & 0    & 0    & 44.95 & 1.33 \\
+	    WatchTelevision & 75.12 & 100   & 0    & 0    & 24.88 & 0    \\
+	    BrushTeeth      & 90.91 & 98.27 & 0    & 0    & 9.1   & 1.73 \\
+	    WashHands       & 74.93 & 99.72 & 0.1  & 5.1  & 25.07 & 0.27 \\
+	    MakePasta       & 55.74 & 99.8  & 0    & 0.04 & 44.26 & 0.2 \\
+	    ReadBook        & 89.08 & 100   & 0    & 0    & 10.91 & 0 \\
+	    MakeCoffee      & 62.63 & 99.09 & 0    & 0    & 37.37 & 0.91 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the \textbf{ideal scenario}.}
+        \label{tab-r-ideal-t2}
+        \vspace{1cm}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AC$ & $SA^3$ & $AC$ & $SA^3$ & $AC$ \\
+            \hline
+            MakeChocolate   & 54.73 & 97.76 & 1.2  & 2.64 & 45.27 & 2.24 \\
+	    WatchTelevision & 71.13 & 100   & 0    & 0    & 28.87 & 0    \\
+	    BrushTeeth      & 91.18 & 98.43 & 0.28 & 0.41 & 8.82  & 1.57 \\
+	    WashHands       & 75.12 & 98.37 & 0.69 & 4.55 & 24.88 & 1.63 \\
+	    MakePasta       & 53.88 & 99.39 & 1.34 & 5.62 & 46.12 & 0.61 \\
+	    ReadBook        & 82.91 & 94.66 & 0.45 & 0.3  & 17.09 & 5.34 \\
+	    MakeCoffee      & 59.14 & 99.24 & 1.32 & 2.6  & 40.86 & 0.76 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the \textbf{complete scenario}.}
+        \label{tab-r-comp-t2}
+        \vspace{1cm}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 0     & 0  & 1 \\
+	    WatchTelevision & 100 & 0     & 0  & 1.14    \\
+	    BrushTeeth      & 100 & 37.5  & 0  & 1.25 \\
+	    WashHands       & 100 & 25    & 0  & 1 \\
+	    MakePasta       & 100 & 0     & 0  & 2 \\
+	    ReadBook        & 100 & 0     & 0  & 1.12  \\
+	    MakeCoffee      & 100 & 0     & 0  & 1.71  \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the EAM learning process for the \textbf{ideal scenario}.}
+        \label{tab-rp-ideal-t2}
+        \vspace{1cm}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 120   & 0 & 1 \\
+	    WatchTelevision & 100 & 78.57 & 0 & 1.14 \\
+	    BrushTeeth      & 100 & 93.75 & 0 & 1.25 \\
+	    WashHands       & 100 & 75    & 0 & 1 \\
+	    MakePasta       & 100 & 56.25 & 0 & 2 \\
+	    ReadBook        & 100 & 12.5  & 0 & 1.12 \\
+	    MakeCoffee      & 100 & 100   & 0 & 1.71 \\
+            \hline
+        \end{tabular}                
+        \caption{Average results for 8 users of the EAM learning process for the \textbf{complete scenario}.}
+        \label{tab-rp-comp-t2}
+    \end{center}
+\end{table}

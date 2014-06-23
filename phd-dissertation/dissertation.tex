@@ -1,0 +1,381 @@
+% ----------------------------------------------------------------------
+%              Latex PhD template for the University of Deusto
+% ----------------------------------------------------------------------
+
+\documentclass[twoside,12pt]{Latex/Classes/PhDthesisPSnPDF}
+
+\usepackage{ifthen}
+\usepackage{framed}
+%\usepackage{slashbox}
+\usepackage{arydshln}
+\usepackage{comment}
+
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage[official]{eurosym}
+\usepackage{url}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{verbatim}
+\usepackage{amsmath}
+
+\usepackage{amsfonts}
+\usepackage{listings}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%\ifpdf
+%\usepackage{minted}
+%\usepackage{multirow}
+%\fi
+
+\usepackage{pifont}
+
+\newcommand{\Epsilon}{E}
+\newcommand{\Tau}{T}
+\newcommand{\todo}[1]{\textcolor{red}{@TODO: #1}}
+
+\newcommand{\myfig}[1]{\hbox{Figure \ref{#1}}}
+\newcommand{\mytab}[1]{\hbox{Table \ref{#1}}}
+\newcommand{\mysec}[1]{\hbox{Section \ref{#1}}}
+\newcommand{\mycha}[1]{\hbox{Chapter \ref{#1}}}
+
+\newcommand{\primeraletra}{periodico} % normal, epica, periodico
+
+\ifthenelse{\equal{\primeraletra}{normal}}{
+     \newcommand{\letra}[2]{#1#2}
+}{
+\ifthenelse{\equal{\primeraletra}{epica}}{
+    \usepackage{yfonts,color}
+    \newcommand{\letra}[2]{\yinipar{\color{red}#1}#2}
+}{
+\ifthenelse{\equal{\primeraletra}{periodico}}{
+
+    \usepackage{lettrine}
+    \newcommand{\letra}[2]{\lettrine[lines=4]{\color{BrickRed}#1}{#2}}
+}{
+  % TODO ERROR
+}
+}
+}
+
+% Macros help you summarise frequently repeated Latex commands.
+% Here, they are placed in an external file /Latex/Macros/MacroFile1.tex
+% An macro that you may use frequently is the figuremacro (see introduction.tex)
+\include{Latex/Macros/Macros}
+
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+\hyphenation{man-te-ni-mien-to es-ce-na-rios iLab iLabs Web-Lab Deus-to}
+
+%: ----------------------------------------------------------------------
+%:                  TITLE PAGE: name, degree,..
+% ----------------------------------------------------------------------
+% below is to generate the title page with crest and author name
+
+% if output to PDF then put the following in PDF header
+\ifpdf  
+    \pdfinfo { /Title  (PhD)
+               /Creator (TeX)
+               /Producer (pdfTeX)
+               /Author (Gorka Azkune)
+               /CreationDate (D:YYYYMMDDhhmmss)  %format D:YYYYMMDDhhmmss
+               /ModDate (D:YYYYMMDDhhmm)
+               /Subject (xyz)
+               /Keywords (keyword1, keyword2, keyword3) }
+    \pdfcatalog { /PageMode (/UseOutlines)
+                  /OpenAction (fitbh)  }
+\fi
+
+
+% Title of the dissertation
+\title{Enhancing the Completeness and Accuracy of Knowledge-Based Activity Models through Incremental Data-Driven Learning}
+
+
+% ----------------------------------------------------------------------
+% This section below defines front covert (external and internal)
+% Shield logo
+\crest{\includegraphics[width=2cm]{Deusto_Shield}}
+% Full logo
+%\crest{\includegraphics[width=6cm]{UDeusto}}
+\university{Universidad de Deusto}
+\degree{Tesis doctoral presentada por }
+\author{Gorka Azkune} 
+\collegeordept{dentro del Programa de Doctorado en Ingenier\'ia para la Sociedad de la Informaci\'on y Desarrollo Sostenible}
+\textadvisor{Dirigida por }
+\advisor{Dr. Diego L\'opez-de-Ipi\~na y Dr. Liming Chen}
+\textsignaturecandidate{El doctorando}
+\textsignatureadvisor{Los directores}
+\cityofbirth{Bilbao}
+%\degreedate{\monthname \ \the\year}
+\degreedate{Abril de 2013}
+
+
+% ----------------------------------------------------------------------
+       
+% turn of those nasty overfull and underfull hboxes
+\hbadness=10000
+\hfuzz=50pt
+
+
+%: --------------------------------------------------------------
+%:                  FRONT MATTER: dedications, abstract,..
+% --------------------------------------------------------------
+
+\begin{document}
+
+\selectlanguage{british}
+
+% sets line spacing: TODO: quitar esto
+%\renewcommand\baselinestretch{1.2}
+%\baselineskip=18pt plus1pt
+
+% Watermark
+%\watermark{DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT}
+
+
+%: ----------------------- generate cover page ------------------------
+
+\maketitle  % command to print the title page with above variables
+
+% Title back
+\include{0_frontmatter/title_back}
+
+
+
+
+
+%: ----------------------- abstract ------------------------
+
+% Your institution may have specific regulations if you need an abstract and where it is to be placed in the document. The default here is just after title.
+
+
+% The original template provides and abstractseparate environment, if your institution requires them to be separate. I think it's easier to print the abstract from the complete thesis by restricting printing to the relevant page.
+% \begin{abstractseparate}
+%   \input{Abstract/abstract}
+% \end{abstractseparate}
+
+
+%: ----------------------- tie in front matter ------------------------
+
+% The frontmatter text starts here
+\frontmatter
+
+\include{0_frontmatter/dedication}
+
+\include{0_frontmatter/abstract}
+
+\include{0_frontmatter/acknowledgement}
+
+% As abstract contains various languages we set the main language again
+\selectlanguage{british}
+
+
+%: ----------------------- contents ------------------------
+
+\setcounter{secnumdepth}{5} % organisational level that receives a numbers
+\setcounter{tocdepth}{5}    % print table of contents for level 3
+
+
+%%You can also add extra lines to the ToC or to force extra unnumbered section headings to be included. For example, if you wanted to add an entry called Preface, and you didn't want the Preface to be numbered, you'd use these commands:
+%\ subsection*{Preface}
+%\addcontentsline{toc}{subsection}{Preface} 
+
+\tableofcontents            % print the table of contents
+% levels are: 0 - chapter, 1 - section, 2 - subsection, 3 - subsection
+
+%: ----------------------- list of figures/tables ------------------------
+
+\listoffigures	% print list of figures
+\listoftables  % print list of tables
+
+
+%: ----------------------- glossary ------------------------
+
+% Tie in external source file for definitions: /0_frontmatter/glossary.tex
+% Glossary entries can also be defined in the main text. See glossary.tex
+
+\include{0_frontmatter/glossary}
+
+%\begin{multicols}{2} % \begin{multicols}{#columns}[header text][space]
+%\begin{footnotesize} % scriptsize(7) < footnotesize(8) < small (9) < normal (10)
+
+%\printnomenclature[1.5cm] % [] = distance between entry and description
+
+\printnomenclature[1.5cm] % [] = distance between entry and description
+
+\label{sec:glossary} % target name for links to glossary
+
+%\end{footnotesize}
+%\end{multicols}
+
+
+
+
+%: --------------------------------------------------------------
+%:                  MAIN DOCUMENT SECTION
+% --------------------------------------------------------------
+
+% the main text starts here with the introduction, 1st chapter,...
+\mainmatter
+
+%\renewcommand{\chaptername}{} % uncomment to print only "1" not "Chapter 1"
+\pagestyle{fancy}
+
+%: ----------------------- subdocuments ------------------------
+
+% Parts of the thesis are included below. Rename the files as required.
+% But take care that the paths match. You can also change the order of appearance by moving the include commands.
+
+%: ----------------------- introduction ------------------------
+
+\input{1_introduction/0_index}
+\input{1_introduction/1_context}
+\input{1_introduction/2_motivation}
+\input{1_introduction/3_hypothesis}
+\input{1_introduction/3b_methodology.tex}
+\input{1_introduction/4_contributions}
+
+
+%: ----------------------- related work ------------------------
+
+\input{2_state_of_the_art/0_index}
+\input{2_state_of_the_art/1_basic_concepts}
+\input{2_state_of_the_art/2_datadriven}
+\input{2_state_of_the_art/3_knowledgedriven}
+\input{2_state_of_the_art/4_hybrid}
+\input{2_state_of_the_art/5_summary}
+
+%: ----------------------- general architecture ------------------------
+% Think about a better title!
+
+\input{3_general_architecture/0_index}
+
+%: ----------------------- clustering process ------------------------
+\input{4_clustering_process/0_index}
+\input{4_clustering_process/1_sa3}
+\input{4_clustering_process/2_activity_clustering}
+
+
+%: ----------------------- activity model learner ------------------------
+\input{5_activity_model_learner/0_index}
+\input{5_activity_model_learner/1_learning_algorithm}
+
+
+%: ----------------------- Evaluation ------------------------
+
+\input{6_evaluation/0_index}
+\input{6_evaluation/1_methodology}
+\input{6_evaluation/2_scenarios}
+\input{6_evaluation/3_results}
+\input{6_evaluation/4_discussion}
+
+
+%: ----------------------- conclusion ------------------------
+
+\input{7_conclusions/0_index}
+
+
+% --------------------------------------------------------------
+%:                  BACK MATTER: appendices, refs,..
+% --------------------------------------------------------------
+
+% the back matter: appendix and references close the thesis
+\backmatter
+
+
+%: ----------------------- appendix ------------------------
+
+%\appendix
+
+
+%: ----------------------- bibliography ------------------------
+
+
+
+% The section below defines how references are listed and formatted
+% The default below is 2 columns, small font, complete author names.
+% Entries are also linked back to the page number in the text and to external URL if provided in the BibTex file.
+
+
+% Original version:
+
+% PhDbiblio-url2 = names small caps, title bold & hyperlinked, link to page 
+%\begin{multicols}{2} % \begin{multicols}{ # columns}[ header text][ space]
+%\begin{tiny} % tiny(5) < scriptsize(7) < footnotesize(8) < small (9)
+%
+%\bibliographystyle{Latex/Classes/PhDbiblio-url2} % Title is link if provided
+%\renewcommand{\bibname}{References} % changes the header; default: Bibliography
+%
+%\bibliography{9_backmatter/references} % adjust this to fit your BibTex file
+%
+%\end{tiny}
+%\end{multicols}
+
+
+
+% Show all bibliography entries
+%\nocite*
+
+
+
+% If we want bibliography backreference, use unsrt first and the desidered one after
+
+%\bibliographystyle{unsrt} % Defines the bibliography style
+
+% \bibliographystyle{alpha} % Defines the bibliography style
+% \bibliographystyle{apacite} % Defines the bibliography style
+
+%\bibliographystyle{plainnat}
+%\bibliographystyle{unsrt}
+%\bibliographystyle{abbrvnat}
+\bibliographystyle{apa}
+
+%\bibliographystyle{apa-good} % Defines the bibliography style
+%\bibliographystyle{natbib} % Defines the bibliography style
+%\bibliographystyle{apacite} % Defines the bibliography style
+
+
+%\bibliographystyle{plainurl}
+
+%\renewcommand{\bibname}{References} % changes the header; default: Bibliography
+
+%To include the references/works cited/bibliography in your Table of Contents, right before the bibliography command, use the command
+%\addcontentsline{toc}{section}{References}
+%
+
+\bibliography{8_backmatter/library} % adjust this to fit your BibTex file
+
+% --------------------------------------------------------------
+% Various bibliography styles exit. Replace above style as desired.
+
+% in-text refs: (1) (1; 2)
+% ref list: alphabetical; author(s) in small caps; initials last name; page(s)
+%\bibliographystyle{Latex/Classes/PhDbiblio-case} % title forced lower case
+%\bibliographystyle{Latex/Classes/PhDbiblio-bold} % title as in bibtex but bold
+%\bibliographystyle{Latex/Classes/PhDbiblio-url} % bold + www link if provided
+
+%\bibliographystyle{Latex/Classes/jmb} % calls style file jmb.bst
+% in-text refs: author (year) without brackets
+% ref list: alphabetical; author(s) in normal font; last name, initials; page(s)
+
+%\bibliographystyle{plainnat} % calls style file plainnat.bst
+% in-text refs: author (year) without brackets
+% (this works with package natbib)
+
+
+% --------------------------------------------------------------
+
+
+%: Declaration of originality
+\include{8_backmatter/declaration}
+
+
+
+
+
+\end{document}
