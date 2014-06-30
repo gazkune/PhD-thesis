@@ -88,12 +88,15 @@ The first part of the \textit{ADL script} is for defining \textit{sensor activat
 
 \begin{figure}
 \begin{small}
+\lstset{linewidth=\textwidth}
 \begin{lstlisting}
 MakeCoffee 2
-0.50 storeSens@0 mugSens@5 fridgeSens@10 smilkSens@5 afcoffeeSens@5 
-     coffeePotSens@15 potSens@20 microwaveSens@20
-0.50 storeSens@0 cupSens@5 fridgeSens@10 smilkSens@5 afcoffeeSens@5 
-     coffeePotSens@15 potSens@20 microwaveSens@20
+0.50 storeSens@0 mugSens@5 fridgeSens@10 smilkSens@5 
+     afcoffeeSens@5 coffeePotSens@15 potSens@20 
+     microwaveSens@20
+0.50 storeSens@0 cupSens@5 fridgeSens@10 smilkSens@5 
+     afcoffeeSens@5 coffeePotSens@15 potSens@20 
+     microwaveSens@20
 \end{lstlisting}
 \end{small}
 \caption{Sensor activation patterns for \textit{MakeCoffee} activity. The activity has two activation patterns with equal probability.}
@@ -104,8 +107,10 @@ The values that come after the '@' symbol represent the time in seconds between 
 
 The second part of the \textit{ADL script} defines the so called \textit{activity patterns}, which represent different days of the user in terms of performed activities. Two kinds of activity patterns are defined: (i) \textit{sequences}, where a time slot is given with a sequence of activities and time lapses between two consecutive activities, and (ii) \textit{alterations}, where a probability value is assigned to an activity to be performed in a concrete time slot. An example is depicted in Figure \ref{fig:activity-pattern}. A typical day of a user is described, with an occurrence probability of 0.29, since the activity pattern describes a weekend day ($2/7 \simeq 0.29$). In this case, the user reported that (s)he sometimes reads a book in the afternoon. Alterations allow modelling this kind of behaviour.
 
+
 \begin{figure}
 \begin{small}
+\lstset{linewidth=\textwidth}
 \begin{lstlisting}
 Prob 0.29 4
 S 9:00-10:00 MakeCoffee@0 BrushTeeth@1800 ReadBook@120
