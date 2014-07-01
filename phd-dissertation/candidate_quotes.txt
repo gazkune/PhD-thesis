@@ -1,3 +1,15 @@
+------------------------------------
+Introduction
+------------------------------------
+
+What's well begun, is half done
+Horace (Horacio)
+
+The first step, my son, which one makes in the world, is the one on which depends the rest of our days.
+Voltaire
+
+The distance is nothing; it is only the first step that costs.
+Marie Anne de Vichy-Chamrond, marquise du Deffand,
 
 ------------------------------------
 Related Work
@@ -5,6 +17,66 @@ Related Work
 
 If I have seen further it is by standing on the shoulders of giants.
 Isaac Newton
+
+-----------------------------------
+The Approach to Learn Specialised and Complete Activity Models
+-----------------------------------
+
+Good design is a Renaissance attitude that combines technology, cognitive science, human need and beauty to produce something.
+Paola Antonelli (2001), curator of architecture and design, Museum of Modern Art, New York
+
+Simplicity is the keynote of all true elegance.
+Coco Chanel
+
+Simplicity is the shortest path to a solution.
+Ward Cunningham
+
+Everything should be made as simple as possible, but no simpler.
+Albert Einstein
+
+Simplicity is prerequisite for reliability.
+Edsger W. Dijkstra
+
+It seems that perfection is attained not when there is nothing more to add, but when there is nothing more to remove.
+Antoine de Saint Exupéry
+
+Fools ignore complexity. Pragmatists suffer it. Some can avoid it. Geniuses remove it.
+Alan Perlis
+
+------------------------------------
+A Clustering Process for Activity Annotation
+------------------------------------
+
+Action is eloquence, and the eyes of the ignorant
+More learned than the ears.
+William Shakespeare
+
+What's done can't be undone.
+William Shakespeare
+
+If you keep doing what you've always done, you'll keep getting what you've always gotten.
+Neil Strauss
+
+So many worlds, so much to do,
+So little done, such things to be.
+Alfred Tennyson
+
+We cannot think first and act afterwards. From the moment of birth we are immersed in action and can only fitfully guide it by taking thought.
+Alfred North Whitehead
+
+The shortest answer is doing.
+George Herbert
+
+------------------------------------
+Activity Model Learner
+------------------------------------
+
+Learning is a kind of natural food for the mind.
+Cicero
+
+It is the worst of madness to learn what has to be unlearnt.
+Erasmus
+
 
 ------------------------------------
 Future Work
@@ -19,16 +91,3 @@ Conclusions
 
 Alea iacta est
 Julius Caesar
-
-------------------------------------
-Introduction
-------------------------------------
-
-What's well begun, is half done
-Horace (Horacio)
-
-The first step, my son, which one makes in the world, is the one on which depends the rest of our days.
-Voltaire
-
-The distance is nothing; it is only the first step that costs.
-Marie Anne de Vichy-Chamrond, marquise du Deffand,
