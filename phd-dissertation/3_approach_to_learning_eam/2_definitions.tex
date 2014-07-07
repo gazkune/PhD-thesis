@@ -1,0 +1,34 @@
+\section{Definitions and Constraints}
+\label{sec:approach:def}
+
+Assuming those constraints, let us introduce some important definitions:
+
+\begin{defn}[Sensor activation]
+ A sensor activation occurs when a sensor changes its state from the no-interaction state to interaction state. Reverse transitions are not considered. For example, when a user takes a glass, the activation is tagged as \textit{glassSens}.
+\end{defn}
+
+\begin{defn}[Type]
+ When referring to activities and objects, type captures a purpose based classification. In this paper, considered classes are \textit{Cooking}, \textit{Hygiene}, \textit{Entertainment} and \textit{Housework}. An activity can only have one type, while objects can have more than one. For example, an object like a tap can be used for cooking, housework or hygiene. But a \textit{MakeCoffee} activity can only be a cooking activity. On the other hand, when referring to sensors, type classifies sensors in terms of their technological base. In this paper, modeled sensor types are \textit{contact}, \textit{electric}, \textit{pressure} and \textit{tilt} sensors. 
+\end{defn}
+ 
+\begin{defn}[Actions]
+ Actions are the primitives of activities and are directly linked to sensor activations. For example, \textit{cupSens} and \textit{glassSens} are linked to the action \textit{hasContainer}. A sensor activation can only be mapped to one single action.
+\end{defn}
+
+\begin{defn}[Initial Activity Model (IAM)]
+Activity models are sequences of actions defined by a domain expert. Initial activity models refer to the minimum number of necessary actions to perform an activity. The objective of such models is to represent incomplete but generic activity models. Initial activity models also have an estimation of the maximum duration of the activity.
+\begin{equation}
+  IAM(Activity_n) = \{action_a, action_b, \ldots , max\_duration\}
+ \end{equation} 
+\end{defn}
+
+\begin{defn}[Extended Activity Model (EAM)]
+ A complete and specialised version of an IAM. By \textit{complete} we mean that an activity model contains all the actions performed by a user for the corresponding activity. By \textit{specialised} we mean there are two or more different complete action sequences for the corresponding activity, i.e. specialised sub-classes of that activity exist. The EAM for an activity is represented as a list of action sequences with their occurrence frequency:
+\begin{equation}
+ \begin{split}
+ EAM(Activity_n) = \{as_1, as_2, \ldots , as_n\} \ \ \ where \\
+ as_i = \{frequency, action_a, action_b, \ldots, action_m\}
+ \end{split}
+ \label{eq-eam}
+\end{equation}
+\end{defn}

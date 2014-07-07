@@ -14,11 +14,18 @@ Write here a quote
 
 % the code below specifies where the figures are stored
 \ifpdf
-    \graphicspath{{3_approach_to_learning/figures/PDF/}{3_approach_to_learning/figures/PNG/}{3_approach_to_learning/figures/}}
+    \graphicspath{{3_approach_to_learning_eam/figures/PDF/}{3_approach_to_learning_eam/figures/PNG/}{3_approach_to_learning_eam/figures/}}
 \else
-    \graphicspath{{3_approach_to_learning/figures/EPS/}{3_approach_to_learning/figures/}}
+    \graphicspath{{3_approach_to_learning_eam/figures/EPS/}{3_approach_to_learning_eam/figures/}}
 \fi
 
 \letra{T}{his} chapter describes the general architecture of the solution designed to learn activity models from user's behavioural data and previous knowledge. Provide here also the basis of ontology-based activity modelling to provide a solid base for our approach. Show the intuition that led us to the final solution (the plot with actions in three axis: time, location and type). Provide the design architecture, implementation details and finally the definitions and constraints related to the solution.
 
 Here, show how the chapter is structured in sections:
+
+\begin{itemize}
+ \item Ontology-Based Activity Modelling: describe how ontology-based activity modelling works, based on Chen's papers. Section \ref{sec:approach:ontology}.
+ \item Definitions and Constraints: provide accurate definitions of all relevant concepts in the dissertation. Establish clearly the constraints of the work (single-user single-activity scenario, dense sensing activity monitoring...). Section \ref{sec:approach:def}.
+ \item Solution Design: describe the high-level solution, module by module; provide implementation details of every module and reference where the module is described in this dissertation; describe the inputs of the system (context knowledge, sensor activation dataset) and the outputs (partially annotated dataset, fully annotated dataset, learnt action patterns...). Section \ref{sec:approach:solution}.
+\end{itemize}
+

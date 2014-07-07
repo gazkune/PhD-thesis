@@ -77,6 +77,24 @@ Cicero
 It is the worst of madness to learn what has to be unlearnt.
 Erasmus
 
+------------------------------------
+Evaluation
+------------------------------------
+
+The game of science is, in principle, without end. He who decides one day that scientific statements do not call for any further test, and that they can be regarded as finally verified, retires from the game.
+Karl Popper
+
+I don't claim to be a methodologist, but I act like one only because I do methodology to protect myself from crazy methodologists.
+Ward Cunningham
+
+It is those who know little, and not those who know much, who so positively assert that this or that problem will never be solved by science.
+Charles Darwin
+
+Science is a way of trying not to fool yourself. The first principle is that you must not fool yourself, and you are the easiest person to fool.
+Richard Feynman
+
+Science, at bottom, is really anti-intellectual. It always distrusts pure reason, and demands the production of objective fact.
+H.L. Mencken
 
 ------------------------------------
 Future Work

@@ -34,6 +34,13 @@
 \usepackage{rotating}
 \usepackage{multirow}
 
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition} % definition numbers are dependent on theorem numbers
+
 \newcommand{\Epsilon}{E}
 \newcommand{\Tau}{T}
 \newcommand{\todo}[1]{\textcolor{red}{@TODO: #1}}
@@ -256,6 +263,9 @@
 % Think about a better title!
 
 \input{3_approach_to_learning_eam/0_index}
+\input{3_approach_to_learning_eam/1_ontology}
+\input{3_approach_to_learning_eam/2_definitions}
+\input{3_approach_to_learning_eam/3_solution_design}
 
 %: ----------------------- clustering process ------------------------
 \input{4_clustering_process/0_index}
