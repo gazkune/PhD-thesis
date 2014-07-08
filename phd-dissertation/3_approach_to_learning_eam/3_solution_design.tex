@@ -4,11 +4,17 @@
 Based on the constraints and definitions shown in Section \ref{sec:approach:def}, an offline system for EAM learning is presented. The inputs of the learning system are:
 
 \begin{enumerate}
- \item Context knowledge: provided by a domain expert. It contains prior knowledge about activities (type, location and IAM), objects of the environment (type, location and attached sensors) and sensors (type, described action and object to which it is attached).
+ \item Context knowledge: the context knowledge represents the prior knowledge provided by a domain expert and which is relevant to learn activity models. The concepts modelled in the context knowledge include: 
+ \begin{enumerate}
+  \item Activities: type, location and IAM
+  \item Objects: type, location and attached sensors
+  \item Sensors: type, described action and object to which it is attached
+ \end{enumerate}
+ 
  \item Sensor activation dataset: an unlabelled time-stamped sensor activation dataset with the activity traces of a concrete user.
 \end{enumerate}
 
-In the current implementation, context knowledge is formatted in a \textit{Json}\footnote{http://json.org/} file. As an example, Figure \ref{fig-context-json} shows how an activity, an object and a sensor are modelled in the context knowledge file. This knowledge is provided by a domain expert and modelled by knowledge engineers. Sensor activation datasets are formatted in Comma Separated Value files (CSV). Each row of the file contains a time-stamp (year, month, day and time) and a sensor activation. 
+In the current implementation, context knowledge is formatted in a \textit{Json}\footnote{http://json.org/} file. As an example, Figure \ref{fig-context-json} shows how an activity, an object and a sensor are modelled in the context knowledge file. This knowledge is provided by a domain expert and modelled by knowledge engineers. Sensor activation datasets are formatted in Comma Separated Value files (CSV). Each row of the file contains a time-stamp (year, month, day and time) and a sensor activation (see Figure \ref{fig-dataset}).
 
 \begin{figure}[htbp]
 \begin{small}
@@ -37,6 +43,25 @@ In the current implementation, context knowledge is formatted in a \textit{Json}
 \label{fig-context-json}
 \end{figure}
 
+\begin{figure}[htbp]
+\begin{small}
+\begin{lstlisting}
+2014-05-23 09:47:33.984341,storeSens
+2014-05-23 09:47:39.333528,potSens
+2014-05-23 09:47:52.750216,cookerSens
+2014-05-23 09:48:07.764138,fridgeSens
+2014-05-23 09:48:12.591836,wmilkSens
+2014-05-23 09:48:47.199512,chocoSens
+2014-05-23 09:54:11.553695,mugSens
+2014-05-23 09:54:40.794979,rcontrolSens
+2014-05-23 09:54:50.390696,tvSens
+2014-05-23 09:54:59.348862,sofaSens
+\end{lstlisting}
+\end{small}
+\caption{A slice of a sensor activation dataset.}
+\label{fig-dataset}
+\end{figure}
+
 Based on those inputs, the output of the presented approach is a list of action sequences for each activity, which describe the EAMs for each activity (see equation \ref{eq-eam}). %To learn those models a two-step system is presented. First, a clustering process is run in the so called \textbf{semantic space of actions}, using initial activity models to label each cluster with a modeled activity. The semantic space of actions is a three-dimensional space spanned by the axes of location, type and time. Actions carried out by a user have only one location in the environment (bathroom, kitchen etc.), one time instant, but multiple types. For instance, a glass can be used for multiple activity types, such as cooking, eating or personal hygiene (brushing teeth). Hence, the action \textit{hasContainer} linked to a glass activation, occupies multiple positions in the type axis. 
 
 The designed system architecture to learn EAMs is depicted in Figure \ref{fig-design}. All the modules of the diagram have been implemented using Python 2.7\footnote{https://www.python.org/} and its packages Numpy\footnote{http://www.numpy.org/} for numerical computing and Pandas\footnote{http://pandas.pydata.org/} for data analysis. 
@@ -51,11 +76,3 @@ Firstly, a sensor activation dataset has to be collected. A real smart environme
     \caption{The detailed design architecture of the proposed approach.}
     \label{fig-design}
 \end{figure}
-
-\subsection{Semantic Activity Annotation ($SA^3$)}
-\label{subsec-sa3}
-The $SA^3$ algorithm is used as the initialisation step of a clustering process. As explained in \cite{Azkune2014}, it uses IAMs to run a specially designed pattern recognition algorithm, where IAMs act as the patterns to be recognised. The algorithm is shown to work with positive sensor noise (sensors that are activated when they should not), missing sensor noise (sensors that are not activated when they should) and varied order of actions (the order in which actions are executed does not influence the performance of $SA^3$).
-
-In this paper, a new feature has been added to the $SA^3$ algorithm described in \cite{Azkune2014}: activity location inference. Let $S=\{a, b, c, d\}$ be a sequence of actions, where $a$ and $d$ pertain to the IAM of activity $A$. For location inference, only actions that pertain to the IAM of the detected activity are considered, since all the other actions of the sequence $S$ cannot be considered as part of the activity yet. For instance, some of those actions might be produced by positive noise. Hence, the sequence $S$ is an activity $A$ with location $L$ \textit{iff} $a$ and $d$ have been executed in the same location and that location is compatible with $A$ activity's locations. As an example, assume actions \textit{hasBook} and \textit{useFurniture} pertain to the IAM of \textit{ReadBook}. Assume also that \textit{hasBook} action has been mapped from \textit{book-a} object and \textit{useFurniture} action from \textit{sofa} object. \textit{ReadBook} can be performed in the lounge or in the bedroom, according to context knowledge, but not in both. As \textit{book-a} object is in the bedroom but \textit{sofa} object is in the lounge, the sequence containing \textit{hasBook(book-a)} and \textit{useFurniture(sofa)} cannot form an activity. Activity location inference has shown to decrease $SA^3$ algorithm's false positive rates considerably.
-
-The result of $SA^3$ is a sensor activation dataset named \textit{partially annotated dataset}, where actions describing an activity are labelled with that activity name. All the other actions will be labelled with the special label \textit{None}. We call the resulting file \textit{partially annotated} because actions that do not pertain to the IAMs of detected activities are not treated yet. 
