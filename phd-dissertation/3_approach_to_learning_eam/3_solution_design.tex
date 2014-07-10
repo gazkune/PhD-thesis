@@ -1,20 +1,30 @@
 \section{Solution Design}
 \label{sec:approach:solution}
 
-Based on the constraints and definitions shown in Section \ref{sec:approach:def}, an offline system for EAM learning is presented. The inputs of the learning system are:
+Based on the definitions and constraints shown in Section \ref{sec:approach:def}, an offline system for extended activity model learning is presented. The objective of the system is to learn extended activity models (EAM, definition \ref{def-eam}) for every defined activity and a particular user, since every user has his/her own way to perform activities in terms of executed actions. The initial activity models (IAM, definition \ref{def-iam}) for every activity provided by a domain expert will be the same for every user, because they are generic models. But the extended activity models are personal models. They capture different complete activity models performed by a user. Notice that EAM learning has several implications in the ontology-based activity model approach:
 
 \begin{enumerate}
- \item Context knowledge: the context knowledge represents the prior knowledge provided by a domain expert and which is relevant to learn activity models. The concepts modelled in the context knowledge include: 
- \begin{enumerate}
-  \item Activities: type, location and IAM
-  \item Objects: type, location and attached sensors
-  \item Sensors: type, described action and object to which it is attached
- \end{enumerate}
- 
- \item Sensor activation dataset: an unlabelled time-stamped sensor activation dataset with the activity traces of a concrete user.
+ \item Complete models are learnt for every activity and a particular user. Complete refers to the sequence of executed actions for a concrete activity.
+ \item If two or more different complete models are learnt for a concrete activity, specialised models of the same activity are found. This means that the defined activity is not a leaf in the ADL ontological tree and hence, sub-activities of that activity are discovered.
+ \item Activity models can be dynamic. If the EAM learning system is continuously updated with new data, activity models can be updated. In consequence, activity models evolve and are adapted to users' varying behaviours.
 \end{enumerate}
 
-In the current implementation, context knowledge is formatted in a \textit{Json}\footnote{http://json.org/} file. As an example, Figure \ref{fig-context-json} shows how an activity, an object and a sensor are modelled in the context knowledge file. This knowledge is provided by a domain expert and modelled by knowledge engineers. Sensor activation datasets are formatted in Comma Separated Value files (CSV). Each row of the file contains a time-stamp (year, month, day and time) and a sensor activation (see Figure \ref{fig-dataset}).
+\subsection{Inputs of the learning system}
+
+The learning system for EAMs works on user generated data. It combines domain knowledge and user generated data in a learning algorithm. Notice that user data comes in an unlabelled sensor activation dataset, so there is no need to manually label any dataset. On the other hand, domain knowledge concerning the environment and activities is provided to the learning system. More concretely, the inputs of the EAM learning system are:
+
+\begin{enumerate}
+ \item Context knowledge: the context knowledge represents the prior knowledge provided by a domain expert which is relevant to learn activity models. The concepts modelled in the context knowledge include: 
+ \begin{enumerate}
+  \item Activities: every activity is defined by its name, type, location and IAM. Following definition \ref{def-type}, an activity has only one type. However, an activity can be performed in several locations (notice that this does not contradict constraint \ref{cons-location}). 
+  \item Objects: objects refer to every object in the environment which are monitored by sensors and are used to perform activities. An object is defined by its name, type, location and attached sensors. As definition \ref{def-type} states, an object can have several types. But an object is subjected to constraint \ref{cons-static-obj}, so it has a unique location. In principle, objects can be monitored by several sensors. For instance, a fridge may have a tilt sensor attached to its door to monitor open/close door action and a electric sensor to monitor the power usage.
+  \item Sensors: following constraint \ref{cons-dense}, sensors are attached to objects and they are defined by a sensor identifier, type, described action and object to which it is attached. Sensors produce sensor activations (definition \ref{def-sa}) when they transition from their no-interaction state to interaction state. Sensors have a unique type and they are mapped to one single action, as stated in definition \ref{def-action}. The object to which the sensor is attached is also stored in the context knowledge.
+ \end{enumerate}
+ 
+ \item Sensor activation dataset: as defined in definition \ref{def-sa-dataset}, an unlabelled time-stamped sensor activation dataset with the activity traces of a concrete user.
+\end{enumerate}
+
+In the current implementation, context knowledge is formatted in a JavaScript Object Notation (JSON)\footnote{http://json.org/} file. JSON has been selected because it provides a light-weight knowledge formatting syntax which is widely supported and used to share information. Although OWL or RDF could be used to implement context knowledge, the overhead introduced by such markup languages comes without any advantage for the EAM learning system. The decision of using JSON responds to the principle of providing a simple solution, focusing on modelling only relevant knowledge. As an example, Figure \ref{fig-context-json} shows how an activity, an object and a sensor are modelled in the context knowledge file. This knowledge is provided by a domain expert and modelled by knowledge engineers. 
 
 \begin{figure}[htbp]
 \begin{small}
@@ -43,6 +53,9 @@ In the current implementation, context knowledge is formatted in a \textit{Json}
 \label{fig-context-json}
 \end{figure}
 
+The second input to the EAM learning system is the sensor activation dataset. For the implementation presented in this dissertation, sensor activation datasets are formatted in Comma Separated Value files (CSV)\footnote{http://en.wikipedia.org/wiki/Comma-separated\_values}. Each row of the file contains a time-stamp (year, month, day and time) and a sensor activation tagged with the sensor identifier which has produced the activation (see Figure \ref{fig-dataset}).
+
+
 \begin{figure}[htbp]
 \begin{small}
 \begin{lstlisting}
@@ -62,17 +75,89 @@ In the current implementation, context knowledge is formatted in a \textit{Json}
 \label{fig-dataset}
 \end{figure}
 
-Based on those inputs, the output of the presented approach is a list of action sequences for each activity, which describe the EAMs for each activity (see equation \ref{eq-eam}). %To learn those models a two-step system is presented. First, a clustering process is run in the so called \textbf{semantic space of actions}, using initial activity models to label each cluster with a modeled activity. The semantic space of actions is a three-dimensional space spanned by the axes of location, type and time. Actions carried out by a user have only one location in the environment (bathroom, kitchen etc.), one time instant, but multiple types. For instance, a glass can be used for multiple activity types, such as cooking, eating or personal hygiene (brushing teeth). Hence, the action \textit{hasContainer} linked to a glass activation, occupies multiple positions in the type axis. 
+Based on those inputs, a context knowledge file and a sensor activation dataset, the output of the EAM learning system is a list of action sequences for each activity, which describe the EAMs for each activity (see equation \ref{eq-eam}). 
 
-The designed system architecture to learn EAMs is depicted in Figure \ref{fig-design}. All the modules of the diagram have been implemented using Python 2.7\footnote{https://www.python.org/} and its packages Numpy\footnote{http://www.numpy.org/} for numerical computing and Pandas\footnote{http://pandas.pydata.org/} for data analysis. 
+\subsection{Intuition behind the solution}
+\label{subsec:approach:intuition}
+The intuition for the designed solution to EAM learning comes when sensor activations are plotted in a three-dimensional space spanned by location, type and time, as shown in Figure \ref{fig-action-plot}. This three-dimensional space, named activity space, reflects the prior knowledge about activities. An activity has a concrete type that is shared with the object types used to perform that activity and is performed in a location and a time segment. 
 
-Firstly, a sensor activation dataset has to be collected. A real smart environment or a synthetic data generator can be used to get this dataset. Afterwards, a novel clustering process is run, using the context knowledge provided by an expert. The clustering process is divided into two steps: (i) the Semantic Activity Annotation algorithm ($SA^3$) uses IAMs to detect activities in the unlabelled dataset and initialise activity clusters, and (ii) the Activity Clustering algorithm ($AC$) uses activity, object and action knowledge to expand initial activity clusters detected by $SA^3$. As a result, several action clusters for every activity are generated. Those clusters are finally processed by Activity Model Learner ($AML$), which filters incorrect action sequences and outliers to learn final EAMs as a list of action sequences.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{activity_visualization.png}
+    \caption{A plot of the actions executed by a user for performing several activities in the three-dimensional space spanned by location, type and time.}
+    \label{fig-action-plot}
+\end{figure}
 
-%Firstly, a sensor activation dataset has to be collected. A real smart environment or a synthetic data generator can be used to get this dataset. Afterwards, a novel clustering process is run, using the context knowledge described in a \textit{Json}\footnote{http://www.json.org/} file. The clustering process is divided into two steps: (i) the Semantic Activity Annotation algorithm ($SA^3$) uses IAMs to detect activities in the unlabeled dataset and initialize activity clusters, and (ii) the Activity Clustering algorithm ($AC$) uses activity, object and action knowledge to expand initial activity clusters detected by $SA^3$. As a result, several action clusters for every activity are generated. Those clusters, stored in another \textit{Json} file, are finally processed by Activity Model Learner, which filters incorrect action sequences and outliers to learn final EAMs as a list of action sequences.
+When sensor activations describing several activities are plotted in the activity space, several lumps or clusters can be distinguished. Intuition says that sensor activations, and hence actions, have to be close to each other when they form an activity (close in the activity space), i.e. if a user is making pasta, it is common sense to think that sensor activations describing that activity will be located in the kitchen, and the objects which are being used by the user will be for cooking purposes. As far as time regards, sensor activations will occupy a time segment which will denote the duration of the activity.
+
+In consequence, the idea is to design a clustering algorithm which takes advantage of location, type and time information to aggregate actions to clusters. But this is not enough. Those clusters have to be identified and labelled with one of the defined activities. To identify action clusters with activity names, initial activity models in the context knowledge can be used. Initial activity models contain an incomplete sequence of actions. Despite being incomplete sequences, they can be used to identify activities. So the clustering algorithm has to produce several labelled action/sensor activation sequences per activity.
+
+The clusters extracted in the clustering process may contain all the actions executed by a user to perform a concrete activity. Those clusters may be used to learn different ways of performing an activity and hence, to learn extended activity models. In summary, the key idea is to design a clustering algorithm that uses initial activity models to detect activities and some metrics in the activity space to aggregate actions to activities. Afterwards, using the clusters extracted and labelled, analyse them to learn extended activity models for each activity.
+
+%To learn those models a two-step system is presented. First, a clustering process is run in the so called \textbf{semantic space of actions}, using initial activity models to label each cluster with a modeled activity. The semantic space of actions is a three-dimensional space spanned by the axes of location, type and time. Actions carried out by a user have only one location in the environment (bathroom, kitchen etc.), one time instant, but multiple types. For instance, a glass can be used for multiple activity types, such as cooking, eating or personal hygiene (brushing teeth). Hence, the action \textit{hasContainer} linked to a glass activation, occupies multiple positions in the type axis. 
+
+\subsection{Description of the solution}
+Following the intuition described in section \ref{subsec:approach:intuition}, a solution for the EAM learning system has been designed. The adopted system architecture is depicted in Figure \ref{fig-design}. In a first glance, the two important blocks identified in section \ref{subsec:approach:intuition} can be distinguished in the architecture: a clustering process and an activity model learning process. The clustering process is implemented in two modules, namely the Semantic Activity Annotation module ($SA^3$) and the Activity clustering module ($AC$). On the other hand, the activity learning process is implemented by a module called Activity Model Learner ($AML$). 
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{our_approach.pdf}
-    \caption{The detailed design architecture of the proposed approach.}
+    \caption{The detailed design architecture of the proposed approach to learn EAMs.}
     \label{fig-design}
 \end{figure}
+
+Two kinds of elements can be distinguished in the architecture depicted by Figure \ref{fig-design}: files and software modules. The only exception to this rule is the \textit{real smart environment}, which represents a sensorised environment where a user performs several activities. All the other modules can be classified into files or software modules. There are three kinds of files: plain text files (\textit{ADL script}), JSON files (\textit{context knowledge}, \textit{activity clusters} and \textit{learned action sequences for activities}) and CSV files (\textit{sensor activation dataset}, \textit{partially annotated dataset} and \textit{fully annotated dataset}). Files are used to exchange information between software modules. The developed software modules are four: \textit{Synthetic Data Generator}, \textit{Semantic Activity Annotation}, \textit{Activity Clustering} and \textit{Activity Model Learner}.All the software modules of the diagram have been implemented using Python 2.7\footnote{https://www.python.org/} and its packages Numpy\footnote{http://www.numpy.org/} for numerical computing and Pandas\footnote{http://pandas.pydata.org/} for data analysis. 
+
+Once the elements of the architecture have been described, the solution itself will be detailed. Firstly, a sensor activation dataset has to be collected for a concrete user. A real smart environment or a synthetic data generator can be used to get this dataset. The sensor activation dataset contains all sensor activations registered for a user performing certain activities during a fixed period of time. Remember that sensor activations are unlabelled. Whatever method has been chosen to obtain it, the resulting sensor activation dataset is formatted in a CSV file and its information has already been defined in definition \ref{def-sa-dataset}.
+
+Afterwards, a novel clustering process is run on the sensor activation dataset, using the context knowledge provided by an expert and formatted in a JSON file. The proposed clustering process, which is extensively presented in Chapter \ref{cha:clustering}, is divided into two steps: 
+
+\begin{enumerate}
+ \item Semantic Activity Annotation algorithm ($SA^3$): this algorithm uses IAMs stored in the context knowledge to detect activities in the unlabelled dataset. It transforms sensor activations to actions according to context knowledge to apply a novel pattern recognition algorithm that has been designed and implemented to detect the occurrence of IAMs in the unlabelled sensor activation dataset. $SA^3$ also uses object and activity location information to infer from sensor activations where an activity is being performed and analyse consequently the feasibility of the detected pattern. $SA^3$ is a initialisation process from the clustering point of view, because it identifies initial clusters in the time axis and identifies the label of those clusters. The output of $SA^3$ is given in the so called \textit{partially annotated dataset}, where sensor activations and their resultant actions are labelled with activity names or the special label 'None', which indicates that the action could not be labelled with any known activity name. A detailed description of $SA^3$ is given in Section \ref{sec:clustering:sa3}.
+ \item Activity Clustering algorithm ($AC$): the input to the algorithm is the output of $SA^3$, i.e. the partially annotated dataset file. $AC$ uses activity, object and action knowledge described in the context knowledge to expand initial activity clusters detected by $SA^3$. To analyse those actions that remain unlabelled after $SA^3$, $AC$ defines boolean functions based on location, type and time information of actions and objects. It analyses unlabelled actions that are close to initial clusters, checking the feasibility of those actions pertaining to those close initial clusters. The feasibility is computed using location, type and time information, implementing the idea that actions pertaining to an activity are performed in the same location, with a coherent purpose and close in time. $AC$ algorithm's result is stored in another CSV file called \textit{fully annotated dataset}, which assigns an activity label to all actions and their original sensor activations. The special label 'None' is used for those actions that are not considered part of any activity. Those actions can be originated by sensor noise or user erratic behaviour, i.e. a user that interacts with an object that is not being used for performing an activity. Additionally, $AC$ also generates a JSON file called \textit{activity clusters}. This file contains all the clusters found by the algorithm for each activity. Clusters, which are action sequences, come with an occurrence frequency. The activity clusters file is also used to store some interesting statistics found by $AC$ about the frequency of objects used and actions executed for each activity, frequency of locations in where each activity has been performed and activity duration statistics (mean and standard deviation). An example of an activity clusters file can be seen in Figure \ref{fig-clusters-file}. $AC$ algorithm is described in Section \ref{sec:clustering:ac}.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\begin{small}
+\begin{lstlisting}
+    "ReadBook": {
+        "locations": [
+            [42, "Bedroom"], 
+            [11, "Lounge"]
+        ], 
+        "actions": [
+            [53, "useFurniture"], 
+            [53, "turnOnLamp"], 
+            [53, "hasBook"]
+        ], 
+        "patterns": [
+            [
+                53, 
+                [
+                    "useFurniture", 
+                    "turnOnLamp", 
+                    "hasBook"
+                ]
+            ]
+        ], 
+        "objects": [
+            [42, "bed"], 
+            [42, "bedroom-lamp"], 
+            [42, "book-b"], 
+            [11, "sofa"], 
+            [11, "lounge-lamp"], 
+            [11, "book-a"]
+        ], 
+        "occurrences": 53, 
+        "duration": [
+            14.773584905660377, 
+            2.6467602797835856
+        ]
+    }, 
+\end{lstlisting}
+\end{small}
+\caption{Information stored in an activity clusters file for activity ReadBook.}
+\label{fig-clusters-file}
+\end{figure}
+
+The main result of the clustering process is thus stored in the activity clusters JSON file. Activity clusters have the information of all action sequences executed by a user to perform a concrete activity. For example, in the file shown in Figure \ref{fig-clusters-file}, in the ``patterns'' section, all the action sequences found by $AC$ are stored. In this case, for activity ReadBook, only one cluster has been generated with 53 occurrences in the sensor activation dataset. According to $AC$, ReadBook has been performed by means of executing the action sequence \textit{useFurniture}, \textit{turnOnLamp} and \textit{hasBook}. Nevertheless, $AC$ generally finds many different clusters per activity. Those clusters are finally processed by Activity Model Learner ($AML$), which filters incorrect action sequences and outliers to learn final EAMs as a list of action sequences. $AML$ uses action sequence similarity metrics to implement a novel outlier detection. Notice that all action sequences or clusters detected by $AC$ are not valid action models, since they may contain incorrectly labelled actions (due to clustering errors, sensor errors and/or user erratic behaviour) and missed actions (due to sensor errors). Those spurious actions sequences have to be detected and removed, to discover those action sequences that are valid models for a given activity. Valid action sequences are the EAMs for activities and are stored in a JSON file called \textit{learned action sequences for activities}. All the details about $AML$ are provided in Chapter \ref{cha:learner}.

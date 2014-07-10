@@ -96,6 +96,9 @@ Richard Feynman
 Science, at bottom, is really anti-intellectual. It always distrusts pure reason, and demands the production of objective fact.
 H.L. Mencken
 
+We are trying to prove ourselves wrong as quickly as possible, because only in that way can we find progress. 
+Richard Feynman
+
 ------------------------------------
 Future Work
 ------------------------------------

@@ -1,0 +1,13 @@
+"cold start" problem
+
+Ontological activity concepts: MakeTea, MakeCoffee
+
+Action and descriptive properties: \textit{hasContainer}, \textit{actStartTime}
+
+dense sensing-based activity monitoring
+
+single user - single activity scenario
+
+Chapters and sections: first letters of nouns -> capital letters
+subsections: first letter of the first noun -> capital letter
+Don't avoid dashes in chapters, sections and subsections
