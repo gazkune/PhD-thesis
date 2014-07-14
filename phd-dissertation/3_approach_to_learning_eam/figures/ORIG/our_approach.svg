@@ -384,15 +384,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="577.96995"
+     inkscape:cx="456.04611"
      inkscape:cy="247.59502"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1440"
-     inkscape:window-height="872"
-     inkscape:window-x="1366"
-     inkscape:window-y="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -402,7 +402,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -628,25 +628,25 @@
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-2.5025253"
-       y="689.71741"
+       x="-30.502525"
+       y="703.71741"
        id="text6806"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan6808"
-         x="-2.5025253"
-         y="689.71741"
-         style="font-size:18px">Time-stamped</tspan><tspan
+         x="-30.502525"
+         y="703.71741"
+         style="font-size:18px">Sensor activation</tspan><tspan
          sodipodi:role="line"
-         x="0.36270905"
-         y="712.21741"
+         x="-30.502525"
+         y="726.21741"
          id="tspan6810"
-         style="font-size:18px">sensor </tspan><tspan
+         style="font-size:18px">dataset</tspan><tspan
          sodipodi:role="line"
-         x="-2.5025253"
-         y="734.71741"
+         x="-30.502525"
+         y="748.71741"
          id="tspan6812"
-         style="font-size:18px">activations</tspan></text>
+         style="font-size:18px" /></text>
     <image
        y="494.21268"
        x="473.73685"
@@ -785,7 +785,7 @@
          id="tspan9150"
          x="1098"
          y="912.36218"
-         style="font-size:18px">Learned Action-Patterns</tspan><tspan
+         style="font-size:18px">Learned Action Sequences</tspan><tspan
          sodipodi:role="line"
          x="1098"
          y="934.86218"
@@ -801,21 +801,16 @@
        d="m 1088,745.21933 0,60"
        id="path9338"
        inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1.13130522;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:9.05044152, 9.05044152;stroke-dashoffset:0"
-       d="m 201.49421,639.15392 615.3618,-1.58324 1.64978,174.15443 -615.36179,0 z"
-       id="path3117"
-       inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="308"
+       x="698"
        y="798.93359"
        id="text3893"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3895"
-         x="308"
+         x="698"
          y="798.93359">Clustering process</tspan></text>
     <text
        xml:space="preserve"
@@ -893,5 +888,13 @@
        d="m 772.14286,670.93361 0,-128.57143 99.28571,0"
        id="path4874"
        inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0.17695473;fill:#241f1c;fill-opacity:1;stroke:#000000;stroke-width:1.37464070000000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3132"
+       width="628.29132"
+       height="196.8627"
+       x="198.7115"
+       y="627.35938"
+       ry="53.998363" />
   </g>
 </svg>
