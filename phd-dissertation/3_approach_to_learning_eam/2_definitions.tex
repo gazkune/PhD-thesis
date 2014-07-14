@@ -53,6 +53,24 @@ Activity models are sequences of actions defined by a domain expert. Initial act
 \end{equation}
 \end{defn}
 
+\begin{defn}[User Erratic Behaviour]
+\label{def-erratic}
+ When a user interacts with an object but the interacted object is not being used to perform the ongoing activity. Consider the case where a user wants to prepare pasta. In order to take the pasta from the store, the sugar package has to be removed first. The user will touch the sugar package and thus, a sensor activation will be generated. But this interaction does not mean that sugar is being used to prepare pasta. 
+\end{defn}
+
+
+\begin{defn}[Positive Sensor Noise]
+\label{def-positive}
+ A sensor that should not get activated, i.e. there is no interaction with the object monitored by the sensor, gets activated because of sensor or monitoring infrastructure errors.
+\end{defn}
+
+\begin{defn}[Missing Sensor Noise]
+\label{def-missing}
+ A sensor that should get activated, i.e. there is an interaction with the object monitored by the sensor, does not get activated because of sensor or monitoring infrastructure errors.
+\end{defn}
+
+
+
 The learning approach for activity models presented in this dissertation has some constraints:
 
 \begin{cons}[Dense sensing-based activity monitoring]
