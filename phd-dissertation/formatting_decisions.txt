@@ -2,6 +2,8 @@
 
 Ontological activity concepts: MakeTea, MakeCoffee
 
+Special label None
+
 Action and descriptive properties: \textit{hasContainer}, \textit{actStartTime}
 
 dense sensing-based activity monitoring

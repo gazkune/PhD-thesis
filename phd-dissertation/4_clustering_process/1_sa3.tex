@@ -1,27 +1,24 @@
 \section{SA³: Semantic Activity Annotation Algorithm}
 \label{sec:clustering:sa3}
 
-%Brief introduction to the algorithm:
-%- Inspired in knowledge-driven techniques, specially in Chen's work
-%- It is not activity recognition, but offline annotation
 The objective of the $SA^3$ algorithm is to find sequences of actions that are describing an activity in an unlabelled sensor activation dataset. For that purpose, initial activity models (IAM) stored in the context knowledge are used. Remember that IAMs, as defined in definition \ref{def-iam}, are characterised by a sequence of necessary actions to perform an activity plus a duration estimation. 
 
 The problem can be stated more formally as:
 
 \begin{problem}[$SA^3$]
 \label{prob-sa3}
- Given a context knowledge file where activities, sensors and objects are described and an unlabelled sensor activation dataset, find the occurrences of IAMs that form a valid execution of an activity.
+ Given a context knowledge file where activities, sensors and objects are described and an unlabelled sensor activation dataset, find the occurrences of IAMs that form valid executions of activities.
 \end{problem}
 
-Considering that IAMs are sequences of actions and that sensor activation datasets are sensor sequences, Problem \ref{prob-sa3} can be seen as a pattern recognition problem, where IAMs act as the patterns to be recognised in the sensor activation dataset. Although $SA^3$ is actually a pattern recognition algorithm, there are some important features that make the problem special. Namely:
+Considering that IAMs are sequences of actions and that sensor activation datasets are sensor sequences, Problem \ref{prob-sa3} can be seen as a pattern recognition problem, where IAMs act as the patterns to be recognised in the sensor activation dataset. Although $SA^3$ is actually a pattern recognition algorithm, there are some important features that make the problem special:
 
-\begin{itemize}
+\begin{enumerate}
  \item IAMs are sequences of actions, whereas sensor activation datasets contain sensor activations, i.e. the activation of a concrete sensor of the environment.
- \item As IAMs are incomplete activity models, a sensor activation dataset will generally include sensor activations that are interleaved with IAMs in the same activity.
+ \item As IAMs are incomplete activity models, a user will generally execute more actions than those considered in the IAMs to perform activities. As a consequence a sensor activation dataset will generally include sensor activations and actions that are interleaved with IAM actions for the same activity.
  \item IAMs have no information about the order in which actions are executed, thus if $IAM(A) = \{a, b, c\}$, a sensor activation dataset containing the sequence $\{c, a, b\}$ has to be identified as activity $A$, i.e. the elements of the pattern to be recognised might appear in varied orders.
  \item Even though a sequence corresponding to an IAM is found, it does not necessarily describe a valid activity, since duration and location are important. For example, for an activity whose typical duration is 5 minutes, corresponding actions are found but their distance is of 3 hours; it is then common sense to think that those actions do not form a valid activity. Hence, the pattern recognition algorithm needs to take action time distances and locations into account.
  \item Sensors are prone to errors and in consequence, sensor activation datasets contain noise. The pattern recognition algorithm has to work thus in noisy environments. More concretely, considered kinds of sensor noise are positive and missing sensor noise (definitions \ref{def-positive} and \ref{def-missing}).
-\end{itemize}
+\end{enumerate}
 
 In summary, $SA^3$ has to use IAMs as patterns to be recognised in an unlabelled sensor activation dataset, where actions are executed in varied orders, where actions that are not in IAMs can appear interleaved, where duration and location information is crucial for the validity of a pattern and where sensor noise exists. 
 
@@ -34,7 +31,7 @@ In order to tackle Problem \ref{prob-sa3} a three-step algorithm has been design
     \label{fig:sa3_algorithm}
 \end{figure}
 
-The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label those actions pertaining to IAMs and thus it cannot infer a label for all the other actions of the sensor activation dataset. An example of how a partially annotated dataset looks like is provided in Figure \ref{fig-partially-annotated}. The first column shows the time-stamp of the sensor activation. The second column shows the activated sensor. Those two columns form the sensor activation dataset. $SA^3$ adds the third, fourth and fifth columns, where action, activity label and start/end tags are provided. Start tag refers to the first action of the IAM of detected activity detected in a valid activity discovered by $SA^3$. End tag has the same meaning but for the last action. In consequence, start and end tags show the start and end times for a detected activity. For convenience, and even though any action not pertaining to the IAM of the detected activity cannot be labelled by $SA^3$, all the actions between start and end times are labelled with the detected activity name, and not with the special label 'None'. This labelling criterion is applied to make visualization easier and it does not have any effect on the output of $SA^3$, neither for $AC$ nor for evaluation purposes.
+The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label those actions pertaining to IAMs and thus it cannot infer a label for all the other actions of the sensor activation dataset. An example of how a partially annotated dataset looks like is provided in Figure \ref{fig-partially-annotated}. The first column shows the time-stamp of the sensor activation. The second column shows the activated sensor. Those two columns form the sensor activation dataset. $SA^3$ adds the third, fourth and fifth columns, where action, activity label and start/end tags are provided. Start tag refers to the first action pertaining to the IAM of a valid activity discovered by $SA^3$. End tag has the same meaning but for the last action. In consequence, start and end tags show the start and end times for a detected activity. For convenience, and even though any action not pertaining to the IAM of the detected activity cannot be labelled by $SA^3$, all the actions between start and end times are labelled with the detected activity name, and not with the special label None. This labelling criterion is applied to make visualization easier and it does not have any effect on the output of $SA^3$, neither for $AC$ nor for evaluation purposes.
 
 \begin{figure}[htbp]
 \begin{small}
@@ -55,7 +52,7 @@ The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label t
 \label{fig-partially-annotated}
 \end{figure}
 
-
+The next sections describe in detail the three steps of $SA^3$ depicted in Figure \ref{fig:sa3_algorithm}. Finally, Section \ref{subsec:clustering:sa3:complete} shows the complete algorithm and illustrates it with an example.
 % Note: The following two paragraphs can be used in summary and conclusions?
 %Real-time activity recognition needs complete activity models to have a reliable recognition performance. However, providing complete activity models is very complicated, since each user executes varied action sequences to perform the same activity. For example, to make a coffee, some users may use milk and sugar, while others may add only some cream. But making coffee will always imply using coffee and having a container, i.e. the action sequence \textit{\{hasContainer(x), hasCoffee(y)\}}. This prior knowledge is used in $SA^3$ for activity annotation.
 
@@ -69,7 +66,7 @@ The first step takes as inputs the sensor activation dataset and the context kno
 In consequence, a sensor activation sequence such as:
  \begin{equation*}
  \begin{split}
-   \{cupObjSensor, whiteSugarSensor, skimmedMilkSensor\}
+   \{cupSens, wsugarSensor, smilkSens\}
  \end{split}  
  \end{equation*}
  will be transformed to:
@@ -81,76 +78,148 @@ In consequence, a sensor activation sequence such as:
  
 For the sake of clarity, and given that action matching does not care about concrete objects used to execute that action, \textit{hasContainer(cup)} will be used as \textit{hasContainer}. But notice that the object information obtained through the sensor activation is not removed. 
 
-Sensor-action transformation step allows performing pattern recognition in the action space, abstracting from concrete sensor activations. This step can be kept simple thanks to the dense sensing-based approach. For different activity monitoring approaches, such as wearable sensors, more complex sensor-action transformation steps should be implemented. However, notice that as far as sensor information can be transformed to actions, $SA^3$ and the entire clustering process can work without problem. This is why constraint \ref{cons-dense} is considered a weak constraint.
+Sensor-action transformation step allows performing pattern recognition in the action space, abstracting from concrete sensor activations. This step can be kept simple thanks to the dense sensing-based approach. For different activity monitoring approaches, such as wearable sensors, more complex sensor-action transformation steps should be implemented. However, notice that as far as sensor information can be transformed to actions, $SA^3$ and the entire clustering process can work without any problem. This is why constraint \ref{cons-dense} is considered to be a weak constraint.
 
 \subsection{Activity sequence finding step}
 \label{subsec:clustering:sa3:find}
 
-All the occurrences of minimal activity models are found iterating on the action dataset. For an action pertaining to a minimal activity model following actions are searched. Those actions are considered to describe the activity if two criteria are fulfilled: 
- \begin{enumerate}
-  \item \textit{Completion criterion}: the action sequence has to contain all the actions of the corresponding minimal activity model
-  \item \textit{Duration criterion}: the duration of the action sequence has to be smaller than the duration estimation of the corresponding minimal activity model
-  \item \textit{Location compatibility criterion}:
+The objective of this step is to find all valid occurrences of IAMs in the action space obtained from the sensor-action transformation step. An iterative process is run over actions. Firstly, the algorithm checks whether current action pertains to any of the IAMs stored in the context knowledge file. If the answer is no, the action is labelled with the None label and the next action is treated. But if the answer is yes, the IAMs of the activities in which the action appears are considered as possible activities. Notice that if the action pertains to more than one IAM, all the possibilities are treated. Assume the action $a$ pertains to $IAM(A_1)$ and $IAM(A_2)$. Two action sequences are created $S(A_1) = \{a\}$ and $S(A_2) = \{a\}$. The algorithm iterates through the next actions, in order to find sequences of actions that form valid activities in correspondence of possible activities.
+
+The process to find valid activities works as follows:
+
+\begin{enumerate}
+ \item Current action $b$ is added to the created action sequences: $S(A_i) = append(S(A_i), b)$.
+ \item If current action $b$ pertains to an IAM of an activity for which no sequence has been open, open a new sequence.
+ \item Check whether candidate sequences form a valid activity in terms of \textit{completion}, \textit{duration} and \textit{location}
+ \item If any of the candidate sequences forms a valid activity, close the sequence and follow with remaining sequences.
+ \item Iterate through actions until all sequences are closed (valid activities) or removed (invalid activities).
+\end{enumerate}
+
+To fully understand the described process to check for valid activities, the \textit{completion}, \textit{duration} and \textit{location} criteria have to be explained:
+
+\begin{enumerate}
+  \item Completion criterion: an action sequence has to contain all the actions of the corresponding IAM to be considered a complete action sequence for the corresponding activity. An action sequence $S(A_i)$ is complete for activity $A_i$ if and only if 
+  \begin{equation}
+  \label{eq-completion}
+  IAM(A_i) \subseteq S(A_i)   
+  \end{equation}
+  
+  \item Duration criterion: for an action sequence to fulfil the duration criterion, the duration of the action sequence has to be smaller than the duration estimation of the corresponding IAM. The duration of an action sequence $S(A_i)$ is calculated as the rest of the time-stamps of the last action and the first action: 
+  \begin{equation}
+    \Delta_t(S(A_i)) = t(S(A_i)_{last}) - t(S(A_i)_{first})
+  \end{equation}
+  where $t(S(A_i)_j)$ is the time-stamp of the $j$-th action of the sequence $S(A_i)$. Duration estimations for activities are stored in the context knowledge file and are written as $\Delta_t(A_i)$. Hence, the duration criterion establishes that an action sequence fulfils the duration criterion if and only if 
+  \begin{equation}
+   \label{eq-duration}
+   \Delta_t(S(A_i)) \leq \Delta_t(A_i)
+  \end{equation}  
+  
+  \item Location compatibility criterion: the actions of sequence $S(A_i)$ which pertain to $IAM(A_i)$ have been transformed from corresponding sensor activations. Those sensor activations can be traced in the context knowledge to the used objects. And those objects have a location in their model. Hence, the location of actions can be inferred using the context knowledge file. Using this information, the location of the possible activity described by sequence $S(A_i)$ is inferred. The location of sequence $S(A_i)$ is inferred as the common locations of actions of the sequence pertaining to $IAM(A_i)$. If actions pertaining to the IAM do not share a common location, the sequence has no location and thus, it is not location compatible with any activity. On the other hand, if a common location is shared, that location has to be compatible with the locations of the corresponding activity, modelled in the context knowledge file. Notice that only locations of actions pertaining to an IAM are considered. All the other actions can be generated by noise or erratic behaviour and in consequence, their locations are not considered in $SA^3$.
  \end{enumerate}
- Depending on the activity models, the actions dataset and noise levels, detected activities can overlap each other. Here is an illustrative example, where time-stamps are ignored since duration criterion is satisfied. Imagine we define minimal activity models for \textit{MakeCoffee, MakeTiramisu, MakeWhippedCream} and \textit{BrushTeeth}, where:
+
+Action sequences that fulfil the completion, duration and location criteria will be considered as valid activities and stored as such. Action sequences that do not fulfil those criteria will be removed, since they do not form a valid activity description.  
+
+\subsection{Correct activity sequence fitting step}
+\label{subsec:clustering:sa3:fit}
+Depending on the activity models, the sensor activation dataset and noise levels, valid activities can overlap each other. Moreover, as many IAMs will share some actions, activity overlapping will be a normal scenario after activity sequence finding step described in Section \ref{subsec:clustering:sa3:find}. But by virtue of constraint \ref{cons-single}, interleaving thus overlapping activities cannot appear in the sensor activation dataset. So a special step has to be designed to treat overlapping activities generated in the activity sequence finding step. 
+
+Having a set of overlapping activities, described through corresponding action sequences, this step introduces a heuristic directly derived from constraint \ref{cons-single} to return a set of non-overlapping activities which provides the best explanation for the generated situation. The heuristic states that in a set of overlapping action sequences, the maximum number of non-overlapping action sequences have to be returned. 
+ 
+
+\subsection{The complete SA³ algorithm}
+\label{subsec:clustering:sa3:complete}
+
+Sections \ref{subsec:clustering:sa3:transform}, \ref{subsec:clustering:sa3:find} and \ref{subsec:clustering:sa3:fit} describe the first, second and third steps of the $SA^3$ algorithm. This three-step algorithm is depicted as pseudo-code in Algorithm \ref{alg:sa3}. It has been designed to work with noisy sensor activations, varying order for activity executions and sensor activations that do not belong to any initial activity model. That flexibility allows using the tool in many different datasets. 
+
+\begin{algorithm}
+ \caption{$SA^3$ algorithm for semantic activity annotation}
+ \label{alg:sa3}
+ \begin{algorithmic}
+ \REQUIRE sensor\_activation\_dataset, context\_knowledge
+ \ENSURE partially\_annotated\_dataset
+ \STATE $partially\_annotated\_dataset \leftarrow createDataset(sensor\_activation\_dataset)$
+ \STATE $action\_dataset \leftarrow applyTransformFunction(sensor\_activation\_dataset,$ 
+ $context\_knowledge)$
+ \STATE $IAM\_list \leftarrow obtainIAMS(context\_knowledge)$
+ \FORALL{$action \in action\_dataset$}
+  \IF{$action \in initial\_activity\_models$}
+    \STATE $activities \leftarrow obtainActivities(action, IAM\_list)$
+  \ENDIF
+  \FORALL{$activity \in activities$}
+    \STATE $// \text{ Use duration, completion and location criteria}$
+    \STATE $valid\_activities \leftarrow findValidActivities(context\_knowledge)$
+  \ENDFOR
+ \ENDFOR
+ \STATE $partially\_annotated\_dataset \leftarrow findNonOverlappingActivities(valid\_activities)$
+ \RETURN $partially\_annotated\_dataset$
+ \end{algorithmic}
+\end{algorithm}
+
+An illustrative example is shown next, to describe how $SA^3$ works. Time-stamps are ignored in the example, considering that duration criterion is fulfilled by the shown action sequence and considered activities. This assumption helps making the example clearer. The illustrative example has been designed to show in detail how the $SA^3$ works, so it does not have to be coherent with the reality. 
+
+Imagine initial activity models for MakeCoffee, MakeTiramisu, MakeWhippedCream and BrushTeeth are defined as follow:
  \begin{equation*}
   \begin{split}
-   MakeCoffee =\{hasCoffee, hasContainer, hasFlavour\} \\
+  MakeCoffee =\{hasCoffee, hasContainer, hasFlavour\} \\
   MakeTiramisu = \{hasCream, hasContainer, hasCoffee\} \\
   MakeWhippedCream = \{hasFlavour, hasContainer, hasCream\} \\
   BrushTeeth = \{hasBrusher, hasToothPaste, turnOnTap\} 
   \end{split}
  \end{equation*} 
  
-Let us consider the following action sequence from the action dataset:
+Notice that there are many actions that are used for the IAMs of several activities. For instance, \textit{hasContainer} is used in the IAMs of MakeCoffee, MakeTiramisu and MakeWhippedCream. Using the same actions for various activities makes the problem harder, since overlapping activities are more common.
+
+Let us consider the following sensor activation sequence from the sensor activation dataset:
+
+\begin{equation*}
+\begin{split}
+ \{mugSens, creamSens, spoonSens, whitesugarSens, brusherSens, \\ 
+ afcoffeeSens, toothpasteSens, glassSens, btapSens\}
+\end{split}  
+\end{equation*}
+
+Applying the sensor-action transformation step using the context knowledge as described in Section \ref{subsec:clustering:sa3:transform}, the following action sequence is obtained (concrete objects are ignored in the action sequence):
+
 \begin{equation*}
 \begin{split}
  \{hasContainer, hasCream, useCookingUtensil, hasFlavour, hasBrusher, \\ 
- hasCoffee, hasToothPaste, hasContainer, turnOnTap\}
+ hasCoffee, hasToothpaste, hasContainer, turnOnTap\}
 \end{split}  
 \end{equation*}
-Figure \ref{fig:overlap} shows all the activities found applying the completion and duration criterion. Activities overlap each other, because there are several actions that belong to several activities. Notice also that there are some actions that are not in any activity model, which is totally feasible for our approach.
+
+Figure \ref{fig:overlap-l} shows all the activities found by the second step of $SA^3$ (Section \ref{subsec:clustering:sa3:find}). Activities overlap each other, because there are several actions that belong to several activities. Notice also that there are some actions that are not in any activity model, which is totally feasible for the approach.
+
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{overlapping_activities.pdf}
-    \caption{Illustrative example of the output of the step 2 of $SA^3$. MWC refers to \textit{MakeWhippedCream}, MT to \textit{MakeTiramisu}, MC to \textit{MakeCoffee} and BT to \textit{BrushTeeth}}
-    \label{fig:overlap}
+ \begin{small}
+\begin{lstlisting}
+ hasContainer      |     |
+ hasCream          | MWC |
+ useCookingUtensil |     |
+ hasFlavour        |     | MT 
+ hasBrusher              |    |
+ hasCoffee               |    |
+ hasToothpaste                | BT
+ hasContainer                 |
+ turnOnTap                    |
+\end{lstlisting}
+\caption{Illustrative example of the output of the activity sequence finding step of $SA^3$. MWC refers to MakeWhippedCream, MT to MakeTiramisu  and BT to BrushTeeth.}
+\label{fig:overlap-l}
+\end{small}
 \end{figure}
 
-\subsection{Correct activity sequence fitting step}
-\label{subsec:clustering:sa3:fit}
-Having the overlapping activities, the objective of this step is to find the maximum number of activities that do not overlap. This heuristic is derived from the fact that only none interleaved activities are considered. Applying it, the example of Figure \ref{fig:overlap} can be solved appropriately. The solution found by the algorithm is that there are only two activities in that action sequence:
+Assuming duration criterion is always fulfilled for this example, Figure \ref{fig:overlap-l} shows how the completion and location criteria work. For instance, action sequence $S = \{hasContainer, hasCream, useCookingUtensil, hasFlavour\}$ is a valid sequence to describe activity MakeWhippedCream, because it contains all the actions of $IAM(MakeWhippedCream)$ and it is location compatible. Actions \textit{hasContainer, hasCream} and \textit{hasFlavour}, which pertain to $IAM(MakeWhippedCream)$ are obtained by interacting with objects \textit{mug, cream} and \textit{white-sugar}. The location of all those objects is the kitchen. As activity location for MakeWhippedCream is set to kitchen, the action sequence and the activity are location compatible.
+
+However, consider the following action sequence $S = \{$ $hasFlavour,$ $hasBrusher,$ $hasCoffe,$ $hasToothpaste,$ $hasContainer\}$. Assuming duration criterion is satisfied, it can be seen that the completion criterion is also satisfied for activity MakeCoffee. But sequence $S$ does not form a valid activity because the last action \textit{hasContainer} is produced by the object \textit{glass}, which is located in the bathroom. As \textit{hasContainer} is in $IAM(MakeCoffee)$, its location is taken into account for location inference and compatibility. In this case, sequence $S$ does not have a unique location and hence, it is removed. 
+
+After activity sequence finding step finishes, three overlapping valid activities are found, namely MakeWhippedCream, MakeTiramisu and BrushTeeth. Such a situation cannot happen in a single user - single activity scenario, so the third step has to be applied: correct activity sequence fitting step (Section \ref{subsec:clustering:sa3:fit}). Using the defined heuristic, two activities are returned:
+
 \begin{equation*}
   \begin{split}   
-  MakeWhippedCream = \{hasContainer, hasCream, useCookingUtensil, hasFlavour\} \\
-  BrushTeeth = \{hasBrusher, hasCoffee, hasToothPaste, hasContainer, turnOnTap\} 
+  MakeWhippedCream = \{hasContainer, hasCream, useCookingUtensil,\\ 
+  hasFlavour\} \\
+  BrushTeeth = \{hasBrusher, hasCoffee, hasToothPaste, hasContainer,\\ 
+  turnOnTap\} 
   \end{split}
- \end{equation*}  
+ \end{equation*} 
 
-Hence, \textit{hasCoffee} is probably due to a faulty sensor activation and \textit{hasContainer} may refer to a glass used in the bathroom to rinse the mouth. 
-
-\subsection{The complete SA³ algorithm}
-
-
-This three-step algorithm is depicted as pseudo-code in Algorithm \ref{alg:sa3}. It has been designed to work with noisy sensor activations, varying order for activity executions and sensor activations that do not belong to any activity model. That flexibility allows using the tool in many different datasets. Section \ref{evaluation} contains many cases to show the performance of the algorithm in several demanding situations.
-
-\begin{algorithm}
- \caption{$SA^3$ algorithm for semantic activity annotation}
- \label{alg:sa3}
- \begin{algorithmic}
- \REQUIRE sensor\_dataset, transformation\_function, minimal\_activity\_models
- \ENSURE annotated\_dataset
- \STATE $action\_dataset \leftarrow apply\_transform\_function(sensor\_dataset, transformation\_function)$
- \FORALL{$action \in action\_dataset$}
-  \IF{$action \in minimal\_activity\_models$}    
-    \STATE $activities \leftarrow obtain\_activities(action, minimal\_activity\_models)$
-  \ENDIF
-  \FORALL{$activity \in activities$}
-    \STATE $// \text{ Use duration and completion criteria}$
-    \STATE $detected\_activities \leftarrow find\_proper\_activities(minimal\_activity\_models)$
-  \ENDFOR
- \ENDFOR
- \STATE $annotated\_dataset \leftarrow find\_non\_overlapping\_activities(detetected\_activities)$
- \RETURN $annotated\_dataset$
- \end{algorithmic}
-\end{algorithm}
+Those two activities are the maximum number of non-overlapping activities found in the set of valid activities. The action sequence for MakeWhippedCream makes perfect sense. There is an action, \textit{useCookingUtensil}, which is not in any IAM, but it is very coherent with the activity. Even though $SA^3$ labels this action with the MakeWhippedCream tag, remember there is no way for $SA^3$ to know whether this action is really part of the activity. Such a labelling is done only for convenience. On the other hand, the action sequence for activity BrushTeeth contains a strange action: \textit{hasCoffee}. In a noisy scenario this action may be generated by sensor or communication infrastructure errors. The other action which is not in the IAM of BrushTeeth is \textit{hasContainer}. It is generated by the \textit{glass} sensor, which is located in the bathroom. Action \textit{hasContainer} may refer to a glass used in the bathroom to rinse the mouth. 
