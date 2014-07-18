@@ -1,27 +1,80 @@
 \section{The Learning Algorithm}
 \label{sec:learner:algorithm}
 
-Activity clusters extracted by the clustering process contain all the action sequences performed by a user for each activity. But some of those clusters are spurious, due to sensor noise, user erratic behaviour and clustering errors. The objective of $AML$ is to remove spurious action sequences. For that purpose, a three-step algorithm has been designed and implemented. For all the clusters extracted for an activity, the following steps are performed:
+% Divide the section into two subsections: (i) filtering step, where steps 1 and 2 are included, and (ii) similarity-based outlier detection. In the second one, discuss different similarity metrics (edit distance, Jaccard similiarity, Tanimoto's similarity and reason why Jaccard is the best for us.
+
+%Explain why pattern similarity and associated frequencies are the best candidates to learn EAMs. 
+
+%Explain the approach to identify spurious action sequences (due to sensor noise and clustering errors).
+
+%Explain the problems arose from using frequency as criterion.
+
+%Conclude with the fact that only similarity of action sequences can be used in order to keep all variations performed by a user.
+
+Summing up the conclusions obtained in previous Sections \ref{sec:learner:objectives} and \ref{sec:learner:relevant}, the task of learning EAMs can be seen as purging spurious activity clusters from all the clusters extracted by the clustering process. The information that $AML$ can use for this task is the activity clusters themselves and associated occurrence frequencies. So the main idea is that activity clusters contain all the action sequences performed by a user for each activity, but some of those clusters are spurious, due to sensor noise, user erratic behaviour and clustering errors. $AML$ has to detect those spurious action sequences or outliers and remove them in order to keep only those action sequences that really represent an activity.
+
+The designed learning algorithm works on the similarity between action sequences and their occurrence frequencies. A two-step process has been designed and implemented for that purpose: (i) the filtering step (Section \ref{subsec:learner:filtering}), where action sequences will be treated in terms of repeated actions and varied order of actions, and (ii) the similarity-based outlier detection step (Section \ref{subsec:learner:outlier}), where outlier action sequences will be detected in the similarity space and fused with the most similar action sequence taking their occurrence frequencies into account. The complete $AML$ algorithm and its final output are described in Section \ref{subsec:learner:complete}.
+
+\subsection{Filtering step}
+\label{subsec:learner:filtering}
+
+If activity clusters are carefully analysed, it can be seen that there are some clusters that contain repeated actions. Additionally some clusters contain the same actions but in different orders. In the ontology-based activity modelling approach described in Section \ref{sec:approach:ontology}, the activity models in terms of action properties do not contain repeated actions and the order in which actions are executed is not important (notice that descriptive properties do reflect this information, but they are not used when recognising activities). In consequence, two filtering steps are performed:
 
 \begin{enumerate}
- \item Remove repeated actions into a sequence: some action sequences contain repeated actions. For instance, consider the sequence $S=\{a, b, a, c\}$. As repeated actions do not add any new information for activity modelling, they are removed. $S$ becomes $S' = \{a, b, c\}$. Notice that this step does not remove any action sequence of an activity. This step can be omitted depending on how activity models are used by the activity recognition system. The work presented in this paper is based on the knowledge-driven approach developed by Chen et al. in \cite{Chen2012a}. This activity recognition system does not consider repeated actions in the recognition phase, so activity models do not have this information. However, if the recognition system is sensitive to repeated actions, the learning algorithm can be easily modified to omit this first step.
- \item Fuse equal action sequences: some action sequences contain the same actions, but in different orders. For example, $S_1 = \{a, b, c \}$ and $S_2 = \{b, c, a\}$. The order of actions is not important for activity models, so both sequences are fused. To detect equal sequences, the Jaccard coefficient is used \cite{A.K.Jain1988}. The Jaccard coefficient between two sequences $A$ and $B$ is defined as:
+ \item Remove repeated actions into a sequence: some action sequences contain repeated actions. For instance, consider the sequence $S=\{a, b, a, c\}$. As repeated actions do not add any new information for activity modelling, they are removed. $S$ becomes $S' = \{a, b, c\}$. Notice that this step does not remove any action sequence of an activity. This step can be omitted depending on how activity models are used by the activity recognition system. The work presented in this paper is based on the knowledge-driven approach developed by Chen et al. in \cite{Chen2012a}. This activity recognition system does not consider repeated actions in the recognition phase, so activity models do not have this information. However, if the recognition system is sensitive to repeated actions, the learning algorithm can be easily modified to omit this first filtering step.
+ 
+ \item Fuse equal action sequences: some action sequences contain the same actions, but in different orders. For example, $S_1 = \{a, b, c \}$ and $S_2 = \{b, c, a\}$. The order of actions is not important for activity models, so both sequences are fused. Two action sequences are equal if:
+ 
  \begin{equation}
-  Jaccard(A, B) = \frac{A \cap B}{A \cup B}
+ \label{eq-equal}
+  S_1 \cap S_2 = S_1 \cup S_2
  \end{equation}
-Any two sequences whose Jaccard coefficient is 1 are fused. 
- \item Run Jaccard based outlier detection algorithm, which has been specially designed to learn proper action sequences.
+
+ Any two action sequences that fulfil equation \ref{eq-equal} are fused. Fusing implies removing one of the action sequences and to sum occurrence frequencies of both action sequences to assign it to the fused sequence. Thus from two sequences a resultant sequence will remain.
+
 \end{enumerate}
 
-The Jaccard based outlier detection is an iterative algorithm. It calculates the so called \textit{Jaccard Matrix} ($JM$), which is a square matrix of all action sequences that remain after steps 1 and 2. $JM_{i, j}$ stores the Jaccard coefficient for action sequences $i$ and $j$. The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient is 1. Removing diagonal values from $JM$, $\hat{JM}$ is obtained. This matrix has the information of the similarity of all action sequences detected for an activity. To detect outlier action sequences, the median of the values of $\hat{JM}$ and the standard deviation to this median are calculated. Notice that the median is used rather than the mean value, since the median is robust to outliers. Using these two statistics a threshold $\theta$ is calculated, such that:
+As a consequence of the filtering step, the number of clusters for an activity will be equal or less than the clusters provided as input.
+
+
+\subsection{Similarity-based outlier detection step}
+\label{subsec:learner:outlier}
+The idea behind the similarity-based outlier detection is simple: all the action sequences describing the same activity will have their own similarity distribution depending on the varied ways of performing the activity by a concrete user. Spurious action sequences will be those which are very similar to valid action sequences, and their difference will be related to sensor noise or clustering errors. Hence, if outliers are detected in the similarity space between action sequences, those outliers will point to spurious action sequences. 
+
+The first thing needed to apply the idea introduced above is a similarity measure for two action sequences. The literature offers a lot of similarity measures to compare two sequences. However, many of them take into account the order of the elements of both sequences, such as the Levenshtein distance \cite{Levenshtein1966}, Hamming distance \cite{Hamming1950} or most frequent $k$ characters \cite{Seker2014}. As explained in previous Section \ref{subsec:learner:filtering}, the order of actions is not relevant for activity modelling, thus order-based similarity measures are not useful for the outlier detection.
+
+There are two similarity measures that do not care about the order of the elements of sequences, namely the Jaccard coefficient \cite{A.K.Jain1988} and the S{\o}rensen-Dice coefficient \cite{Sorensen1948}. The Jaccard coefficient measures similarity between finite sample sets, and is defined as the size of the intersection divided by the size of the union of the sample sets:
 
 \begin{equation}
+\label{eq-jaccard}
+  Jaccard(A, B) = \frac{A \cap B}{A \cup B}
+ \end{equation}
+
+It can be seen that $Jaccard(A, B) \in [0, 1]$. Moreover, if sequences $A$ and $B$ are equal, $Jaccard(A, B) = 1$. If $A$ and $B$ are empty sequences the Jaccard coefficient is defined to be 1.
+
+S{\o}rensen-Dice coefficient is very similar to the Jaccard coefficient. It is denoted as $QS$ and defined as the size of the intersection multiplied by two divided by the sum of the elements of both sequences:
+
+\begin{equation}
+ QS(A, B) = \frac{2 |A \cap B|}{|A| + |B|}
+\end{equation}
+
+Similarly to Jaccard coefficient, $QS(A, B) \in [0, 1]$. Since it does not satisfy the triangle inequality, it can be considered a semimetric version of the Jaccard coefficient. The S{\o}rensen–Dice coefficient is mainly useful for ecological community data. Justification for its use is primarily empirical rather than theoretical, although it can be justified theoretically as the intersection of two fuzzy sets \cite{Roberts1986}. 
+
+For the outlier detection step, the Jaccard coefficient has been selected, because it is a theoretically well founded measure which can be seen as the basis of the S{\o}rensen-Dice coefficient. So the similarity between two action sequences is given by the Jaccard coefficient of both sequences. The value 1 denotes that both sequences are equal, whereas 0 means that there is nothing in common between both sequences. Notice that due to the filtering step (Section \ref{subsec:learner:filtering}) there will not be equal action sequences at this stage, hence value 1 will not appear. Similarly, having a 0 value is also impossible, since all the action sequences describing the same activity share at least the actions contained in their IAMs. 
+
+The similarity-based outlier detection is an iterative algorithm. It calculates the so called \textit{Jaccard Matrix} ($JM$), which is a square matrix of all action sequences that remain after steps 1 and 2. $JM_{i, j}$ stores the Jaccard coefficient for action sequences $i$ and $j$. The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient is 1. Removing diagonal values from $JM$, $\hat{JM}$ is obtained. This matrix has the information of the similarity of all action sequences detected for an activity. To detect outlier action sequences, the median of the values of $\hat{JM}$ and the standard deviation to this median are calculated. Notice that the median is used rather than the mean value, since the median is robust to outliers. Using these two statistics a threshold $\theta$ is calculated, such that:
+
+\begin{equation}
+\label{eq-threshold}
  \theta = max \{ median(\hat{JM}) + std(\hat{JM}), \lambda \}
 \end{equation}
 
 The first part of the calculation of $\theta$ captures the relative similarity among all action sequences and establishes an adequate threshold to identify outliers. However, as the Jaccard coefficient is defined in an absolute scale, the second part ($\lambda \in [0, 1]$) has to be added. For relatively short action sequences used in the experiments (the longest ones are around 9 actions), 0.75 has shown to be a good balanced value. $\lambda$ prevents fusing sequences that even being more similar than most of the others, their similarity is not higher than it. Sequences below $\lambda$ are considered too different to be fused. 
 
 The Jaccard based outlier detection algorithm fuses sequences whose Jaccard coefficient is higher than $\theta$, until no sequences can be fused. To fuse, the fusion function has been defined. Given two action sequences $S_1$ and $S_2$ with associated occurrence frequencies $f_1$ and $f_2$, the fusion function returns the sequence whose associated frequency is higher. The new occurrence frequency of the returned action sequence will be the sum of $f_1$ and $f_2$. This fusing heuristic states that the lower frequency sequence is a spurious variation of the higher frequency sequence.
+
+\subsection{The complete AML algorithm}
+\label{subsec:learner:complete}
 
 The output of the $AML$ is shown in Figure \ref{fig-aml-output}.
 

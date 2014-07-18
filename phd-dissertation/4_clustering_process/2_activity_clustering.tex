@@ -107,6 +107,7 @@ Nevertheless, while executing the $AC$ algorithm, starting times of activities c
 In contrast with time metrics 1 and 2, where activity start and end were given by $SA^3$ and activity duration was assumed to be located symmetrically around the centre of the activity, the third time metric uses the start time of the previous activity as found by $AC$. Afterwards, the centre of the activity is calculated projecting the duration from the starting point. This makes previous activity treatment more accurate. However, notice that the same approach cannot be applied to the next activity, since it has not been treated yet. The estimation given by $SA^3$ cannot be improved, because surrounding activities have not been treated when action $c$ is being analysed. Hence, the best guess is to keep using start and end times provided by $SA^3$.
 
 \subsection{The complete AC algorithm}
+\label{subsec:clustering:complete-ac}
 
 To sum up, the $AC$ algorithm takes the results of $SA^3$ as the initialisation step. First, it treats insiders for all the activities detected by $SA^3$, using the compatibility function (equation \ref{eq-comp}). Afterwards, it treats outsiders in time order, using the candidate function (equation \ref{eq-candidate}) and defined three time metrics (equations \ref{eq-t1}, \ref{eq-t2} and \ref{eq-t3}). The complete algorithm is depicted as pseudo-code in Algorithm \ref{alg:ac}.
 

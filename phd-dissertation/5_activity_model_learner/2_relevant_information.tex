@@ -1,12 +1,22 @@
 \section{Identifying Relevant Information}
 \label{sec:learner:relevant}
 
-Explain all the available information: actions, objects, patterns, frequencies, duration.
+%Explain all the available information: actions, objects, patterns, frequencies, duration.
 
-Explain why pattern similarity and associated frequencies are the best candidates to learn EAMs. Duration is discarded because of the InRange function and because no clear relationship between duration and spurious activities have been found. 
+To address problem \ref{pro-aml}, the information $AML$ can use is the one stored in the output of the clustering process (activity clusters and fully annotated dataset) and the context knowledge file. Notice that the information from context knowledge has already been exploited in the clustering process, both by $SA^3$ and $AC$, so it cannot offer any new relevant information for $AML$. In other words, the output of the clustering process cannot be further analysed and refined using the information from the context knowledge file.
 
-Explain the approach to identify spurious action sequences (due to sensor noise and clustering errors).
+Thus, $AML$ can only rely on the activity clusters file and the fully annotated dataset. It is important to identify what information can be obtained from those files and whether they are relevant in order to learn EAMs from the activity clusters. Basically, the activity clusters file is obtained as a summary of the fully annotated dataset. The only information which is not stored in the activity clusters file and it is in the fully annotated dataset is the start and end times for concrete executions of activities. Notice that the mean duration and standard deviation are calculated for each activity (not for each activity variation) and stored in the activity clusters file. However, all the clusters in the activity clusters file have been obtained applying the time feasibility InRange function (equation \ref{eq-candidate}), so all of them are feasible models from the duration point of view. Hence, concrete activity durations are not relevant for $AML$ and in consequence, the fully annotated dataset will not be used as an input to $AML$.
 
-Explain the problems arose from using frequency as criterion.
+Activity clusters file is then the only input to the $AML$ algorithm. The information provided in this file has already be shown in Figure \ref{fig-clusters-file} and described in Section \ref{subsec:clustering:complete-ac}. Now, this information will be analysed to assess its relevance to learn EAMs:
 
-Conclude with the fact that only similarity of action sequences can be used in order to keep all variations performed by a user.
+\begin{enumerate}
+ \item Locations: the locations contained for each activity are compatible with the locations defined in the context knowledge. The relative occurrences of those locations are not relevant to learn EAMs. They can be used to learn descriptive properties, for instance, but this is not the objective of $AML$, so locations will not be used.
+ \item Actions: the list of all actions used and their frequencies may serve to identify actions that are executed very rarely for a given activity. However, due to the conservative approach and considering that even being rare that action could really be executed for that activity by a concrete user, the frequency information of actions cannot be directly used to discard any of them.
+ \item Patterns: patterns represent the actions sequences (clusters) with their associated frequencies. They contain all the varied ways a user executed to perform an activity, so they are the key element to learn EAMs.
+ \item Objects: $AML$ attempts at learning activity models as sequences of actions. The concrete objects used to execute those actions are not relevant. Objects may be used to learn descriptive properties, but not actions properties, so they will not be used for $AML$.
+ \item Occurrences: the total number of clusters for a given activity. It does not provide any significant information to learn EAMs.
+ \item Duration: it can be used to learn descriptive properties and update duration information provided by domain experts in the context knowledge. However, it cannot be used to learn action properties.
+\end{enumerate}
+
+In consequence, the information stored in patterns is the only relevant information for $AML$. Remember that patterns store all the different action sequences extracted by the clustering process for a given activity with associated frequencies. 
+
