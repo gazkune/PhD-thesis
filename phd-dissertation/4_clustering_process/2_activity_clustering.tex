@@ -58,7 +58,7 @@ To capture time feasibility, the duration given by the expert in an IAM is inter
 
 Nevertheless, due to human behaviour variations, there will be some executions whose duration is outside the standard deviation. To capture those executions, $InRange$ function considers all the actions lying inside $k$ standard deviations. For the experiments run in this dissertation $k=2$ has been set, but the value can be adjusted depending on the area which is desired to cover. For a concrete activity execution, the mean of the activity is calculated as the centre of the detected start and end of the activity, as given by $SA^3$. Using this mean calculation, duration estimation given in the context knowledge is the standard deviation of the Guassian distribution for action time distances. Hence, in the case depicted in Figure \ref{fig-in-range}, where Gaussian distributions are calculated as described, the outsider action represented with a star is in range with activities $A_1$ and $A_2$ for $k=2$.
 
-\begin{figure}[!t]
+\begin{figure}[htbp]%[!t]
 \centering
 \includegraphics[width=\textwidth]{in_range_criterion.pdf}
     \caption{Gaussian distributions of activity durations for activities $A_1$ and $A_2$. Vertical lines show the standard deviation and the star represents an outsider action.}
