@@ -30,7 +30,7 @@ If activity clusters are carefully analysed, it can be seen that there are some 
   S_1 \cap S_2 = S_1 \cup S_2
  \end{equation}
 
- Any two action sequences that fulfil equation \ref{eq-equal} are fused. Fusing implies removing one of the action sequences and to sum occurrence frequencies of both action sequences to assign it to the fused sequence. Thus from two sequences a resultant sequence will remain.
+ Any two action sequences that fulfil equation \ref{eq-equal} are fused. Fusing implies removing one of the action sequences and to sum occurrence frequencies of both action sequences to assign it to the fused sequence. Thus from two sequences a resultant sequence will remain, reducing the number of valid action sequences.
 
 \end{enumerate}
 
@@ -52,7 +52,7 @@ There are two similarity measures that do not care about the order of the elemen
 
 It can be seen that $Jaccard(A, B) \in [0, 1]$. Moreover, if sequences $A$ and $B$ are equal, $Jaccard(A, B) = 1$. If $A$ and $B$ are empty sequences the Jaccard coefficient is defined to be 1.
 
-S{\o}rensen-Dice coefficient is very similar to the Jaccard coefficient. It is denoted as $QS$ and defined as the size of the intersection multiplied by two divided by the sum of the elements of both sequences:
+The S{\o}rensen-Dice coefficient is very similar to the Jaccard coefficient. It is denoted as $QS$ and defined as the size of the intersection multiplied by two divided by the sum of the elements of both sequences:
 
 \begin{equation}
  QS(A, B) = \frac{2 |A \cap B|}{|A| + |B|}
@@ -63,7 +63,7 @@ Similarly to Jaccard coefficient, $QS(A, B) \in [0, 1]$. Since it does not satis
 For the outlier detection step, the Jaccard coefficient has been selected, because it is a theoretically well founded measure which can be seen as the basis of the S{\o}rensen-Dice coefficient. So the similarity between two action sequences is given by the Jaccard coefficient of both sequences. The value 1 denotes that both sequences are equal, whereas 0 means that there is nothing in common between both sequences. Notice that due to the filtering step (Section \ref{subsec:learner:filtering}) there will not be equal action sequences at this stage, hence value 1 will not appear. Similarly, having a 0 value is also impossible, since all the action sequences describing the same activity share at least the actions contained in their IAMs. 
 
 % TODO -> enhance the description of the outlier detection algorithm!
-The similarity-based outlier detection is an iterative algorithm applied to all remaining action sequences and where the Jaccard coefficient is used to calculate the similarity between action sequences. The algorithm calculates the so called \textit{Jaccard Matrix} ($JM$), which is a square matrix of all action sequences that remain from the previous iteration (in the case of the first iteration, action sequences coming from the filtering step in Section \ref{subsec:learner:filtering}). $JM_{i, j}$ stores the Jaccard coefficient for action sequences $i$ and $j$. 
+The similarity-based outlier detection is an iterative algorithm which uses the Jaccard coefficient to calculate the similarity between action sequences. The algorithm calculates the so called \textit{Jaccard Matrix} ($JM$), which is a square matrix of all action sequences that remain from the previous iteration (in the case of the first iteration, action sequences coming from the filtering step in Section \ref{subsec:learner:filtering}). $JM_{i, j}$ stores the Jaccard coefficient for action sequences $S_i$ and $S_j$. 
 
 \begin{equation}
 JM = \left(
@@ -134,18 +134,18 @@ The similarity-based outlier detection algorithm is an iterative process that fu
 \label{eq-fusion}
  Fusion(S_i, S_j) = \left\{
 \begin{array}{cc}
- S_i, & \mbox{if } f(S_i) \geq f(S_j) \\
- S_j, & \mbox{else}
+ S_i, & \mbox{if } f_{S_i} \geq f_{S_j} \\
+ S_j, & \mbox{otherwise}
 \end{array}
 \right.
 \end{equation}
 
-\noindent where $f(S_i)$ is the occurrence frequency of action sequence $S_i$. The fused action sequence will have a new occurrence frequency which is calculated as the sum of the occurrence frequencies of fused sequences: $f(S_{fused}) = f(S_i) + f(S_j)$. 
+\noindent where $f_{S_i}$ is the occurrence frequency of action sequence $S_i$. The fused action sequence will have a new occurrence frequency which is calculated as the sum of the occurrence frequencies of fused sequences: $f_{S_{fused}} = f_{S_i} + f_{S_j}$. 
 
 \subsection{The complete AML algorithm}
 \label{subsec:learner:complete}
 
-Combining the filtering step described in Section \ref{subsec:learner:filtering} and the similarity-based outlier detection step described in Section \ref{subsec:learner:outlier}, the complete $AML$ algorithm can be built. Its inputs are the activity clusters file, where the result of the clustering process is given, and the fixed threshold $\lambda$. Algorithm \ref{alg:aml} shows the $AML$ algorithm in pseudo-code.  
+Combining the filtering step described in Section \ref{subsec:learner:filtering} and the similarity-based outlier detection step described in Section \ref{subsec:learner:outlier}, the complete $AML$ algorithm can be built. Its inputs are the activity clusters file, where the result of the clustering process is given, and the fixed threshold $\lambda$. Algorithm \ref{alg:aml} shows the $AML$ algorithm written in pseudo-code.  
 
 \begin{algorithm}
  \caption{$AML$ algorithm for learning extended activity models}
@@ -156,6 +156,7 @@ Combining the filtering step described in Section \ref{subsec:learner:filtering}
  \STATE $activities \leftarrow obtainActivities(activity\_clusters)$
  \FORALL{$activity \in activities$}
    \STATE $action\_sequences \leftarrow obtainSequences(activity, activity\_clusters)$
+   \STATE // The filtering step
    \STATE $action\_sequences \leftarrow filteringStep(action\_sequences)$
    \STATE // The similarity-based outlier detection step
    \REPEAT
@@ -171,7 +172,7 @@ Combining the filtering step described in Section \ref{subsec:learner:filtering}
  \end{algorithmic}
 \end{algorithm}
 
-The output of the $AML$ algorithm is the so called learned action sequences file. This file contains the extended activity models for every activity defined in the context model. An example can be seen in Figure \ref{fig-aml-output}, where two complete and specialised models for activity MakePasta are provided. The example is extracted from a real experiment, where the user prepares pasta \textit{carbonara} more or less the 50\% of times and pasta with tomato sauce also around 50\% of times. Looking at the action sequences, the different ways of preparing pasta can be distinguished. In the first way, labelled by the user as pasta \textit{carbonara}, bacon and cream are used by the user (actions \textit{hasBacon} and \textit{hasCream}). In the second way, action \textit{hasTomato} appears, which makes reference to the usage of tomato sauce. Notice also that the first action sequence contains an \textit{openFridge} action, which suggests that some of the ingredients are stored in the fridge. This does not happen in the second action sequence, where all the ingredients are taken from the food store (action \textit{openStore}).
+The output of the $AML$ algorithm is the so called learned action sequences file, stored in a \textit{Json} file in the current implementation. This file contains the extended activity models for every activity defined in the context model. An example can be seen in Figure \ref{fig-aml-output}, where two complete and specialised models for activity MakePasta are provided. The example is extracted from a real experiment, where the user prepares pasta \textit{carbonara} more or less the 50\% of times and pasta with tomato sauce also around 50\% of times. Looking at the action sequences, the different ways of preparing pasta can be distinguished. In the first way, labelled by the user as pasta \textit{carbonara}, bacon and cream are used by the user (actions \textit{hasBacon} and \textit{hasCream}). In the second way, action \textit{hasTomato} appears, which makes reference to the usage of tomato sauce. Notice also that the first action sequence contains an \textit{openFridge} action, which suggests that some of the ingredients are stored in the fridge. This does not happen in the second action sequence, where all the ingredients are taken from the food store (action \textit{openStore}).
 
 \begin{figure}[htbp]
 \begin{small}
