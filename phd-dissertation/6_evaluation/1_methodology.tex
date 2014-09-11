@@ -54,6 +54,7 @@ Following those ideas simulation tools have already been used for activity recog
 As it can be seen in the literature review done in the paragraph above, simulation tools can be used for activity recognition, since they provide accurate enough datasets to verify some theories. However, none of the references given above specify a concrete methodology to use simulators to evaluate activity recognition approaches. There is no information about how activities should be defined, how different users can be modelled, sensor error models, etc. which are key issues when using a simulator. Therefore, there is a lack of a sound methodology that addresses all those issues. 
 
 \subsection{Hybrid Evaluation Methodology Approach}
+\label{subsec:evaluation:hybrid}
 
 \begin{comment}
  - Describe target scenario: dense sensing, single user - single activity
@@ -62,19 +63,19 @@ As it can be seen in the literature review done in the paragraph above, simulati
 
 The hybrid evaluation methodology has been specially designed for activity recognition systems which assume the dense sensing paradigm (see constraint \ref{cons-dense}). Even though the methodology itself is not limited to concrete scenarios, the implementation presented in this document works for single user - single activity scenarios, i.e. only one user is considered and concurrent or interleaved activities are not taken into account (see constraint \ref{cons-single}). 
 
-The methodology has been named hybrid because it combines real users’ inputs and simulation tools. The key idea is to circulate surveys among target users with the objective of capturing how they perform certain activities of daily living. Using the information collected by surveys, individual scripts are prepared, which are then processed by a synthetic dataset generator tool to simulate arbitrary number of days and generate perfectly labelled datasets of activities. To get as close as possible to real world settings, the synthetic dataset generator uses probabilistic sensor noise models and probabilistic time lapses.
+The methodology has been named hybrid because it combines real users’ inputs and simulation tools. The key idea is to circulate surveys among target users with the objective of capturing how they perform certain activities of daily living. Additionally, users are also requested to describe how their days are in terms of defined activities. For example, a user might make a coffee and brush teeth in week days between 7:00 and 7:30 AM. So the aim of those surveys is to model real human behaviour, covering one of the major weaknesses of simulation-based evaluation methodologies. Using the information collected by surveys, individual scripts are prepared, which are then processed by a synthetic dataset generator tool to simulate arbitrary number of days and generate perfectly labelled datasets of activities. To get as close as possible to real world settings, the synthetic dataset generator uses probabilistic sensor noise models and probabilistic time lapses.
 
-Based on those constraints and ideas, the hybrid evaluation methodology has the following steps (see Figure \ref{fig-methodology}):
+Based on those constraints and ideas, the proposed hybrid evaluation methodology has the following steps (see Figure \ref{fig-methodology}):
 
 \begin{enumerate}
- \item Design activity survey: to capture how users perform activities, a proper survey has to be designed. A detailed explanation of how surveys are designed can be found in Section \ref{subsubsec:evaluation:survey}.
+ \item Design activity surveys: to capture how users perform activities and model their behaviour, a proper survey has to be designed. A detailed explanation of how surveys are designed for this dissertation can be found in Section \ref{subsubsec:evaluation:survey}.
  \item Select target users: depending on the objectives of the research, several user groups can be selected. For example, if the system aims at providing help to elderly people, selecting members of that target group is recommended.
- \item Distribute survey: a suitable way to distribute surveys has to be used, which guarantees users' anonymity. The distribution method can also be influenced by target users. For example, using web-based surveys can be a bad idea if surveys are directed to elderly people, who can be unfamiliar with those technologies. 
- \item Translate surveys to scripts: this step is critical. Appropriate criteria have to be adopted to translate the answers obtained from surveys to scripts for synthetic dataset generator. It is very important not to alter or lose the information provided by users.
- \item Model sensor noise: sensor noise has to be modelled in order to achieve realistic activity datasets. 
+ \item Distribute surveys among target users: a suitable way to distribute surveys has to be used, which guarantees users' anonymity. The distribution method can also be influenced by target users. For example, using web-based surveys can be a bad idea if surveys are directed to elderly people, who can be unfamiliar with those technologies. Personal interviews may be a good alternative for those cases.
+ \item Translate surveys to scripts: this step is critical. Appropriate criteria have to be adopted to translate the answers obtained from surveys to scripts for the synthetic dataset generator - or any other simulator -. It is very important not to alter or lose the information provided by users.
+ \item Model sensor noise: sensor noise has to be modelled in order to achieve realistic activity datasets. Real sensors are not perfect and depending on their technological base, error models have to be provided.
  \item Run synthetic dataset generator: using the scripts obtained from surveys and sensor error models, the synthetic dataset generator is executed. The output of the tool is a labelled activity dataset which will serve as the ground truth for evaluation.
- \item Develop the activity recognition system: researchers have to develop the activity recognition system in order to be tested. Notice that datasets generated by the synthetic dataset generator can also be used in this step, specially for data-driven activity recognition systems.
- \item Compare results: finally, the results obtained by the activity recognition system have to be compared with the ground truth, using appropriate metrics.
+ \item Develop the activity modelling and/or recognition system: researchers have to develop the activity modelling and/or recognition system in order to be tested. Notice that datasets generated by the synthetic dataset generator can also be used in this step, specially for data-driven approaches.
+ \item Compare results: finally, the results obtained by the activity modelling and/or recognition system have to be compared with the ground truth, using appropriate metrics.
 \end{enumerate}
 
 \begin{figure}[htbp]
@@ -93,28 +94,82 @@ Based on those constraints and ideas, the hybrid evaluation methodology has the 
  - Explain survey-script translation criteria
 \end{comment}
 
-The survey to capture how activities are performed by users has two main parts. The first part is devoted to capture what activities are performed in different days. The second part, on the other hand, asks users about how they perform those activities based on user-object interactions. An example of a survey used by us in some projects can be found in the web\footnote{http://goo.gl/etCNyi}.
+One of the main advantages of considering dense sensing scenarios is that activities are described in terms of the objects which have been used to perform that activity. Furthermore, as only sensor activations (and not de-activations) are important for the approach (see definition \ref{def-sa}), to model an activity, it is enough to know which objects are used by the user and the order of usage of those objects. This information is easy to obtain in a survey and will be named \textbf{activity model}.
 
-For the first part, users are asked to describe their week days in terms of activities. They are expected to provide information about time slots and activity sequences performed in those time slots. Users might also be asked to provide time relations between two consecutive activities. For example, between 7:00 and 7:30 AM a user might make a coffee and ten minutes later might brush teeth. 
+\begin{defn}[Activity model]
+\label{def-act-model}
+ An activity model is a sequence of objects used by a user to perform an activity. A user might provide more than one activity model per defined activity, because the same activity can be performed in several ways. Activity models also provide a typical duration given by the user.
+\end{defn}
 
-The second part is longer. Target activities are presented one by one. For each activity, several questions are asked to users, to capture the locations of activities, the ways activities are performed, the objects used for each activity, a description of how those objects are used and duration estimations.
+On the other hand, to model human behaviour appropriately, acquiring activity models is not enough. It is very important to know what activities are performed by a concrete user in a daily basis, alongside with the time slots and time lapses between contiguous activities. 
 
-As described in Section \ref{sec:hybrid-approach}, it is also important to decide the way to circulate the survey and to guarantee user anonymity. In our current experiments, we use Google Forms\footnote{http://www.google.com/google-d-s/createforms.html}, because surveys can be sent by e-mail to target users, users' answers are anonymous and it offers convenient ways to collect and manage received answers. It is worth to point out that even though survey distribution may depend on target users, anonymity should always be preserved. 
+\begin{defn}[Behaviour model]
+\label{def-behaviour}
+ A behaviour model is a sequence of activities with associated time slots and time lapses. A user might provide several behaviour models, as every day can be different in terms of performed activities and times.
+\end{defn}
+
+The main objective of the survey is to obtain activity and behaviour models from target users. Hence, the survey for activities of daily living has two main parts. The first part is devoted to capture what activities are performed in different days, i.e. behaviour models. The second part, on the other hand, asks users about how they perform those activities based on user-object interactions, i.e. activity models. The concrete survey used for the experiments carried out in this dissertation can be found in the web\footnote{http://goo.gl/etCNyi}. 
+
+As it can be seen in Figure \ref{fig-survey-1}, the survey begins with a brief explanation for target users, where the aims of the survey are stated and the target activities are presented. In this case, target activities are seven: make a coffee, make a chocolate, make pasta, brush teeth, watch television, wash hands and read a book. Afterwards, under the heading of ``Day Description'', users are asked to describe their week days in terms of activities. They are expected to provide information about time slots and activity sequences performed in those time slots. Users are also asked to provide time relations between two consecutive activities. For example, between 7:00 and 7:30 AM a user might make a coffee and ten minutes later might brush teeth. This first part has been designed to obtain behaviour models for target users.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{adl_survey_part1.pdf}
+    \caption{The first part of the survey. A small introduction can be found where the aim of the survey is explained, continuing with the behaviour model part.}
+    \label{fig-survey-1}
+\end{figure}
+
+The second part of the survey is longer. Target activities are presented one by one. For each activity, several questions are asked to users, to capture the locations of activities, the ways activities are performed, the objects used for each activity, a description of how those objects are used and typical duration estimations. An example of those questions can be found in Figure \ref{fig-survey-2} for the activity MakeCoffee.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{adl_survey_part2.pdf}
+    \caption{The questions of the survey to capture the activity model of MakeCoffee.}
+    \label{fig-survey-2}
+\end{figure}
+
+As Figure \ref{fig-survey-2} shows six questions are asked per activity. The first question is to know where the activity is performed by the user. As stated in the brief explanation under the question, expected locations are home locations such as kitchen, lounge, etc. Each activity may be performed in several locations, in concordance with the context knowledge model shown in Figure \ref{fig-context-json}. Notice also that expected locations fulfil with the location definition given in definition \ref{def-location}.
+
+The second question deals with different ways of performing an activity, i.e. sub-activities. Users are asked to provide a variation name, which will define the name of the sub-activity. The next question asks about the objects used to perform the activity. This will serve not only to model the activity itself, but also to model the context knowledge, where objects and attached sensors are represented (see Section \ref{subsec:approach:inputs}). Afterwards, the most important question for activity modelling comes: a description of how the enumerated objects are used to perform the activity. Descriptions are requested for each activity variation. From those descriptions, object usage order and time lapses will be obtained. Finally, the last question aims at modelling typical durations for the variations of the target activity.
+
+As described in the steps of the hybrid evaluation methodology in Section \ref{subsec:evaluation:hybrid}, it is also important to decide the way to circulate the survey and to guarantee user anonymity. In our current experiments, we use Google Forms\footnote{http://www.google.com/google-d-s/createforms.html}, mainly for three reasons:
+
+\begin{enumerate}
+ \item Easy circulation: surveys can be sent by e-mail to target users, who receive a link to the web-based survey. This makes survey circulation easy and clear.
+ \item Anonymity: the answers of users are completely anonymous. When a user submits his/her answers, only a tag like ``user 1'' appears. There is no way to link user answers to a concrete user.
+ \item Simple and centralised answer management: Google Forms service generates a centralised table where all the answers are collected. The table is automatically updated whenever a new answer arrives. This web-based table system for answers make data management much easier.
+\end{enumerate}
+
+Summarising, the survey for activities has different questions in order to obtain activity and behaviour models according to their definitions (definitions \ref{def-act-model} and \ref{def-behaviour}). Surveys are circulated among target users using Google Forms, which offers convenient tools to send them by e-mail and collect anonymous answers in a centralised manner.
+
 
 % We may introduce some snapshots of the survey to explain what we wan to obtain from that part
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% SYNTHETIC DATASET GENERATOR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Synthetic Dataset Generator}
-%\label{sec:synthetic}
+\subsubsection{Synthetic Dataset Generator}
+\label{subsubsec:evaluation:synthetic}
 \begin{comment}
  - Explain the script: sensor activation patterns, activity patterns (sequences and alterations), sensor positive noise
  - Explain probabilistic sensor modelling
  - Explain probabilistic time lapses
  - Show output examples and give numbers
 \end{comment}
-The synthetic dataset generator tool is central to the hybrid evaluation methodology. The tool has been implemented in Python 2.7\footnote{https://www.python.org/}. The input to the synthetic dataset generator is a script called \textit{ADL script}. 
+Although the hybrid methodology for evaluation could be used in principle with any simulator for human activity recognition, a custom simulation tool has been developed to evaluate the EAM learning system. Available simulators such as Persim do not cover all the conditions to evaluate the EAM learning system appropriately. It may be very useful in the future, but nowadays it does not have the tools to model sensor errors and different variations of activities.
+
+Following the ideas of Okeyo et al. \cite{Okeyo2012a}, instead of developing a simulator tool that provides visual interaction like Persim, a synthetic dataset generator has been developed. The tool presented by Okeyo et al. does a very good job simulating time relations between sensor activations and activities, so their ideas regarding time management have been borrowed. But the simulator tool developed for this dissertation has more capabilities, allowing researchers to introduce different sensor activation sequences for activities with occurrence probabilities, activity sequences which occur only with a given probability and different ways to model sensor errors.
+
+The synthetic dataset generator tool has been implemented in Python 2.7\footnote{https://www.python.org/}. The inputs to the synthetic dataset generator are a script called \textit{ADL script}, where activity and behaviour models for a concrete user are represented, and the context knowledge file, where some sensor error models are provided. As sensor error models are linked to their type (pressure, tilt, contact, etc), it is a natural choice to place them where all the sensors of a concrete environment are represented, i.e. in the context knowledge file. This part of the context knowledge file has not been introduced in Section \ref{subsec:approach:inputs} because it was not important for the EAM learning system. However, for simulation purposes, sensor error models play a crucial role, and including them in the context knowledge file was the straightforward solution.
+
+Figure \ref{fig-synth-tool} shows a high-level design for the synthetic dataset generator. As it can be seen in the figure, activity and behaviour models and sensor positive noise are represented in the ADL script. On the other hand, sensor missing noise models are obtained from the context knowledge file. Using probabilistic time management tools, the synthetic dataset generator creates a sensor activation dataset, where all sensor activations are properly labelled to use it as ground truth. Sensor activations which are part of an activity are labelled with the activity name. But sensor activations which appear due to sensor noise are labelled with the special label None. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{synthetic_tool.pdf}
+    \caption{High-level design of the synthetic dataset generator tool.}
+    \label{fig-synth-tool}
+\end{figure}
 
 The first part of the \textit{ADL script} is for defining \textit{sensor activation patterns} for activities. Sensor activation patterns are used to describe how activities are performed in terms of sensor activations. An activity can have an arbitrary number of sensor activation patterns, which are specified with an occurrence probability and a sequence of sensor activations with relative time lapses. An example of sensor activation patterns for activity \textit{MakeCoffee} can be found in Figure \ref{fig:sensor-act}.
 
