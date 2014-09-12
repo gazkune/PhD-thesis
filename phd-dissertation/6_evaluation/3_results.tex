@@ -1,13 +1,107 @@
 \section{Results}
 \label{sec:evaluation:results}
 
+All the experiments run produced datasets of 60 days per user, both for the ideal scenario and the complete scenario. A typical user dataset for the ideal scenario contains around 2400 sensor activations, while the complete scenario has around 3500, which gives a clear idea of the positive sensor noise level in the complete scenario (around 45\% in average). Datasets used for the experiments are available in the web\footnote{http://www.morelab.deusto.es/pub/synthetic\_adl\_datasets/}. The same context knowledge file is used for all users and experiments, hence IAMs are identical. This is important, since IAMs are supposed to be incomplete but generic activity models for every user. It is also worth to highlight that actions in IAMs were defined before getting the answers of users to the surveys.
+
+First of all, the results of the clustering process for the defined three time metrics are depicted, comparing the labels assigned by $SA^3$ and posteriorly $AA$ with the ground truth (Tables \ref{tab-r-ideal-t0}, \ref{tab-r-comp-t0}, \ref{tab-r-ideal-t1}, \ref{tab-r-comp-t1}, \ref{tab-r-ideal-t2} and \ref{tab-r-comp-t2}). The average results for all users are shown in each table. Standard deviation is quite significant for $SA^3$, but it is very small for $AA$. That is why it is not shown in the tables. Tables \ref{tab-r-ideal-t0} and \ref{tab-r-comp-t0} show the results obtained with simple time distance (equation \ref{eq-t1}), in the ideal scenario (Table \ref{tab-r-ideal-t0}) and the complete scenario (Table \ref{tab-r-comp-t0}). Similarly, Tables \ref{tab-r-ideal-t1} and \ref{tab-r-comp-t1} show the results for normalized time distance (equation \ref{eq-t2}). Finally, Tables \ref{tab-r-ideal-t2} and \ref{tab-r-comp-t2} show the results of using dynamic normalized time distance for previous activity (equation \ref{eq-t2}) and normalized time distance for next activity (equation \ref{eq-t1}).
+
+
 \begin{table}[htbp]\scriptsize
     \begin{center}    
         \begin{tabular}{ccccccc}
             \hline            
             \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
              & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
-             & $SA^3$ & $AC$ & $SA^3$ & $AC$ & $SA^3$ & $AC$ \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 55.05 & 98.67 & 0    & 0    & 44.95 & 1.33 \\
+	    WatchTelevision & 75.12 & 100   & 0    & 0    & 24.88 & 0    \\
+	    BrushTeeth      & 90.91 & 96.8  & 0    & 0    & 9.1   & 3.2 \\
+	    WashHands       & 74.93 & 99.87 & 0.1  & 13.12  & 25.07 & 0.14 \\
+	    MakePasta       & 55.74 & 99.73 & 0    & 0    & 44.26 & 0.27 \\
+	    ReadBook        & 89.08 & 100   & 0    & 0    & 10.91 & 0 \\
+	    MakeCoffee      & 62.63 & 99.16 & 0    & 0.19 & 37.37 & 0.84 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the ideal scenario using simple time distance.}
+        \label{tab-r-ideal-t0}
+        \end{center}
+\end{table}
+        %\vspace{1cm}
+        
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 54.73 & 97.76 & 1.2  & 2.86 & 45.27 & 2.24 \\
+	    WatchTelevision & 71.13 & 100   & 0    & 0    & 28.87 & 0    \\
+	    BrushTeeth      & 91.18 & 96.97 & 0.28 & 0.41 & 8.82  & 3.03 \\
+	    WashHands       & 75.12 & 98.45 & 0.69 & 12.6 & 24.88 & 1.55 \\
+	    MakePasta       & 53.88 & 99.7  & 1.34 & 5.2  & 46.12 & 0.29 \\
+	    ReadBook        & 82.91 & 94.66 & 0.45 & 0.3  & 17.09 & 5.34 \\
+	    MakeCoffee      & 59.14 & 99.83 & 1.32 & 3.23 & 40.86 & 0.17 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the complete scenario using simple time distance.}
+        \label{tab-r-comp-t0}
+        \end{center}
+\end{table}
+        %\vspace{1cm}
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 55.05 & 98.67 & 0    & 0    & 44.95 & 1.33 \\
+	    WatchTelevision & 75.12 & 100   & 0    & 0    & 24.88 & 0    \\
+	    BrushTeeth      & 90.91 & 96.57 & 0    & 0    & 9.1   & 3.43 \\
+	    WashHands       & 74.93 & 99.86 & 0.1  & 14.27 & 25.07 & 0.14 \\
+	    MakePasta       & 55.74 & 99.8  & 0    & 0    & 44.26 & 0.2 \\
+	    ReadBook        & 89.08 & 100   & 0    & 0    & 10.91 & 0 \\
+	    MakeCoffee      & 62.63 & 99.16 & 0    & 0    & 37.37 & 0.84 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the ideal scenario using normalized time distance.}
+        \label{tab-r-ideal-t1}
+        \end{center}
+\end{table}
+        %\vspace{1cm}
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 54.73 & 97.76 & 1.2  & 2.86 & 45.27 & 2.24 \\
+	    WatchTelevision & 71.13 & 100   & 0    & 0    & 28.87 & 0    \\
+	    BrushTeeth      & 91.18 & 96.7  & 0.28 & 0.41 & 8.82  & 3.3 \\
+	    WashHands       & 75.12 & 98.45 & 0.69 & 13.99  & 24.88 & 1.55 \\
+	    MakePasta       & 53.88 & 99.83 & 1.34 & 5.2 & 46.12 & 0.17 \\
+	    ReadBook        & 82.91 & 94.66 & 0.45 & 0.3  & 17.09 & 5.34 \\
+	    MakeCoffee      & 59.14 & 99.83 & 1.32 & 2.9  & 40.86 & 0.17 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the complete scenario using normalized time distance.}
+        \label{tab-r-comp-t1}
+    \end{center}
+\end{table}
+
+\begin{table}[htbp]\scriptsize
+    \begin{center}    
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
             \hline
             MakeChocolate   & 55.05 & 98.67 & 0    & 0    & 44.95 & 1.33 \\
 	    WatchTelevision & 75.12 & 100   & 0    & 0    & 24.88 & 0    \\
@@ -18,14 +112,19 @@
 	    MakeCoffee      & 62.63 & 99.09 & 0    & 0    & 37.37 & 0.91 \\
             \hline
         \end{tabular}
-        \caption{Average results for 8 users of the clustering process for the \textbf{ideal scenario}.}
+        \caption{Average results for 8 users of the clustering process for the ideal scenario using dynamic normalized time distance for previous and normalized time distance for next activity.}
         \label{tab-r-ideal-t2}
-        \vspace{1cm}
+    \end{center}
+\end{table}
+        %\vspace{1cm}
+        
+\begin{table}[htbp]\scriptsize
+  \begin{center}
         \begin{tabular}{ccccccc}
             \hline            
             \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
              & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
-             & $SA^3$ & $AC$ & $SA^3$ & $AC$ & $SA^3$ & $AC$ \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
             \hline
             MakeChocolate   & 54.73 & 97.76 & 1.2  & 2.64 & 45.27 & 2.24 \\
 	    WatchTelevision & 71.13 & 100   & 0    & 0    & 28.87 & 0    \\
@@ -36,9 +135,36 @@
 	    MakeCoffee      & 59.14 & 99.24 & 1.32 & 2.6  & 40.86 & 0.76 \\
             \hline
         \end{tabular}
-        \caption{Average results for 8 users of the clustering process for the \textbf{complete scenario}.}
+        \caption{Average results for 8 users of the clustering process for the complete scenario using dynamic normalized time distance for previous and normalized time distance for next activity.}
         \label{tab-r-comp-t2}
-        \vspace{1cm}
+   \end{center}
+\end{table}
+        %\vspace{1cm}
+
+To have a clearer vision of the performance of the three time metrics, Table \ref{tab-r-comparative} shows the average precision and recall for all activities using each of the defined time metrics. The table only shows the results for the complete scenario, where the biggest differences can be seen and the best reference for the performance is obtained. 
+
+\begin{table}[htbp]\scriptsize
+\begin{center}
+ \begin{tabular}{ccc}
+  \hline
+   & Avg. Precision & Avg. Recall \\
+  \hline
+  t1 & 96.71\% & 10.18\% \\
+  t2 & 96.59\% & 10.18\% \\
+  t3 & 97.75\% & 10.17\% \\
+  \hline
+ \end{tabular}
+ \caption{Comparative between the usage of the three time metrics for the clustering process in the complete scenario. t1 refers to simple time distance, t2 to normalized time distance and t3 to using dynamic center normalized time distance for previous activity and normalized time distance for next activity.}
+ \label{tab-r-comparative}
+\end{center} 
+\end{table}
+
+On the other hand, Tables \ref{tab-rp-ideal-t2} and \ref{tab-rp-comp-t2} show the results of the complete learning process for EAMs. The output of the clustering process for the previous experiments are used to run the $AML$ as explained in Section \ref{subsec-learner}. As Table \ref{tab-r-comparative} shows that the combination of dynamic normalized and normalized time distance is the best approach for clustering, results of Tables \ref{tab-rp-ideal-t2} and \ref{tab-rp-comp-t2} show only the results of running $AML$ on the clusters produced in the experiments depicted in Tables \ref{tab-r-ideal-t2} and \ref{tab-r-comp-t2}, for the sake of clarity. Average results for all users are provided. While Table \ref{tab-rp-ideal-t2} shows the results for the ideal scenario, Table \ref{tab-rp-comp-t2} depicts the results for the complete one. Notice that for each activity, the average number of patterns is provided in the last column. This value shows the average number of different ways to perform the activity by all users.
+
+
+        
+\begin{table}[htbp]\scriptsize
+  \begin{center}
         \begin{tabular}{ccccc}
             \hline            
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
@@ -53,9 +179,13 @@
 	    MakeCoffee      & 100 & 0     & 0  & 1.71  \\
             \hline
         \end{tabular}
-        \caption{Average results for 8 users of the EAM learning process for the \textbf{ideal scenario}.}
+        \caption{Average results for 8 users of the EAM learning process for the ideal scenario.}
         \label{tab-rp-ideal-t2}
-        \vspace{1cm}
+    \end{center}
+\end{table}
+        %\vspace{1cm}
+\begin{table}[htbp]\scriptsize
+  \begin{center}
         \begin{tabular}{ccccc}
             \hline            
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
@@ -70,7 +200,29 @@
 	    MakeCoffee      & 100 & 100   & 0 & 1.71 \\
             \hline
         \end{tabular}                
-        \caption{Average results for 8 users of the EAM learning process for the \textbf{complete scenario}.}
+        \caption{Average results for 8 users of the EAM learning process for the complete scenario.}
         \label{tab-rp-comp-t2}
+    \end{center}
+\end{table}
+
+To finalize, Table \ref{tab-avg-actions-comp-t2} shows the average number of actions learned by the EAM learning system per activity and the number of actions of the IAMs of those activities, in the complete scenario and using the dynamic center normalized time distance for the previous activity and the normalized time distance for the next activity. This scenario configuration has been selected for its significance. It can be seen that for some activities the number of learned actions is very important, whereas some other activities such as \textit{ReadBook} or \textit{BrushTeeth} do not add many actions to their IAMs.
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccc}
+            \hline            
+            \textbf{Activity} & \textbf{Actions in IAM} & \textbf{Average Number of Learned Actions} \\             
+            \hline
+            MakeChocolate   & 2 & 5.6 \\
+	    WatchTelevision & 2 & 2.55 \\
+	    BrushTeeth      & 3 & 3.5 \\
+	    WashHands       & 2 & 2.79 \\
+	    MakePasta       & 3 & 6.63 \\
+	    ReadBook        & 2 & 2.37 \\
+	    MakeCoffee      & 2 & 6.36 \\
+            \hline
+        \end{tabular}                
+        \caption{Average number of learned actions compared to the number of actions in the IAMs of defined activities. Results are obtained for 8 users in the complete scenario, using dynamic center normalized distance for the previous activity and normalized time distance for the next activity.}
+        \label{tab-avg-actions-comp-t2}
     \end{center}
 \end{table}

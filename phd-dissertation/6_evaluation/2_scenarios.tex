@@ -1,2 +1,19 @@
 \section{Evaluation Scenarios}
 \label{sec:evaluation:scenarios}
+
+Using this methodology, two evaluation scenarios have been set: the \textit{ideal} and the \textit{complete} scenario. The first one does not contain any sensor noise, which makes easier the learning process. The complete scenario is closer to reality since it has sensor noise, which makes learning more demanding.
+
+So the experimental set-up designed consists of: 
+
+\begin{enumerate}
+ \item 8 real users.
+ \item 7 activities of daily living labeled as \textit{MakeCoffee}, \textit{MakeChocolate}, \textit{MakePasta}, \textit{BrushTeeth}, \textit{WatchTelevision}, \textit{WashHands} and \textit{ReadBook}. 
+ \item 2 scenarios: the ideal scenario and the complete scenario.
+\end{enumerate}
+
+The results obtained have been evaluated in two ways: 
+
+\begin{enumerate}
+ \item Compare the labels given by the clustering process to every sensor activation with the ground truth produced by the synthetic dataset generator tool by means of true positives, false positives and false negatives. This evaluation criterion assesses the performance of the clustering process as an activity annotator.
+ \item Compare the learned activity models with the models provided by users in their answers to the survey using again the same metrics (true positives, false positives and false negatives). Activity models are compared action-wise, i.e. if a user states that activity $A$ is performed by action sequences $S_1$ and $S_2$, those sequences constitute the ground truth. The sequences resulting from the learning process (clustering process + $AML$) are compared with this ground truth. In this example, it should be checked whether the learning process learns $S_1$ and $S_2$ for activity $A$.
+\end{enumerate}

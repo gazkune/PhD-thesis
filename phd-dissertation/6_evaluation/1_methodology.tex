@@ -80,7 +80,7 @@ Based on those constraints and ideas, the proposed hybrid evaluation methodology
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{hybrid_methodology.pdf}
+\includegraphics[width=12cm]{hybrid_methodology.pdf}
     \caption{The hybrid evaluation methodology steps depicted in a flowchart.}
     \label{fig-methodology}
 \end{figure}
@@ -160,18 +160,65 @@ Although the hybrid methodology for evaluation could be used in principle with a
 
 Following the ideas of Okeyo et al. \cite{Okeyo2012a}, instead of developing a simulator tool that provides visual interaction like Persim, a synthetic dataset generator has been developed. The tool presented by Okeyo et al. does a very good job simulating time relations between sensor activations and activities, so their ideas regarding time management have been borrowed. But the simulator tool developed for this dissertation has more capabilities, allowing researchers to introduce different sensor activation sequences for activities with occurrence probabilities, activity sequences which occur only with a given probability and different ways to model sensor errors.
 
-The synthetic dataset generator tool has been implemented in Python 2.7\footnote{https://www.python.org/}. The inputs to the synthetic dataset generator are a script called \textit{ADL script}, where activity and behaviour models for a concrete user are represented, and the context knowledge file, where some sensor error models are provided. As sensor error models are linked to their type (pressure, tilt, contact, etc), it is a natural choice to place them where all the sensors of a concrete environment are represented, i.e. in the context knowledge file. This part of the context knowledge file has not been introduced in Section \ref{subsec:approach:inputs} because it was not important for the EAM learning system. However, for simulation purposes, sensor error models play a crucial role, and including them in the context knowledge file was the straightforward solution.
+The synthetic dataset generator tool has been implemented in Python 2.7\footnote{https://www.python.org/}. The inputs to the synthetic dataset generator are a script called ADL script, where activity and behaviour models for a concrete user are represented, and the context knowledge file, where some sensor error models are provided. As sensor error models are linked to their type (pressure, tilt, contact, etc), it is a natural choice to place them where all the sensors of a concrete environment are represented, i.e. in the context knowledge file. This part of the context knowledge file has not been introduced in Section \ref{subsec:approach:inputs} because it was not important for the EAM learning system. However, for simulation purposes, sensor error models play a crucial role, and including them in the context knowledge file was the straightforward solution. Considered sensor error modalities are two: sensor positive noise and missing noise:
+
+\begin{defn}[Sensor positive noise]
+\label{def-positive-noise}
+When a sensor which should not get activated activates, i.e. even though the user does not interact with an object, a sensor monitoring that object gets activated. 
+\end{defn}
+
+\begin{defn}[Sensor missing noise]
+ \label{def-missing-noise}
+ When a sensor which should get activated does not activate, i.e. even though the user does interact with an object, a sensor monitoring that object fails at activating. In consequence, a real interaction gets lost.
+\end{defn}
+
 
 Figure \ref{fig-synth-tool} shows a high-level design for the synthetic dataset generator. As it can be seen in the figure, activity and behaviour models and sensor positive noise are represented in the ADL script. On the other hand, sensor missing noise models are obtained from the context knowledge file. Using probabilistic time management tools, the synthetic dataset generator creates a sensor activation dataset, where all sensor activations are properly labelled to use it as ground truth. Sensor activations which are part of an activity are labelled with the activity name. But sensor activations which appear due to sensor noise are labelled with the special label None. 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{synthetic_tool.pdf}
+\includegraphics[width=10cm]{synthetic_tool.pdf}
     \caption{High-level design of the synthetic dataset generator tool.}
     \label{fig-synth-tool}
 \end{figure}
 
-The first part of the \textit{ADL script} is for defining \textit{sensor activation patterns} for activities. Sensor activation patterns are used to describe how activities are performed in terms of sensor activations. An activity can have an arbitrary number of sensor activation patterns, which are specified with an occurrence probability and a sequence of sensor activations with relative time lapses. An example of sensor activation patterns for activity \textit{MakeCoffee} can be found in Figure \ref{fig:sensor-act}.
+One of the design decisions was to separate the representation of both sensor error models between two different files. The reason is that sensor missing noise is completely linked to sensor technology and the pervasive infrastructure (wireless receivers, communication, and system sampling and conversion mechanisms), whereas sensor positive noise is more related to environmental aspects, such as the distribution of objects and human behaviour. Hence while sensor missing noise can be considered a property of a sensor, sensor positive noise is more influenced by the inhabitant and the environment. That is why missing error models are included in the context knowledge file depending on the sensor type and positive error models are represented in the ADL script which represents a concrete user.
+
+To make this decision the research carried out by Chen et al. in \cite{Chen2012a} has been considered. They show some experiments for activity recognition in a smart home environment using the dense sense activity monitoring approach. Throughout the experiment of 144 activities, a total of 804 user-object interactions were performed. They used the so called User-object Interaction Recognition Accuracy (UoIR), defined as the system’s correctly captured interactions against the total occurred interactions, as the metric to evaluate the reliability and performance of the activity monitoring mechanism. This metric takes into account not only unfired or misread interactions caused by faulty sensors but also those circumstances caused by pervasive infrastructure. As such it is more accurate to reflect the system monitoring performance. Table \ref{tab-sensor-errors} shows the UoIR for different types of sensors with an overall average UoIR of 96.89\%. They conclude that this data proves the monitoring and acquisition mechanism of the system as being very reliable.
+
+\begin{table}[htbp]\scriptsize
+\begin{center}
+ \begin{tabular}{cccc}
+  \hline
+  Sensor type & Total interactions & Captured interactions & Accuracy (\%) \\
+  \hline
+  Contact & 624 & 611 & 97.92 \\
+  Tilt & 126 & 119 & 94.44 \\
+  Pressure & 36 & 32 & 88.89 \\
+  Sound & 18 & 17 & 94.44 \\
+  \hline
+ \end{tabular}
+ \caption{Interaction recognition rate as shown in \cite{Chen2012a}.}
+ \label{tab-sensor-errors}
+\end{center} 
+\end{table}
+
+However, no positive sensor noise has been identified in \cite{Chen2012a}, even though they simulate it in some of their experiments. This is quite reasonable, since the normal state of the sensor represents no interaction. It is very complicated from the technological point of view to change the state of a sensor when no interaction occurs, so it can be concluded that spontaneous sensor activations are very rare. If positive sensor noise is registered, it has to be mainly caused by undesired interactions that actually occur, even though they are not part of the activity. Those undesired interactions can be due to human erratic behaviour or interactions among objects caused by their distribution and casual movements. 
+
+\begin{defn}[User erratic behaviour]
+ \label{def-erratic}
+ A user that interacts with objects even though they are not used for the ongoing activity. It can be caused by many reasons: a user that interacts with an object unpurposely, a user that has to apart an object to reach another object, etc.
+\end{defn}
+
+As according to literature spontaneous sensor activations are rare and interactions among objects usually occur due to human intervention, it can be concluded that sensor positive noise is mainly caused by user erratic behaviour. Thus it has been included in the ADL script rather than in the contextual knowledge file.
+
+\subsubsection*{ADL Script}
+
+The ADL script defines activity models, behaviour models and sensor positive noise for a concrete user. It is currently implemented as a plain text file which has its own syntax. A parser function has been implemented to parse the file and obtain all the models defined on it. 
+
+The first information given in the ADL script refers to the number of days that has to be simulated. A natural number is provided there.
+
+The next part of the file is for defining \textit{sensor activation patterns} for activities. Sensor activation patterns are used to describe how activities are performed in terms of sensor activations and thus represent activity models in terms of sensors. An activity can have an arbitrary number of sensor activation patterns, which are specified with an occurrence probability and a sequence of sensor activations with relative time lapses. An example of sensor activation patterns for activity MakeCoffee can be found in Figure \ref{fig:sensor-act}.
 
 \begin{figure}
 \begin{small}
@@ -186,13 +233,21 @@ MakeCoffee 2
      microwaveSens@20
 \end{lstlisting}
 \end{small}
-\caption{Sensor activation patterns for \textit{MakeCoffee} activity. The activity has two activation patterns with equal probability.}
+\caption{Sensor activation patterns for MakeCoffee activity. The activity has two activation patterns with equal probability.}
 \label{fig:sensor-act}
 \end{figure}
 
-The values that come after the '@' symbol represent the time in seconds between the previous sensor activation and the current one. The synthetic dataset generator establishes a time lapse with a Gaussian random generator whose mean value is the value specified in the script and the standard deviation is the 25\% of the mean. This way, time lapses between two consecutive sensor activations are realistic. 
+First of all, the name of the activity is defined. The number that comes after the name specifies the number of sensor activation patterns for that activity. The next line represents the first sensor activation pattern, which begins with an occurrence probability $p \in [0, 1]$. Notice that the occurrence probabilities of all sensor activations for a given activity must sum to 1. The probability number is followed by a sequence of sensor activations and relative time lapses. The first sensor activation's time has to be 0, indicating that it is the first sensor activation of the activity. The values that come after the '@' symbol represent the time in seconds between the previous sensor activation and the current one. In consequence, $mugSens@5$ means that sensor activation \textit{mugSens} occurs 5 seconds after the \textit{storeSens} sensor activation. How the synthetic dataset generator treats those time lapses will be explained later, when the simulation loop is described.
+%The synthetic dataset generator establishes a time lapse with a Gaussian random generator whose mean value is the value specified in the script and the standard deviation is the 25\% of the mean. This way, time lapses between two consecutive sensor activations are realistic. 
 
-The second part of the \textit{ADL script} defines the so called \textit{activity patterns}, which represent different days of the user in terms of performed activities. Two kinds of activity patterns are defined: (i) \textit{sequences}, where a time slot is given with a sequence of activities and time lapses between two consecutive activities, and (ii) \textit{alterations}, where a probability value is assigned to an activity to be performed in a concrete time slot. An example is depicted in Figure \ref{fig:activity-pattern}. A typical day of a user is described, with an occurrence probability of 0.29, since the activity pattern describes a weekend day ($2/7 \simeq 0.29$). In this case, the user reported that (s)he sometimes reads a book in the afternoon. Alterations allow modelling this kind of behaviour.
+Once all activity models are represented using appropriate sensor activation patterns, behaviour models are defined, which represent different days of the user in terms of performed activities (see definition \ref{def-behaviour}). Two kinds of behaviour models are defined: 
+
+\begin{enumerate}
+ \item \textbf{Sequences:} where a time slot is given with a sequence of activities and relative time lapses between two consecutive activities. Sequences are used to define those activity sequences that are always performed by a user in concrete days.
+ \item \textbf{Alterations:} where a probability value is assigned to an activity to be performed in a concrete time slot. Alterations represent a different kind of behaviour model. Some users might perform an activity regardless of the week day. For example, a user might watch television in evenings with a certain probability. Some days the user watches television, but some days do not. It does not depend on the day, but on some other causes (mood, last hour plans, etc.).
+\end{enumerate}
+
+Specific week days are not represented in behaviour models. Instead of that, the probability of a concrete list of sequences and alterations is given. A list of sequences and alterations model a day. So if such a day model occurs 2 days in a week, i.e. in weekends, the assigned probability will be $2/7 \simeq 0.29$. An example is depicted in Figure \ref{fig:activity-pattern}. A typical day of a user is described, with an occurrence probability of 0.29, since the activity pattern describes a weekend day. In this case, the user reported that (s)he sometimes reads a book in the afternoon. Alterations allow modelling this kind of behaviour.
 
 
 \begin{figure}
@@ -206,15 +261,69 @@ S 22:00-23:00 BrushTeeth@0 WashHands@10
 A 18:00-20:00 ReadBook 0.5
 \end{lstlisting}
 \end{small}
-\caption{An example of an activity pattern, which has an occurrence probability of 0.29 and it is composed of three sequences and an alteration.}
+\caption{An example of a behaviour model for a concrete day, which has an occurrence probability of 0.29 and it is composed of three sequences and an alteration.}
 \label{fig:activity-pattern}
 \end{figure}
 
-The third part of the script is to define \textit{positive sensor noise}, which models the probability for a concrete sensor to get activated in an hour interval independently of ongoing activities. Positive sensor noise is used to model sensor errors and user's erratic behaviour. Erratic behaviour refers to user-object interactions that are not part of an activity. Imagine a user wants to prepare some pasta. Once the store has been open, to grab pasta a coffee recipient has to be moved. This interaction will be registered by the sensor attached to the coffee recipient, but it is not part of the activity. To model sensor positive noise, a probability is assigned to concrete sensors. Synthetic activity generator will use those probabilities to produce noise each hour, using a uniform probability distribution. 
+As it happens with sensor activation patterns, the occurrence probabilities of behaviour models must sum to 1.
 
-But to model sensor errors, positive sensor noise is not enough. Sometimes, sensors that should get activated, fail. To model those errors another file is used: the context model file. This file is a \textit{Json}\footnote{http://www.json.org/} file where objects of the environment, attached sensors and sensor error models are defined. The file is used to acquire sensor error models, which in our case, have been obtained from the analysis given in \cite{Chen2012a}. Using this information, synthetic dataset generator introduces a failing probability to any sensor that has to be activated, achieving more realistic datasets. %Finally, the \textit{ADL script} contains the number of days to be simulated under those conditions. 
+The last part of the script is to define sensor positive noise (see definition \ref{def-positive-noise}). As sensor positive noise is mainly caused by user erratic behaviour it is very complex to model it accurately. Besides, obtaining those models from user surveys is impossible, since users cannot tell how they interact with objects unpurposely. For those reasons, a simple sensor error model has been adopted which guarantees noise generation independently from ongoing activities. A probability value can be assigned to concrete sensors to get activated in an hour interval using a uniform probability distribution. For example, sensor \textit{cupSens} can be assigned an activation probability of 0.1, which means that each hour, the sensor has a 0.1 probability of getting activated. 
 
-Using the \textit{ADL script} and the context model file, the synthetic dataset generator creates a CSV file where each sensor activation has an associated time-stamp and is labelled with an activity name or with special label \textit{None} if it is caused by noise. Additionally, activity start and end time are marked in the dataset.
+\subsubsection*{Context Knowledge File}
+
+The context knowledge file has been described in Section \ref{subsec:approach:inputs}, where an example of such a file was provided in Figure \ref{fig-context-json}. But sensor missing noise models were not shown in that example. As sensor missing noise is mainly related to the sensor type, another part is added to the context knowledge file. More concretely, Figure \ref{fig-missing-noise} shows an example of how such error models are implemented for contact and tilt sensors. For each sensor type, a missing probability $p \in [0, 1]$ is provided. 
+
+\begin{figure}[htbp]
+\begin{small}
+\begin{lstlisting}
+"error_models": {
+   "contact": {
+	"prob": 0.0208
+   },
+   "tilt": {
+	"prob": 0.0556
+  },
+  ...
+}
+\end{lstlisting}
+\end{small}
+\caption{Example of sensor missing noise models for contact and tilt sensors.}
+\label{fig-missing-noise}
+\end{figure}
+
+In consequence, the context knowledge file has the information about activities, objects, sensors and sensor missing noise models. It is mandatory for the synthetic dataset generator to keep the coherence between the sensors used in the ADL script and in the context knowledge file. The tool itself makes sure that coherence exists. If there is a sensor activation in the ADL script which is not represented in the context knowledge file, the synthetic dataset generator raises an error.
+
+\subsubsection*{Simulation Loop}
+
+Using the ADL script and the context model file, the synthetic dataset generator creates a CSV file where each sensor activation has an associated time-stamp and is labelled with an activity name or with special label None if it is caused by noise. Additionally, activity start and end time are marked in the dataset.
+
+For that purpose, the synthetic dataset generator has a simulation loop which has been represented in a flowchart in Figure \ref{fig-sim-loop}. First of all, the simulator fixes the first day start the simulation. In the current implementation the same day the simulator is launched is used as the first day. Afterwards, for the selected day, sensor positive noise is generated. For that purpose, the simulator generates a random number per each sensor with a probability greater than zero. If the sensor has to be activated, the simulator chooses a concrete time inside the current hour using a uniform distribution. The process finishes when the 24 hours of the day have been treated.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=11cm]{simulation_loop.pdf}
+    \caption{A flowchart of the simulation loop of the synthetic dataset generator.}
+    \label{fig-sim-loop}
+\end{figure}
+
+Once sensor positive noise has been generated for the whole day, a behaviour model is chosen, taking into account the probabilities of each model. The behaviour model is a list of sequences and alterations. The first element of the list is taken. If it is a sequence, the activities of the sequence are executed in the specified time slot. For example, assume the sequence is such that 
+
+\begin{scriptsize}
+\begin{lstlisting}
+ S 9:00-10:00 MakeChocolate@0 WatchTelevision@30 BrushTeeth@1800 
+\end{lstlisting}
+\end{scriptsize}
+
+\noindent In that case, the simulator generates a start time for the sequence in the provided time slot, using a uniform distribution. Afterwards, it picks the first activity (MakeChocolate) and looks for the sensor activation patterns of that activity. The simulator probabilistically chooses one of the sensor activation patterns of the activity and executes it. While executing the activity itself, two main aspects are taken into account:
+
+\begin{enumerate}
+ \item Time lapses between sensor activations: the numbers provided in the script are used as the mean value of a Gaussian distribution, whose standard deviation is fixed to a 25\% of the mean by default. So the time lapse is generated probabilistically using as reference the value given in the script. This makes varying and realistic time lapses for consecutive sensor activations.
+ \item Sensor missing noise: before generating the sensor activation, its missing probability is consulted in the context file. The simulator uses the missing probability to decide whether to generate the activation.
+\end{enumerate}
+
+Similarly to sensor activations, time lapses between activities are treated through Gaussian distributions. At the end of the process, the whole sequence will be executed, with probabilistically chosen time lapses and sensor missing errors.
+
+To execute an alteration, the simulator uses its occurrence probability. If it has to be executed, the activity is performed as in sequences. When the behaviour model is fully executed, i.e. all the elements of the list have been treated, the simulator generates the next day and repeats the whole process until the last day is reached. When this happens, the generated dataset is written in a CSV file, where properly labelled time-stamped sensor activations can be found.
 
 \subsection{Discussion about the Hybrid Methodology}
 %\label{sec:discussion}
