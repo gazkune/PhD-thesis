@@ -25,7 +25,7 @@ There are several research groups that share the datasets they obtain in their p
 
 % Present the hybrid methodology and show its need and benefits
 
-\subsection{Analysis of the Viability of the Standard Methodology for the Extended Activity Model Learning System}
+\subsection{Analysis of the viability of the standard methodology for the extended activity model learning system}
 
 To evaluate properly the EAM learning system, activity datasets that fulfil several conditions are needed. Namely:
 
@@ -53,7 +53,7 @@ Following those ideas simulation tools have already been used for activity recog
 
 As it can be seen in the literature review done in the paragraph above, simulation tools can be used for activity recognition, since they provide accurate enough datasets to verify some theories. However, none of the references given above specify a concrete methodology to use simulators to evaluate activity recognition approaches. There is no information about how activities should be defined, how different users can be modelled, sensor error models, etc. which are key issues when using a simulator. Therefore, there is a lack of a sound methodology that addresses the usage of simulation tools for activity recognition evaluation. 
 
-\subsection{Hybrid Evaluation Methodology Approach}
+\subsection{Hybrid evaluation methodology approach}
 \label{subsec:evaluation:hybrid}
 
 \begin{comment}
@@ -85,7 +85,7 @@ Based on those constraints and ideas, the proposed hybrid evaluation methodology
     \label{fig-methodology}
 \end{figure}
 
-\subsubsection{Survey for Activities of Daily Living}
+\subsubsection{Survey for activities of daily living}
 \label{subsubsec:evaluation:survey}
 \begin{comment}
  - Explain each of the questions of the survey
@@ -148,7 +148,7 @@ Summarising, the survey for activities has different questions in order to obtai
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% SYNTHETIC DATASET GENERATOR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Synthetic Dataset Generator}
+\subsubsection{Synthetic dataset generator}
 \label{subsubsec:evaluation:synthetic}
 \begin{comment}
  - Explain the script: sensor activation patterns, activity patterns (sequences and alterations), sensor positive noise
@@ -196,7 +196,7 @@ However, no positive sensor noise has been identified in \cite{Chen2012a}, even 
 
 As according to literature spontaneous sensor activations are rare and interactions among objects usually occur due to human intervention, it can be concluded that sensor positive noise is mainly caused by user erratic behaviour. Thus it has been included in the ADL script rather than in the contextual knowledge file.
 
-\subsubsection*{ADL Script}
+\subsubsection*{ADL script}
 
 The ADL script defines activity models, behaviour models and sensor positive noise for a concrete user. It is currently implemented as a plain text file which has its own syntax. A parser function has been implemented to parse the file and obtain all the models defined on it. 
 
@@ -251,7 +251,7 @@ As it happens with sensor activation patterns, the occurrence probabilities of b
 
 The last part of the script is to define sensor positive noise (see definition \ref{def-positive}). As sensor positive noise is mainly caused by user erratic behaviour it is very complex to model it accurately. Besides, obtaining those models from user surveys is impossible, since users cannot tell how they interact with objects unpurposely. For those reasons, a simple sensor error model has been adopted which guarantees noise generation independently from ongoing activities. A probability value can be assigned to concrete sensors to get activated in an hour interval using a uniform probability distribution. For example, sensor \textit{cupSens} can be assigned an activation probability of 0.1, which means that each hour, the sensor has a 0.1 probability of getting activated. 
 
-\subsubsection*{Context Knowledge File}
+\subsubsection*{Context knowledge file}
 
 The context knowledge file has been described in Section \ref{subsec:approach:inputs}, where an example of such a file was provided in Figure \ref{fig-context-json}. But sensor missing noise models were not shown in that example. As sensor missing noise is mainly related to the sensor type, another part is added to the context knowledge file. More concretely, Figure \ref{fig-missing-noise} shows an example of how such error models are implemented for contact and tilt sensors. For each sensor type, a missing probability $p \in [0, 1]$ is provided. 
 
@@ -275,7 +275,7 @@ The context knowledge file has been described in Section \ref{subsec:approach:in
 
 In consequence, the context knowledge file has the information about activities, objects, sensors and sensor missing noise models. It is mandatory for the synthetic dataset generator to keep the coherence between the sensors used in the ADL script and in the context knowledge file. The tool itself makes sure that coherence exists. If there is a sensor activation in the ADL script which is not represented in the context knowledge file, the synthetic dataset generator raises an error.
 
-\subsubsection*{Simulation Loop}
+\subsubsection*{Simulation loop}
 
 Using the ADL script and the context model file, the synthetic dataset generator creates a CSV file where each sensor activation has an associated time-stamp and is labelled with an activity name or with the special label None if it is caused by noise. Additionally, activity start and end time are marked in the dataset.
 
@@ -307,7 +307,7 @@ Similarly to sensor activations, time lapses between activities are treated thro
 
 To execute an alteration, the simulator uses its occurrence probability. If it has to be executed, the activity is performed as in sequences. When the behaviour model is fully executed, i.e. all the elements of the list have been treated, the simulator generates the next day and repeats the whole process until the last day is reached. When this happens, the generated dataset is written in a CSV file, where properly labelled time-stamped sensor activations can be found.
 
-\subsection{Discussion about the Hybrid Methodology}
+\subsection{Discussion about the hybrid methodology}
 %\label{sec:discussion}
 \begin{comment}
 - Explain the advantages: generate virtually infinite datasets, arbitrary number of days, perfectly labelled, sensor noise, erratic behaviour, realistic time lapses
