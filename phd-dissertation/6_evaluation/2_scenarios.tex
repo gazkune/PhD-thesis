@@ -1,4 +1,4 @@
-\section{Evaluation Scenarios}
+\section{Evaluation Scenarios and Results}
 \label{sec:evaluation:scenarios}
 
 % divide the tests into two stages:
@@ -7,9 +7,301 @@
 
 % In all the cases, explain why we are running such experiments and what we are trying to validate with them. 
 
-% SA³ tests
+Using the tools and methodologies described in Section \ref{sec:evaluation:methodology}, several evaluation scenarios have been prepared to test and validate the most important aspects of the EAM learning system. More concretely, three major evaluation scenarios can be distinguished:
+
+\begin{enumerate}
+ \item $SA^3$ evaluation scenarios: $SA^3$ is a very important part of the whole EAM learning system, since it is the initialisation step of the clustering algorithm. The performance of $SA^3$ has to be carefully analysed to understand how it works, its main advantages and strong points as well as its main weaknesses. Remember that $AA$ algorithm works on the results of $SA^3$, adding -or not- actions to the initial activity clusters detected by $SA^3$. But if $SA^3$ fails at detecting an activity, $AA$ cannot recover it. Thus, the performance of $SA^3$ in all possible situations is key for the performance of the clustering process and in consequence, the performance of the EAM learning system.
+ \item Activity clustering evaluation scenarios: the activity clustering process is the sum of the $SA^3$ and $AA$ algorithms. As a result of the process itself, every sensor activation of a dataset is labelled and several clusters for the defined activities are obtained. Activity clusters' quality is directly linked to labelling performance. Remember that those activity clusters are finally processed by the $AML$ algorithm to learn extended activity models, so assessing the performance of the clustering process by means of labelled sensor activations is very important.
+ \item EAM learning evaluation scenarios: finally, the EAM learning system has to be evaluated. The system is composed by the sequential use of $SA^3$, $AA$ and $AML$. Evaluation scenarios have to be set-up in order to validate that the EAM learning system is able to learn extended activity models for different users. The results obtained in those evaluation scenarios are the most important ones, because they give a clear vision of the performance of the whole system.
+\end{enumerate}
+
+\subsection{$SA^3$ performance}
+\label{subsec:evaluation:sa3}
+
+\subsubsection{Evaluation scenarios and metrics}
+\label{subsubsec:evaluation:sa3:scenarios}
+To assess the performance of $SA^3$ exhaustively, the features of the synthetic dataset generator will be used to generate different kinds of scenarios. To generate those scenarios, surveys will not be used. In the case of $SA³$, the main interest is to measure the performance in presence of increasing noise, activities with several variations, varied order of actions, using IAMs that share the same actions, activity sequences that are very close in time, etc.
+
+With this purpose, four scenarios have been prepared: 
+
+\begin{enumerate}
+ \item The ideal scenario: $SA³$ will be tested in ideal conditions, i.e. there is no sensor noise in the dataset.
+ \item Missing sensor noise scenario: increasing missing error probability is introduced to two sensors that are mapped to actions of the IAMs of two activities, to understand how the detection of those activities evolves compared to noiseless activities. It is also important to see whether the missing noise affecting to some activities influence the detection of the others.
+ \item Positive sensor noise scenario: increasing positive noise is introduced to assess the performance of $SA³$ in presence of positive noise.
+ \item Demanding activities scenario: the fourth scenario tests how $SA³$ performs when IAMs of several activities share many actions among them. 
+\end{enumerate}
+
+The base of the first three scenarios is an ADL script prepared to offer some common features to all experiments. From the activity models point of view: (i) several variations for every activity, (ii) different probability distributions between activity variations, (iii) varied order of actions in activities and (iv) varied time lapses between consecutive sensor activations. From the behaviour model perspective: (i) different day types, (ii) activities which are very close in time and(iii) combinations of sequences and alterations.
+
+The prepared ADL script reflects all those features and tries to be realistic in the definition of the activity and behaviour models. However, notice that at this point, realism is not important (the following evaluation scenarios will address realism properly). Figure \ref{fig:basic-script-activities} shows the defined seven activities of daily living with all the sensor activation patterns and occurrence probabilities. As it can be seen in the Figure, defined activities are: MakeCoffee, MakeChocolate, MakePasta, BrushTeeth, WatchTelevision, WashHands and ReadBook. Different probability distributions can be found for different activities. For example, MakeCoffee has an even occurrence probability for its two variations (50\% - 50\%). However, ReadBook is very unbalanced (90\% - 10\%). Varied order of actions and time lapses can also be seen in the sensor activation patterns of each activity. Finally, some activities contain a lot of sensor activations - six in the case of MakePasta - whereas some others are very short - WashHands or ReadBook with only two -. In general, activity models reflect all the desired features to test the performance of $SA³$, as identified in the paragraph above.
+
+\begin{figure}
+\begin{small}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+MakeCoffee 2
+0.5 mugSens@0 smilkSens@20 microwaveSens@20 afcoffeeSens@120 
+    wsugarSens@20
+0.5 cupSens@0 ktapSens@10 microwaveSens@15 wsugarSens@90 
+    afcoffeeSens@30
+MakeChocolate 2
+0.8 mugSens@0 wmilkSens@20 microwaveSens@20 chocoSens@120
+0.2 cookerSens@0 potSens@5 wmilkSens@20 chocoSens@30 
+    mugSens@200
+MakePasta 2
+0.8 potSens@0 ktapSens@20 cookerSens@30 macaroniSens@120 
+    ftomatoSens@600
+0.2 spaghettiSens@0 potSens@20 ktapSens@25 cookerSens@30 
+    baconSens@50 creamSens@600
+BrushTeeth 2
+0.7 brusherSens@0 toothpasteSens@5 glassSens@30 btapSens@5
+0.3 brusherSens@0 toothpasteSens@5 glassSens@30 btapSens@5 
+    dentalflossSens@15
+WatchTelevision 2
+0.5 sofaSens@0 rcontrolSens@5 tvSens@10
+0.5 rcontrolSens@0 tvSens@5 sofaSens@5
+WashHands 2
+0.85 btapSens@0 bsoapSens@15 handcreamSens@40
+0.15 btapSens@0 bsoapSens@15
+ReadBook 2
+0.9 bookbSens@0 bedSens@10 blampSens@5
+0.1 bookaSens@0 sofaSens@10
+\end{lstlisting}
+\end{small}
+\caption{Sensor activation patterns for the defined activities.}
+\label{fig:basic-script-activities}
+\end{figure}
+
+Behaviour models defined for the first three evaluation scenarios are depicted in Figure \ref{fig:basic-script-behaviour}. Three typical days are defined with different occurrence probabilities. The first one has three sequences and one alteration. Activity WashHands is very close in time to activity BrushTeeth, for example. The second day type tries to simulate a typical day where the inhabitant spends few time in home, showing a big time difference between both activity sequences. Finally, the third day type contains two alterations and three new activity sequences where some activities are again very close in time.
+
+\begin{figure}
+\begin{small}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+Prob 0.43 4
+S 7:00-7:30 MakeChocolate@0 BrushTeeth@120 WashHands@30
+S 13:00-13:30 MakePasta@0 MakeCoffee@60 BrushTeeth@1800
+S 20:00-20:30 MakePasta@0 BrushTeeth@200 ReadBook@150
+A 18:00-19:30 WatchTelevision 0.8
+Prob 0.28 2
+S 7:00-7:30 MakeChocolate@0 BrushTeeth@100 WashHands@30
+S 20:30-21:00 BrushTeeth@0 ReadBook@50
+Prob 0.29 5
+S 9:00-10:00 MakeChocolate@0 WatchTelevision@30 BrushTeeth@1800
+S 13:30-14:30 MakePasta@0 BrushTeeth@150
+S 22:00-23:00 BrushTeeth@0 WashHands@10
+A 15:00-16:00 WatchTelevision 0.75
+A 18:00-20:00 ReadBook 0.5
+\end{lstlisting}
+\end{small}
+\caption{Sensor activation patterns for the defined activities.}
+\label{fig:basic-script-behaviour}
+\end{figure}
+
+Another common element of the first three evaluation scenarios is the IAMs of the activities. All seven activities have the same IAMs alongside the three scenarios. Figure \ref{fig:basic-iams} shows the IAMs used for the experiments. It is very important to keep the same IAMs in all the experiments, since IAMs aim at describing incomplete but generic activity models for any user.
+
+\begin{figure}
+\begin{small}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+   "MakeCoffee": {
+      "type": ["Cooking"],
+      "location": ["Kitchen"],
+      "IAM": ["hasContainer", "hasCoffee"],
+      "duration": 360
+   },
+   "MakeChocolate": {
+      "type": ["Cooking"],
+      "location": ["Kitchen"],
+      "IAM": ["hasContainer", "hasChocolate"],
+      "duration": 500
+   },
+   "MakePasta": {
+      "type": ["Cooking"],
+      "location": ["Kitchen"],
+      "IAM": ["hasPasta", "useCookingAppliance", 
+              "useCookingUtensil"],
+      "duration": 1200
+   },
+   "BrushTeeth": {
+      "type": ["Hygiene"],
+      "location": ["Bathroom"],
+      "IAM": ["hasBrusher", "hasToothpaste", "turnOnTap"],
+      "duration": 130
+   },
+   "WatchTelevision": {
+      "type": ["Entertainment"],
+      "location": ["Lounge"],
+      "IAM": ["hasRemoteControl", "useTV"],
+      "duration": 40
+   },
+   "WashHands": {
+      "type": ["Hygiene"],
+      "location": ["Bathroom"],
+      "IAM": ["turnOnTap", "hasSoap"],
+      "duration": 90
+   },
+   "ReadBook": {
+      "type": ["Entertainment"],
+      "location": ["Bedroom", "Lounge"],
+      "IAM": ["hasBook", "useFurniture"],
+      "duration": 30
+   } 
+\end{lstlisting}
+\end{small}
+\caption{The IAMs of all seven defined activities for the first three evaluation scenarios.}
+\label{fig:basic-iams}
+\end{figure}
+
+The fourth evaluation scenario is different from the other three scenarios. The idea is to use some activities whose IAMs share the same actions. For that purpose, and trying to keep the realism, the following seven activities have been defined: MakeCoffee, MakeWhippedCream, MakeTiramisu, BrushTeeth, WatchTelevision, WashHands and ReadBook. The first three activities' IAMs are formed by the same four actions. More concretely:
+
+\begin{small}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+ IAM(MakeCoffee) = {hasContainer, hasCoffee, hasFlavour}
+ IAM(MakeWhippedCream) = {hasContainer, hasCream, hasFlavour}
+ IAM(MakeTiramisu) = {hasContainer, hasCream, hasCoffee} 
+\end{lstlisting}
+\end{small}
+
+The other activities are defined as in the previous scenarios. So the aim of this evaluation scenario is to see how $SA³$ behaves with challenging IAMs. To focus only on the pattern recognition performance, no noise is added to this fourth evaluation scenario.
+
+For all four evaluation scenarios the same metrics have been used. The most important aspect for $SA³$ to be evaluated is whether activities are well detected. So labels given to sensor activations are not important. Rather, a comparison between the start and end times of the activity detected by $SA³$ and the real activity has to be done. Assume $A_R$ is the real activity and $A_{SA³}$ the activity detected by $SA³$. $A_{SA³}$ is a correct activity detection if $A_R$ contains $A_{SA³}$ and both activities have the same label:
+
+\begin{equation}
+\begin{gathered}
+ t_{start}(A_R) \leq t_{start}(A_{SA³}) \mbox{ and } t_{end}(A_{SA³}) \leq t_{end}(A_R) \\
+ Label(A_R) = Label(A_{SA³})
+\end{gathered}
+\label{metric-sa3}
+\end{equation}
+
+This evaluation criterion is called \textit{activity-based evaluation}. Using activity-based evaluation criterion, true positives, false positives and false negatives are calculated for every activity, comparing the output of $SA³$ with the ground truth.
+
+ %\begin{equation}
+ % \begin{split}
+ %  t_{start}(A_R) \leq t_{start}(A_{SA³}) \mbox{ and } \t_{end}(A_{SA³} \leq t_{end}(A_R) \\
+ %  Label(A_R) = Label(A_{SA³}
+ % \end{split}
+% \end{equation}
 
 
+
+
+
+\subsubsection{Results}
+\label{subsubsec:evaluation:sa3:results}
+% Put the tables and graphics here
+
+First of all, the table for the ideal scenario, showed in Table \ref{tab-sa3-ideal}.
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \textbf{Instances} & \textbf{True Positives (\%)} &  \textbf{False Positives (\%)} & \textbf{False Negatives (\%)}\\             
+            \hline
+            MakeChocolate   & 130 & 100 & 0 & 0 \\
+	    WatchTelevision & 103 & 100 & 0 & 0 \\
+	    BrushTeeth      & 350 & 100 & 0 & 0 \\
+	    WashHands       & 130 & 100 & 0 & 0 \\
+	    MakePasta       & 146 & 100 & 0 & 0 \\
+	    ReadBook        & 112 & 100 & 0 & 0 \\
+	    MakeCoffee      & 56 & 100 & 0 & 0 \\
+            \hline
+        \end{tabular}                
+        \caption{Results for the ideal scenario.}
+        \label{tab-sa3-ideal}
+    \end{center}
+\end{table}
+
+Now, Table \ref{tab-sa3-missing} shows the results for the sensor missing noise scenario.
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{cccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{5}{c}{\textbf{Sensor missing probability}}\\
+             & 0.01 & 0.02 & 0.05 & 0.07 & 0.1 \\
+             & TP- FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%)\\
+            \hline
+            MakeChocolate*   & 99.2 - 0 - 0 & 99.2 - 0 - 0 & 94.6 - 0 - 0 & 92.3 - 0 - 0 & 89.2 - 0 - 0 \\
+	    WatchTelevision  & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    BrushTeeth*      & 98.9 - 0 - 0 & 98.6 - 0 - 0 & 96 - 0 - 0 & 93.8 - 0 - 0 & 89.4 - 0 - 0 \\
+	    WashHands        & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    MakePasta        & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    ReadBook         & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    MakeCoffee       & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+            \hline
+        \end{tabular}                
+        \caption{Results for the sensor missing noise scenario, where TP: true positives, FP: false positives and FN: false negatives. The activities affected by the noise have an asterisk.}
+        \label{tab-sa3-missing}
+    \end{center}
+\end{table}
+
+The next one is Table \ref{tab-sa3-positive}, which shows the results for the sensor positive noise scenario.
+
+\begin{table}[htbp]\scriptsize
+    \begin{center}    
+        \begin{tabular}{cccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{5}{c}{\textbf{Sensor positive probability}}\\
+             & 0.05 & 0.1 & 0.15 & 0.2 & 0.25 \\
+             & TP - FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%)\\
+            \hline
+            MakeChocolate   & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    WatchTelevision & 100 - 0 - 0 & 100 - 0 - 0 & 99.1 - 0.9 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    BrushTeeth      & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    WashHands       & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+	    MakePasta       & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 99.3 - 0.7 - 0 \\
+	    ReadBook        & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 2.6 - 0 & 100 - 0 - 0 & 100 - 1.9 - 0 \\
+	    MakeCoffee      & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
+            \hline
+        \end{tabular}          
+        \caption{Results for positive sensor noise scenario; I: instances; C: correctly annotated; T: total annotated}
+        \label{tab-sa3-positive}
+    \end{center}
+\end{table}
+
+And finally, Table \ref{tab-sa3-demanding} shows the results for the demanding IAMs.
+
+\begin{table}[htbp]\scriptsize
+    \begin{center}         
+        \begin{tabular}{ccccc}
+            \hline
+            \textbf{Activity} & \textbf{Instances} & \textbf{True positives (\%)} & \textbf{False positives (\%)} & \textbf{False negatives (\%)} \\
+            \hline
+            MakeCoffee         & 222 & 100 & 0 & 0 \\
+	    MakeTiramisu       & 120 & 100 & 0 & 0 \\
+	    MakeWhippedCream   & 72  & 100 & 0 & 0 \\
+	    WashHands          & 150 & 100 & 0 & 0 \\
+	    BrushTeeth         & 420 & 100 & 0 & 0 \\
+	    ReadBook           & 127 & 100 & 0 & 0 \\
+	    WatchTelevision    & 151 & 100 & 0 & 0 \\
+            \hline
+        \end{tabular}  
+        \caption{Results for demanding activity models scenario}
+        \label{tab-sa3-demanding}
+    \end{center}
+\end{table}
+
+\subsection{Activity clustering performance}
+\label{subsec:evaluation:clustering}
+
+\subsubsection{Evaluation scenarios and metrics}
+\label{subsubsec:evaluation:clustering:scenarios}
+
+\subsubsection{Results}
+\label{subsubsec:evaluation:clustering:results}
+
+\subsection{EAM learning performance}
+\label{subsec:evaluation:eam}
+
+\subsubsection{Evaluation scenarios and metrics}
+\label{subsubsec:evaluation:eam:scenarios}
+
+\subsubsection{Results}
+\label{subsubsec:evaluation:eam:results}
 
 % The second case
 Using this methodology, two evaluation scenarios have been set: the \textit{ideal} and the \textit{complete} scenario. The first one does not contain any sensor noise, which makes easier the learning process. The complete scenario is closer to reality since it has sensor noise, which makes learning more demanding.
