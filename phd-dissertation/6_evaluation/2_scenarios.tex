@@ -20,7 +20,7 @@ Using the tools and methodologies described in Section \ref{sec:evaluation:metho
 
 \subsubsection{Evaluation scenarios and metrics}
 \label{subsubsec:evaluation:sa3:scenarios}
-To assess the performance of $SA^3$ exhaustively, the features of the synthetic dataset generator will be used to generate different kinds of scenarios. To generate those scenarios, surveys will not be used. In the case of $SA³$, the main interest is to measure the performance in presence of increasing noise, activities with several variations, varied order of actions, using IAMs that share the same actions, activity sequences that are very close in time, etc.
+To assess the performance of $SA^3$ exhaustively, the features of the synthetic dataset generator will be used to set up different kinds of scenarios. To prepare those scenarios, surveys will not be used. In the case of $SA³$, the main interest is to measure the performance in presence of increasing noise, activities with several variations, varied order of actions, using IAMs that share the same actions, activity sequences that are very close in time, etc. As $SA^3$ alone is not going to be used for real applications, the usage of surveys is not necessary. $SA^3$ makes sense inside the complete activity clustering algorithm, whose performance will be tested using real users' inputs.
 
 With this purpose, four scenarios have been prepared: 
 
@@ -30,10 +30,6 @@ With this purpose, four scenarios have been prepared:
  \item Positive sensor noise scenario: increasing positive noise is introduced to assess the performance of $SA³$ in presence of positive noise.
  \item Demanding activities scenario: the fourth scenario tests how $SA³$ performs when IAMs of several activities share many actions among them. 
 \end{enumerate}
-
-The base of the first three scenarios is an ADL script prepared to offer some common features to all experiments. From the activity models point of view: (i) several variations for every activity, (ii) different probability distributions between activity variations, (iii) varied order of actions in activities and (iv) varied time lapses between consecutive sensor activations. From the behaviour model perspective: (i) different day types, (ii) activities which are very close in time and(iii) combinations of sequences and alterations.
-
-The prepared ADL script reflects all those features and tries to be realistic in the definition of the activity and behaviour models. However, notice that at this point, realism is not important (the following evaluation scenarios will address realism properly). Figure \ref{fig:basic-script-activities} shows the defined seven activities of daily living with all the sensor activation patterns and occurrence probabilities. As it can be seen in the Figure, defined activities are: MakeCoffee, MakeChocolate, MakePasta, BrushTeeth, WatchTelevision, WashHands and ReadBook. Different probability distributions can be found for different activities. For example, MakeCoffee has an even occurrence probability for its two variations (50\% - 50\%). However, ReadBook is very unbalanced (90\% - 10\%). Varied order of actions and time lapses can also be seen in the sensor activation patterns of each activity. Finally, some activities contain a lot of sensor activations - six in the case of MakePasta - whereas some others are very short - WashHands or ReadBook with only two -. In general, activity models reflect all the desired features to test the performance of $SA³$, as identified in the paragraph above.
 
 \begin{figure}
 \begin{small}
@@ -72,7 +68,9 @@ ReadBook 2
 \label{fig:basic-script-activities}
 \end{figure}
 
-Behaviour models defined for the first three evaluation scenarios are depicted in Figure \ref{fig:basic-script-behaviour}. Three typical days are defined with different occurrence probabilities. The first one has three sequences and one alteration. Activity WashHands is very close in time to activity BrushTeeth, for example. The second day type tries to simulate a typical day where the inhabitant spends few time in home, showing a big time difference between both activity sequences. Finally, the third day type contains two alterations and three new activity sequences where some activities are again very close in time.
+The base of the first three scenarios is an ADL script prepared to offer some common features to all experiments. From the activity models point of view: (i) several variations for every activity, (ii) different probability distributions between activity variations, (iii) varied order of actions in activities and (iv) varied time lapses between consecutive sensor activations. From the behaviour model perspective: (i) different day types, (ii) activities which are very close in time and(iii) combinations of sequences and alterations.
+
+The prepared ADL script reflects all those features and tries to be realistic in the definition of the activity and behaviour models. However, notice that at this point, realism is not important (the following evaluation scenarios will address realism properly). Figure \ref{fig:basic-script-activities} shows the defined seven activities of daily living with all the sensor activation patterns and occurrence probabilities. As it can be seen in the Figure, defined activities are: MakeCoffee, MakeChocolate, MakePasta, BrushTeeth, WatchTelevision, WashHands and ReadBook. Different probability distributions can be found for different activities. For example, MakeCoffee has an even occurrence probability for its two variations (50\% - 50\%). However, ReadBook is very unbalanced (90\% - 10\%). Varied order of actions and time lapses can also be seen in the sensor activation patterns of each activity. Finally, some activities contain a lot of sensor activations - six in the case of MakePasta - whereas some others are very short - WashHands or ReadBook with only two -. In general, activity models reflect all the desired features to test the performance of $SA³$, as identified in the paragraph above.
 
 \begin{figure}
 \begin{small}
@@ -97,6 +95,8 @@ A 18:00-20:00 ReadBook 0.5
 \caption{Sensor activation patterns for the defined activities.}
 \label{fig:basic-script-behaviour}
 \end{figure}
+
+Behaviour models defined for the first three evaluation scenarios are depicted in Figure \ref{fig:basic-script-behaviour}. Three typical days are defined with different occurrence probabilities. The first one has three sequences and one alteration. Activity WashHands is very close in time to activity BrushTeeth, for example. The second day type tries to simulate a typical day where the inhabitant spends few time in home, showing a big time difference between both activity sequences. Finally, the third day type contains two alterations and three new activity sequences where some activities are again very close in time.
 
 Another common element of the first three evaluation scenarios is the IAMs of the activities. All seven activities have the same IAMs alongside the three scenarios. Figure \ref{fig:basic-iams} shows the IAMs used for the experiments. It is very important to keep the same IAMs in all the experiments, since IAMs aim at describing incomplete but generic activity models for any user.
 
@@ -193,7 +193,11 @@ This evaluation criterion is called \textit{activity-based evaluation}. Using ac
 \label{subsubsec:evaluation:sa3:results}
 % Put the tables and graphics here
 
-First of all, the table for the ideal scenario, showed in Table \ref{tab-sa3-ideal}.
+\paragraph*{Ideal scenario}
+
+To test the performance of $SA^3$ and have a base reference, the ideal scenario has been designed. The ADL script has already been described (Section \ref{subsubsec:evaluation:sa3:scenarios}) and it contains varying order of sensor activations per activity, varied occurrence probability distributions and varied time lapses between sensor activations and activities. The aim of the ideal scenario is to obtain a base reference of the performance of $SA³$ in noiseless conditions. Activity-based evaluation is used and true positives, false positives and false negatives are measured. 
+
+With the objective of getting reliable results, 130 days have been simulated. More concretely, the sensor activation dataset contains 4093 sensor activations describing a total number of 1027 activity instances. The results are shown in Table \ref{tab-sa3-ideal}. For each activity, the number of instances and the percentages of true positives, false positives and false negatives are given.
 
 \begin{table}[htbp]\scriptsize
   \begin{center}
@@ -215,7 +219,11 @@ First of all, the table for the ideal scenario, showed in Table \ref{tab-sa3-ide
     \end{center}
 \end{table}
 
-Now, Table \ref{tab-sa3-missing} shows the results for the sensor missing noise scenario.
+Table \ref{tab-sa3-ideal} shows that the 100\% of all activities are properly captured by $SA³$ under ideal conditions. There are neither false positives nor false negatives. Remember that activity-based evaluation does not check for the labels of every sensor activation. The fact that a 100\% of all activities are properly captured indicates that $SA³$ gets activity time locations robustly.
+
+\paragraph*{Sensor missing noise scenario}
+
+For the next experiments, assessing the performance of $SA³$ under sensor missing error noise is the objective. In principle, the completion criterion of the activity sequence finding step of $SA^3$ suggests that if a sensor activation which is mapped to one of the IAMs fails, $SA³$ would fail to detect that activity (see Section \ref{subsec:clustering:sa3:find} for a detailed explanation). In order to test that suggestion, two of the seven activities have been chosen. Sensor activations which are mapped to the IAMs of those activities are given an increasing missing probability, to see how this missing noise affects the detection of those activities. The rest of the activities are kept noiseless, to measure the effect of missing noise in other activities. Table \ref{tab-sa3-missing} shows the results for the sensor missing noise scenario. The activities which suffer missing noise are marked with an asterisk (MakeChocolate and BrushTeeth). Five experiments are run, each of them simulating 130 days. Sensor missing probabilities are 0.01, 0.02, 0.05, 0.07 and 0.1. For each experiment, true positives, false positives and false negatives are measured, using the activity-based evaluation criterion. 
 
 \begin{table}[htbp]\scriptsize
   \begin{center}
@@ -239,7 +247,20 @@ Now, Table \ref{tab-sa3-missing} shows the results for the sensor missing noise 
     \end{center}
 \end{table}
 
-The next one is Table \ref{tab-sa3-positive}, which shows the results for the sensor positive noise scenario.
+As it can be seen in Table \ref{tab-sa3-missing}, the performance of $SA³$ for the rest of activities does not vary. It keeps on producing 100\% of true positives, while positives and negatives are null. However, true positive rate of activities MakeChocolate and BrushTeeth seems to be linearly reducing with sensor missing noise probability. There is no effect in false positives and negatives, but the effect on true positives is clear, as expected. To make the linearity more clear, Figure \ref{fig:sa3-missing} plots true positive rates for both activities for measured sensor missing noise probabilities. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=10cm]{missing_error_graphic.pdf}
+    \caption{The true positive percentages of $SA^3$ for activities MakeChocolate and BrushTeeth in presence of increasing sensor missing noise.}
+    \label{fig:sa3-missing}
+\end{figure}
+
+Taking into account that noise generation is probabilistically accomplished in the synthetic dataset generator, Figure \ref{fig:sa3-missing} is a confirmation of the inverse linear relation between sensor missing noise and $SA³$ activity detection performance. When missing error increases, activity detection decreases. 
+
+\paragraph*{Sensor positive noise scenario}
+
+To test the sensor positive noise scenario, five experiments have been run. For each of the experiments, six sensors are picked up randomly and they are assigned increasing sensor positive noise probability. This strategy allows measuring the performance of $SA³$ in presence of positive noise. For each of the experiments 130 days are simulated again. To have a reference of the level of noise, sensor activations in each dataset scale from 5054 to 8850. The noiseless scenario presented 4093 sensor activations, so the noisiest dataset contains around 46\% more sensor activations. Table \ref{tab-sa3-positive} shows the results for the sensor positive noise scenario. Each experiment is identified by its noise level, where 0.05 means that all randomly selected sensors have a positive noise probability of 0.05 per hour. For each experiment, true positives, false positives and false negatives are depicted.
 
 \begin{table}[htbp]\scriptsize
     \begin{center}    
@@ -258,12 +279,16 @@ The next one is Table \ref{tab-sa3-positive}, which shows the results for the se
 	    MakeCoffee      & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
             \hline
         \end{tabular}          
-        \caption{Results for positive sensor noise scenario; I: instances; C: correctly annotated; T: total annotated}
+        \caption{Results for positive sensor noise scenario; TP: true positives; FP: false positives; FN: false negatives}
         \label{tab-sa3-positive}
     \end{center}
 \end{table}
 
-And finally, Table \ref{tab-sa3-demanding} shows the results for the demanding IAMs.
+Table \ref{tab-sa3-positive} shows that sensor positive noise affects true positives and false positives. For the first one, a slight reduction for some activities can be seen. For the second one, some activities show rates that even being greater than zero, they are still very low, 2.6\% being the highest for those experiments. Exploring obtained data deeper, it was found that true positive decrease is generated by the appearance of false positives, i.e. in some cases, the false positives are generated overlapped with the real activity, but as they are not contained by the real activity, they are false positives and affect the detection rate. This happens when a sensor activation which is mapped to an action in the IAM of a given activity is generated by chance very close in time from a real execution of that activity. It can be seen in activities WatchTelevision and MakePasta, for example. In some other cases, false positives do not affect true positives (look at ReadBook for 0.15 and 0.25 noise levels). In those cases, the problem is that the IAM of activity ReadBook is composed by two actions: \textit{hasBook} and \textit{useFurniture}. As sensor activations for two sensors monitoring furniture and books were chosen randomly for noise generation, it turned out that both activations were given in such circumstances that they were detected as activities. However, they do not affect any other activity detection.
+
+\paragraph*{Demanding activities scenario}
+
+The final scenario aims at testing $SA³$ under demanding activities. As it has been explained in Section \ref{subsubsec:evaluation:sa3:scenarios}, demanding activities are those which share many common actions in their IAMs. It can be thought that as $SA³$ uses a pattern recognition algorithm where some specific domain-based criteria are applied, its performance could be affected by very similar IAMs. Those conditions are simulated using seven activities, where MakeCoffee, MakeTiramisu and MakeWhippedCream share the same four actions in their IAMs. Remember that even being very similar, they are still different and unique. For this special scenario, a total number of 1262 activity instances have been produced. No sensor noise has been produced for the experiment, since the objective is to see the effect of demanding activities. Obtained results can be seen in Table \ref{tab-sa3-demanding}.
 
 \begin{table}[htbp]\scriptsize
     \begin{center}         
@@ -280,31 +305,25 @@ And finally, Table \ref{tab-sa3-demanding} shows the results for the demanding I
 	    WatchTelevision    & 151 & 100 & 0 & 0 \\
             \hline
         \end{tabular}  
-        \caption{Results for demanding activity models scenario}
+        \caption{Results for demanding activity models scenario.}
         \label{tab-sa3-demanding}
     \end{center}
 \end{table}
+
+Results show that $SA³$ is not affected by the similarity of IAMs, as long as they are unique. True positives are 100\% for all activities, whereas false positives and negatives are zero. The situation is exactly the same as in the ideal scenario. Notice that assuming unique IAMs for each activity is very reasonable, since if there are two equal IAMs for two activities, those two activities should actually be one. 
 
 \subsection{Activity clustering performance}
 \label{subsec:evaluation:clustering}
 
 \subsubsection{Evaluation scenarios and metrics}
 \label{subsubsec:evaluation:clustering:scenarios}
+Testing the activity clustering algorithm, i.e. $SA³ + AA$, requires the usage of the hybrid evaluation methodology. The activity clustering algorithm can be seen as an activity annotator algorithm which labels each sensor activation with an activity label. Notice that activity annotation and recognition are not the same thing. Activity recognition is performed online, while sensor activations are being generated. But activity annotation happens offline, once all sensor activations have already been produced. So annotating is typically easier than recognising, since it does not have time restrictions. 
 
-\subsubsection{Results}
-\label{subsubsec:evaluation:clustering:results}
+Contrary to the evaluation of $SA³$, realism is a key issue when testing activity clustering. That is why the hybrid evaluation methodology is used to set up two evaluation scenarios: the \textit{ideal} and the \textit{complete} scenario. The first one does not contain any sensor noise, which makes easier the annotation process. The complete scenario is closer to reality since it has sensor noise, which makes annotating more demanding. Sensor missing noise errors are obtained from the statistics given in \cite{Chen2012a} and shown in Table \ref{tab-sensor-errors}. Noise error models have been specified depending on sensor type. For example, pressure sensors have a missing probability of around 10\%. This means that whenever the activity script contains a pressure sensor activation, the synthetic dataset generator will perform it with a 90\% of probability. On the other hand, to model sensor positive noise, the strategy introduced in Section \ref{subsec:evaluation:hybrid:discussion} has been followed, i.e. to introduce high levels of random positive noise to compensate the lack of appropriate models for user erratic behaviour. For all experiments, 6 sensors are randomly chosen to assign them a positive noise probability of 0.05 per hour. And other five sensors are also chosen randomly to assign them a 0.1 probability. 
 
-\subsection{EAM learning performance}
-\label{subsec:evaluation:eam}
+ADL surveys have been circulated among people from DeustoTech - University of Deusto. Target users are researchers, students and professors, with ages ranking from 20 to 60 years old. The circulated ADL survey can be found in the web\footnote{http://goo.gl/etCNyi}. A total number of 12 answers have been received, but 4 of them were discarded because they provided too vague information to model properly the activity and  behaviour models. Thus, 8 real users are finally used for the experiments. 
 
-\subsubsection{Evaluation scenarios and metrics}
-\label{subsubsec:evaluation:eam:scenarios}
-
-\subsubsection{Results}
-\label{subsubsec:evaluation:eam:results}
-
-% The second case
-Using this methodology, two evaluation scenarios have been set: the \textit{ideal} and the \textit{complete} scenario. The first one does not contain any sensor noise, which makes easier the learning process. The complete scenario is closer to reality since it has sensor noise, which makes learning more demanding.
+It is worth to remember that the $AA$ algorithm has three different time metrics (see Section \ref{sec:clustering:ac}). To test which of them is better, all the generated datasets are treated three times, using a different time metric for each experiment.
 
 So the experimental set-up designed consists of: 
 
@@ -312,11 +331,417 @@ So the experimental set-up designed consists of:
  \item 8 real users.
  \item 7 activities of daily living labelled as MakeCoffee, MakeChocolate, MakePasta, BrushTeeth, WatchTelevision, WashHands and ReadBook. 
  \item 2 scenarios: the ideal scenario and the complete scenario.
+ \item 3 executions of the activity clustering process, using the three different time metrics.
 \end{enumerate}
 
-The results obtained have been evaluated in two ways: 
+Datasets used for the experiments carried out to evaluate activity clustering are available in the web\footnote{http://www.morelab.deusto.es/pub/synthetic\_adl\_datasets/}. As a summary, 16 different datasets can be found there, 2 per user: the datasets for the ideal and the complete scenarios. All datasets simulate 60 days according to the behaviour models provided by each user.
+
+The evaluation criterion in this case, is the so called \textit{action-based evaluation}: compare the labels given by the clustering process to every sensor activation/action with the ground truth produced by the synthetic dataset generator tool by means of true positives, false positives and false negatives. This evaluation criterion assesses the performance of the clustering process as an activity annotator.
+
+\subsubsection{Results}
+\label{subsubsec:evaluation:clustering:results}
+
+\paragraph*{Ideal scenario}
+
+The 8 datasets generated from the ADL surveys for the ideal scenario contain around 2128 sensor activations in average. For each of the experiments, the average true positives, false positives and false negatives are depicted per activity. The averages are calculated over the 8 users. A comparison between the actions labelled by $SA^3$ and $AA$ is depicted in the results. Remember that those results cannot be compared to the results shown for $SA³$ evaluation (Section \ref{subsubsec:evaluation:sa3:results}), since evaluation criteria are different. Table \ref{tab-r-ideal-t1} shows the results when simple time distance is used in $AA$ (equation \ref{eq-t1}). Similarly, Table \ref{tab-r-ideal-t2} depicts the results when normalised time distance is applied (see equation \ref{eq-t2}). Finally, Table \ref{tab-r-ideal-t3} shows how the clustering process performs when the dynamic centre normalised time distance is used for the previous activity (see equation \ref{eq-t3}) and the normalised time distance for the next activity.
+
+\begin{table}[htbp]\scriptsize
+    \begin{center}    
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 55.05 & 98.67 & 0    & 0    & 44.95 & 1.33 \\
+	    WatchTelevision & 75.12 & 100   & 0    & 0    & 24.88 & 0    \\
+	    BrushTeeth      & 90.91 & 96.8  & 0    & 0    & 9.1   & 3.2 \\
+	    WashHands       & 74.93 & 99.87 & 0.1  & 13.12  & 25.07 & 0.14 \\
+	    MakePasta       & 55.74 & 99.73 & 0    & 0    & 44.26 & 0.27 \\
+	    ReadBook        & 89.08 & 100   & 0    & 0    & 10.91 & 0 \\
+	    MakeCoffee      & 62.63 & 99.16 & 0    & 0.19 & 37.37 & 0.84 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the ideal scenario using simple time distance.}
+        \label{tab-r-ideal-t1}
+        \end{center}
+\end{table}
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 55.05 & 98.67 & 0    & 0    & 44.95 & 1.33 \\
+	    WatchTelevision & 75.12 & 100   & 0    & 0    & 24.88 & 0    \\
+	    BrushTeeth      & 90.91 & 96.57 & 0    & 0    & 9.1   & 3.43 \\
+	    WashHands       & 74.93 & 99.86 & 0.1  & 14.27 & 25.07 & 0.14 \\
+	    MakePasta       & 55.74 & 99.8  & 0    & 0    & 44.26 & 0.2 \\
+	    ReadBook        & 89.08 & 100   & 0    & 0    & 10.91 & 0 \\
+	    MakeCoffee      & 62.63 & 99.16 & 0    & 0    & 37.37 & 0.84 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the ideal scenario using normalised time distance.}
+        \label{tab-r-ideal-t2}
+        \end{center}
+\end{table}
+
+\begin{table}[htbp]\scriptsize
+    \begin{center}    
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 55.05 & 98.67 & 0    & 0    & 44.95 & 1.33 \\
+	    WatchTelevision & 75.12 & 100   & 0    & 0    & 24.88 & 0    \\
+	    BrushTeeth      & 90.91 & 98.27 & 0    & 0    & 9.1   & 1.73 \\
+	    WashHands       & 74.93 & 99.72 & 0.1  & 5.1  & 25.07 & 0.27 \\
+	    MakePasta       & 55.74 & 99.8  & 0    & 0.04 & 44.26 & 0.2 \\
+	    ReadBook        & 89.08 & 100   & 0    & 0    & 10.91 & 0 \\
+	    MakeCoffee      & 62.63 & 99.09 & 0    & 0    & 37.37 & 0.91 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the ideal scenario using dynamic normalised time distance for previous and normalised time distance for next activity.}
+        \label{tab-r-ideal-t3}
+    \end{center}
+\end{table}
+
+To get a clearer comparison between three time metrics, Table \ref{tab-r-comparative-ideal} shows the average precision and recall for each time metric. The average is calculated over all activities. As it can be seen, both precision and recall are very high for all three time metrics. However, the combination of dynamic centre normalised and normalised time distances yields the best results, specially for precision. The difference for recall is not very significant. 
+
+\begin{table}[htbp]\scriptsize
+\begin{center}
+ \begin{tabular}{ccc}
+  \hline
+   & Avg. Precision & Avg. Recall \\
+  \hline
+  t1 & 98.12\% & 99.17\% \\
+  t2 & 97.98\% & 99.15\% \\
+  t3 & 99.26\% & 99.36\% \\
+  \hline
+ \end{tabular}
+ \caption{Comparative between the usage of the three time metrics for the clustering process in the ideal scenario. t1 refers to simple time distance, t2 to normalised time distance and t3 to using dynamic centre normalised time distance for previous activity and normalised time distance for next activity.}
+ \label{tab-r-comparative-ideal}
+\end{center} 
+\end{table}
+
+\paragraph*{Complete scenario}
+
+The 8 datasets for the complete scenario are obtained from the same ADL surveys and scripts. But for these datasets, sensor error models are applied. As a result, datasets have an average of around 2942 sensor activations. Compared to the ideal scenario, those datasets have 38.25\% more sensor activations, which gives a clear idea of the high level of sensor positive noise. Notice that this increment comes even having missing errors, which are applied to every sensor activations. The combination of missing and positive noise gives datasets containing 38.25\% more sensor activations, thus sensor positive noise is very high. 
+
+Results are shown in the same manner as for the ideal scenario. As such, Table \ref{tab-r-comp-t1} shows the results when using simple time distance, Table \ref{tab-r-comp-t2} when using normalised time distance and finally, Table \ref{tab-r-comp-t3} when combining dynamic centre normalised and normalised time distances. Once again, a summary of the performance of the three variants is depicted in Table \ref{tab-r-comparative-complete}, where average precision and recall are shown.
+       
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 54.73 & 97.76 & 1.2  & 2.86 & 45.27 & 2.24 \\
+	    WatchTelevision & 71.13 & 100   & 0    & 0    & 28.87 & 0    \\
+	    BrushTeeth      & 91.18 & 96.97 & 0.28 & 0.41 & 8.82  & 3.03 \\
+	    WashHands       & 75.12 & 98.45 & 0.69 & 12.6 & 24.88 & 1.55 \\
+	    MakePasta       & 53.88 & 99.7  & 1.34 & 5.2  & 46.12 & 0.29 \\
+	    ReadBook        & 82.91 & 94.66 & 0.45 & 0.3  & 17.09 & 5.34 \\
+	    MakeCoffee      & 59.14 & 99.83 & 1.32 & 3.23 & 40.86 & 0.17 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the complete scenario using simple time distance.}
+        \label{tab-r-comp-t1}
+        \end{center}
+\end{table}
+
+
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 54.73 & 97.76 & 1.2  & 2.86 & 45.27 & 2.24 \\
+	    WatchTelevision & 71.13 & 100   & 0    & 0    & 28.87 & 0    \\
+	    BrushTeeth      & 91.18 & 96.7  & 0.28 & 0.41 & 8.82  & 3.3 \\
+	    WashHands       & 75.12 & 98.45 & 0.69 & 13.99  & 24.88 & 1.55 \\
+	    MakePasta       & 53.88 & 99.83 & 1.34 & 5.2 & 46.12 & 0.17 \\
+	    ReadBook        & 82.91 & 94.66 & 0.45 & 0.3  & 17.09 & 5.34 \\
+	    MakeCoffee      & 59.14 & 99.83 & 1.32 & 2.9  & 40.86 & 0.17 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the complete scenario using normalised time distance.}
+        \label{tab-r-comp-t2}
+    \end{center}
+\end{table}
+
+
+        
+        
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{6}{c}{\textbf{Clustering Results}} \\
+             & \multicolumn{2}{c}{True Positive (\%)} & \multicolumn{2}{c}{False Positive (\%)} & \multicolumn{2}{c}{False Negative (\%)} \\
+             & $SA^3$ & $AA$ & $SA^3$ & $AA$ & $SA^3$ & $AA$ \\
+            \hline
+            MakeChocolate   & 54.73 & 97.76 & 1.2  & 2.64 & 45.27 & 2.24 \\
+	    WatchTelevision & 71.13 & 100   & 0    & 0    & 28.87 & 0    \\
+	    BrushTeeth      & 91.18 & 98.43 & 0.28 & 0.41 & 8.82  & 1.57 \\
+	    WashHands       & 75.12 & 98.37 & 0.69 & 4.55 & 24.88 & 1.63 \\
+	    MakePasta       & 53.88 & 99.39 & 1.34 & 5.62 & 46.12 & 0.61 \\
+	    ReadBook        & 82.91 & 94.66 & 0.45 & 0.3  & 17.09 & 5.34 \\
+	    MakeCoffee      & 59.14 & 99.24 & 1.32 & 2.6  & 40.86 & 0.76 \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the clustering process for the complete scenario using dynamic normalised time distance for previous and normalised time distance for next activity.}
+        \label{tab-r-comp-t3}
+   \end{center}
+\end{table}
+
+\begin{table}[htbp]\scriptsize
+\begin{center}
+ \begin{tabular}{ccc}
+  \hline
+   & Avg. Precision & Avg. Recall \\
+  \hline
+  t1 & 96.71\% & 98.19\% \\
+  t2 & 96.59\% & 98.17\% \\
+  t3 & 97.75\% & 98.26\% \\
+  \hline
+ \end{tabular}
+ \caption{Comparative between the usage of the three time metrics for the clustering process in the complete scenario. t1 refers to simple time distance, t2 to normalised time distance and t3 to using dynamic center normalised time distance for previous activity and normalised time distance for next activity.}
+ \label{tab-r-comparative-complete}
+\end{center} 
+\end{table}
+
+\subsection{EAM learning performance}
+\label{subsec:evaluation:eam}
+
+\subsubsection{Evaluation scenarios and metrics}
+\label{subsubsec:evaluation:eam:scenarios}
+
+%Same evaluation scenarios as in the previous experiments.
+For the evaluation of the EAM learning system, the same datasets used and described for the evaluation of the activity clustering system have been used (see Section \ref{subsubsec:evaluation:clustering:scenarios}). The idea is to run the $AML$ algorithm on the clusters extracted by the activity clustering process, using the same activity datasets for the same 8 real users. In consequence, the evaluation scenarios are exactly the same, but they are summarised for convenience:
 
 \begin{enumerate}
- \item Compare the labels given by the clustering process to every sensor activation with the ground truth produced by the synthetic dataset generator tool by means of true positives, false positives and false negatives. This evaluation criterion assesses the performance of the clustering process as an activity annotator.
- \item Compare the learned activity models with the models provided by users in their answers to the survey using again the same metrics (true positives, false positives and false negatives). Activity models are compared action-wise, i.e. if a user states that activity $A$ is performed by action sequences $S_1$ and $S_2$, those sequences constitute the ground truth. The sequences resulting from the learning process (clustering process + $AML$) are compared with this ground truth. In this example, it should be checked whether the learning process learns $S_1$ and $S_2$ for activity $A$.
+ \item 8 real users.
+ \item 7 activities of daily living labelled as MakeCoffee, MakeChocolate, MakePasta, BrushTeeth, WatchTelevision, WashHands and ReadBook. 
+ \item 2 scenarios: the ideal scenario and the complete scenario.
+ \item 3 executions of the activity clustering process, using the three different time metrics. $AML$ is posteriorly executed on all three clustering processes independently.
 \end{enumerate}
+
+The chosen evaluation criterion to assess the performance of the EAM learning system is named \textit{model-based evaluation}. It compares the learned activity models with the models provided by users in their answers to the survey using again the same metrics (true positives, false positives and false negatives). Activity models are compared action-wise, i.e. if a user states that activity $A$ is performed by action sequences $S_1$ and $S_2$, those sequences constitute the ground truth. The sequences resulting from the learning process (clustering process + $AML$) are compared with this ground truth. In this example, it should be checked whether the learning process learns $S_1$ and $S_2$ for activity $A$.
+
+Using the described evaluation scenarios and criterion, the EAM learning system's capability of learning activity models is measured. For all experiments, IAMs have been defined previously and they are always the same. Indeed, the IAMs defined in Figure \ref{fig:basic-iams} are the ones used for those experiments. This is important, since IAMs aim at being generic and incomplete activity models for every user. Using those IAMs, the EAM learning system should be able to learn extended activity models for the defined activities, and those models should be the same as the models provided by the users in their surveys. Such results would proof the main claim of this dissertation, i.e. complete and specialised activity models can be learned from user generated data for previously defined incomplete activity models.
+
+\subsubsection{Results}
+\label{subsubsec:evaluation:eam:results}
+
+\paragraph*{Ideal scenario}
+
+The datasets used for those experiments have already been described in Section \ref{subsubsec:evaluation:clustering:scenarios}. Remember that the ideal scenario does not contain any sensor noise. $AML$ is run, taking as inputs the results of the clustering process generated in Section \ref{subsubsec:evaluation:clustering:results}. Thus, Table \ref{tab-rp-ideal-t0} shows the results for the ideal scenario using the simple time distance in the clustering process. Analogously, Tables \ref{tab-rp-ideal-t1} and \ref{tab-rp-ideal-t2} show the results in the same scenario, but applying the normalised time distance in the first and the combination of the dynamic centre normalised distance and normalised distance in the second. 
+
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 0     & 0  & 1 \\
+	    WatchTelevision & 100 & 0     & 0  & 1.14    \\
+	    BrushTeeth      & 100 & 25    & 0  & 1.25 \\
+	    WashHands       & 100 & 37.5    & 0  & 1 \\
+	    MakePasta       & 100 & 0     & 0  & 2 \\
+	    ReadBook        & 100 & 0     & 0  & 1.12  \\
+	    MakeCoffee      & 92.86 & 21.43     & 0  & 1.71  \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the EAM learning process for the ideal scenario, using the simple time distance in the clustering process.}
+        \label{tab-rp-ideal-t0}
+    \end{center}
+\end{table}
+
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 0     & 0  & 1 \\
+	    WatchTelevision & 100 & 0     & 0  & 1.14    \\
+	    BrushTeeth      & 100 & 25    & 0  & 1.25 \\
+	    WashHands       & 100 & 37.5    & 0  & 1 \\
+	    MakePasta       & 100 & 0     & 0  & 2 \\
+	    ReadBook        & 100 & 0     & 0  & 1.12  \\
+	    MakeCoffee      & 92.86 & 7.14     & 0  & 1.71  \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the EAM learning process for the ideal scenario, using the normalised time distance in the clustering process.}
+        \label{tab-rp-ideal-t1}
+    \end{center}
+\end{table}
+
+
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 0     & 0  & 1 \\
+	    WatchTelevision & 100 & 0     & 0  & 1.14    \\
+	    BrushTeeth      & 100 & 37.5  & 0  & 1.25 \\
+	    WashHands       & 100 & 25    & 0  & 1 \\
+	    MakePasta       & 100 & 0     & 0  & 2 \\
+	    ReadBook        & 100 & 0     & 0  & 1.12  \\
+	    MakeCoffee      & 100 & 0     & 0  & 1.71  \\
+            \hline
+        \end{tabular}
+        \caption{Average results for 8 users of the EAM learning process for the ideal scenario, using dynamic centre normalised time distance for the previous activity and normalised time distance for the next activity.}
+        \label{tab-rp-ideal-t2}
+    \end{center}
+\end{table}
+
+All the tables contain the same information. For each defined activity, the average numbers over 8 users are provided for true positives, false positives and false negatives. Additionally, in order to understand results better, the average number of patterns of each activity is also shown. For example, if an activity has an average number of patterns of 2, this means that the activity has been executed in two different ways in average by all 8 users. True positives, false positives and false negatives have to be interpreted respect to those average number of patterns. Imagine, for instance, that an activity has an average number of patterns of 2. If the true positive rate is 50\%, this means that in average, the EAM learning system has learned one correct activity model out of the performed two. 
+
+Finally, a comparative table is shown in Table \ref{tab-aml-comparative-ideal}. Average precision and recall are calculated for all activities, using different time distances in the clustering process.
+
+\begin{table}[htbp]\scriptsize
+\begin{center}
+ \begin{tabular}{ccc}
+  \hline
+   & Avg. Precision & Avg. Recall \\
+  \hline
+  t1 & 90.57\% & 100\% \\
+  t2 & 92.23\% & 100\% \\
+  t3 & 93.25\% & 100\% \\
+  \hline
+ \end{tabular}
+ \caption{Comparative of applying $AML$ to the clustering process with the three time metrics in the ideal scenario. t1 refers to simple time distance, t2 to normalised time distance and t3 to using dynamic centre normalised time distance for previous activity and normalised time distance for next activity.}
+ \label{tab-aml-comparative-ideal}
+\end{center} 
+\end{table}
+
+\paragraph*{Complete scenario}
+
+In the following experiments, $AML$ has been run in the complete scenario, where sensor missing and positive noise are applied. Table \ref{tab-rp-comp-t0} shows the results using simple time distance in the clustering process. Table \ref{tab-rp-comp-t1} does the same using the normalised time distance. Finally, Table \ref{tab-rp-comp-t2} presents the obtained numbers using dynamic centre normalised time distance for the previous activity and normalised time distance for the next activity. All three tables show the true positive, false positive and false negative rates, alongside the average number of patterns per each activity.
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 120   & 0 & 1 \\
+	    WatchTelevision & 100 & 78.57 & 0 & 1.14 \\
+	    BrushTeeth      & 100 & 93.75 & 0 & 1.25 \\
+	    WashHands       & 100 & 75    & 0 & 1 \\
+	    MakePasta       & 100 & 56.25 & 0 & 2 \\
+	    ReadBook        & 100 & 12.5  & 0 & 1.12 \\
+	    MakeCoffee      & 100 & 78.57   & 0 & 1.71 \\
+            \hline
+        \end{tabular}                
+        \caption{Average results for 8 users of the EAM learning process for the complete scenario, using simple time distance in the clustering process.}
+        \label{tab-rp-comp-t0}
+    \end{center}
+\end{table}
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 120   & 0 & 1 \\
+	    WatchTelevision & 100 & 78.57 & 0 & 1.14 \\
+	    BrushTeeth      & 100 & 93.75 & 0 & 1.25 \\
+	    WashHands       & 100 & 75    & 0 & 1 \\
+	    MakePasta       & 100 & 56.25 & 0 & 2 \\
+	    ReadBook        & 100 & 12.5  & 0 & 1.12 \\
+	    MakeCoffee      & 100 & 92.85   & 0 & 1.71 \\
+            \hline
+        \end{tabular}                
+        \caption{Average results for 8 users of the EAM learning process for the complete scenario, using normalised time distance in the clustering process.}
+        \label{tab-rp-comp-t1}
+    \end{center}
+\end{table}
+
+
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
+             & TP (\%) & FP (\%) & FN (\%) & \\             
+            \hline
+            MakeChocolate   & 100 & 120   & 0 & 1 \\
+	    WatchTelevision & 100 & 78.57 & 0 & 1.14 \\
+	    BrushTeeth      & 100 & 93.75 & 0 & 1.25 \\
+	    WashHands       & 100 & 75    & 0 & 1 \\
+	    MakePasta       & 100 & 56.25 & 0 & 2 \\
+	    ReadBook        & 100 & 12.5  & 0 & 1.12 \\
+	    MakeCoffee      & 100 & 100   & 0 & 1.71 \\
+            \hline
+        \end{tabular}                
+        \caption{Average results for 8 users of the EAM learning process for the complete scenario, using dynamic centre normalised time distance for the previous activity and normalised time distance for the next activity.}
+        \label{tab-rp-comp-t2}
+    \end{center}
+\end{table}
+
+As for the ideal scenario, Table \ref{tab-aml-comparative-complete} provides a summary of the performance of each time distance by means of average precision and recall. 
+
+\begin{table}[htbp]\scriptsize
+\begin{center}
+ \begin{tabular}{ccc}
+  \hline
+   & Avg. Precision & Avg. Recall \\
+  \hline
+  t1 & 59.87\% & 100\% \\
+  t2 & 59.28\% & 100\% \\
+  t3 & 59.02\% & 100\% \\
+  \hline
+ \end{tabular}
+ \caption{Comparative of applying $AML$ to the clustering process with the three time metrics in the complete scenario. t1 refers to simple time distance, t2 to normalised time distance and t3 to using dynamic centre normalised time distance for previous activity and normalised time distance for next activity.}
+ \label{tab-aml-comparative-complete}
+\end{center} 
+\end{table}
+
+As the complete scenario is the most realistic one, yet another table is shown to see how many actions are learned by the EAM learning system compared to the number of actions in the IAMs of each activity. Table \ref{tab-avg-actions-comp-t2} shows such results using the combination of dynamic normalised centre and normalised time distance, since results for all three time distances are very similar. Once again, average numbers over 8 users are provided. This table is useful to see how far are the IAMs of some activities from real executions by users.
+
+
+\begin{table}[htbp]\scriptsize
+  \begin{center}
+        \begin{tabular}{ccc}
+            \hline            
+            \textbf{Activity} & \textbf{Actions in IAM} & \textbf{Average Number of Learned Actions} \\             
+            \hline
+            MakeChocolate   & 2 & 5.6 \\
+	    WatchTelevision & 2 & 2.55 \\
+	    BrushTeeth      & 3 & 3.5 \\
+	    WashHands       & 2 & 2.79 \\
+	    MakePasta       & 3 & 6.63 \\
+	    ReadBook        & 2 & 2.37 \\
+	    MakeCoffee      & 2 & 6.36 \\
+            \hline
+        \end{tabular}                
+        \caption{Average number of learned actions compared to the number of actions in the IAMs of defined activities. Results are obtained for 8 users in the complete scenario, using dynamic centre normalised distance for the previous activity and normalised time distance for the next activity.}
+        \label{tab-avg-actions-comp-t2}
+    \end{center}
+\end{table}

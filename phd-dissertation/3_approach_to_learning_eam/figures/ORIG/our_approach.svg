@@ -402,7 +402,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -432,12 +432,12 @@
            y="583.91583"
            x="270.92517"
            sodipodi:role="line"
-           style="font-size:18px">Activity</tspan><tspan
+           style="font-size:18px">Action</tspan><tspan
            id="tspan5926"
            y="606.41583"
            x="270.92517"
            sodipodi:role="line"
-           style="font-size:18px">Clustering</tspan></text>
+           style="font-size:18px">Aggregator</tspan></text>
     </g>
     <g
        id="g5204"
@@ -889,12 +889,12 @@
        id="path4874"
        inkscape:connector-curvature="0" />
     <rect
-       style="opacity:0.17695473;fill:#241f1c;fill-opacity:1;stroke:#000000;stroke-width:1.37464070000000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="opacity:0.17695474;fill:#241f1c;fill-opacity:1;stroke:#000000;stroke-width:1.3746407;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect3132"
        width="628.29132"
        height="196.8627"
        x="198.7115"
-       y="627.35938"
+       y="631.35938"
        ry="53.998363" />
   </g>
 </svg>
