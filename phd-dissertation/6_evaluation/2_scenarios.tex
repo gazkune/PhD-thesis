@@ -178,17 +178,6 @@ For all four evaluation scenarios the same metrics have been used. The most impo
 
 This evaluation criterion is called \textit{activity-based evaluation}. Using activity-based evaluation criterion, true positives, false positives and false negatives are calculated for every activity, comparing the output of $SA³$ with the ground truth.
 
- %\begin{equation}
- % \begin{split}
- %  t_{start}(A_R) \leq t_{start}(A_{SA³}) \mbox{ and } \t_{end}(A_{SA³} \leq t_{end}(A_R) \\
- %  Label(A_R) = Label(A_{SA³}
- % \end{split}
-% \end{equation}
-
-
-
-
-
 \subsubsection{Results}
 \label{subsubsec:evaluation:sa3:results}
 % Put the tables and graphics here
@@ -214,7 +203,7 @@ With the objective of getting reliable results, 130 days have been simulated. Mo
 	    MakeCoffee      & 56 & 100 & 0 & 0 \\
             \hline
         \end{tabular}                
-        \caption{Results for the ideal scenario.}
+        \caption{Results of the $SA³$ algorithm for the ideal scenario.}
         \label{tab-sa3-ideal}
     \end{center}
 \end{table}
@@ -242,7 +231,7 @@ For the next experiments, assessing the performance of $SA³$ under sensor missi
 	    MakeCoffee       & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
             \hline
         \end{tabular}                
-        \caption{Results for the sensor missing noise scenario, where TP: true positives, FP: false positives and FN: false negatives. The activities affected by the noise have an asterisk.}
+        \caption{Results of $SA³$ for the sensor missing noise scenario, where TP: true positives, FP: false positives and FN: false negatives. The activities affected by the noise have an asterisk.}
         \label{tab-sa3-missing}
     \end{center}
 \end{table}
@@ -279,7 +268,7 @@ To test the sensor positive noise scenario, five experiments have been run. For 
 	    MakeCoffee      & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
             \hline
         \end{tabular}          
-        \caption{Results for positive sensor noise scenario; TP: true positives; FP: false positives; FN: false negatives}
+        \caption{Results of $SA³$ for positive sensor noise scenario; TP: true positives; FP: false positives; FN: false negatives}
         \label{tab-sa3-positive}
     \end{center}
 \end{table}
@@ -305,7 +294,7 @@ The final scenario aims at testing $SA³$ under demanding activities. As it has 
 	    WatchTelevision    & 151 & 100 & 0 & 0 \\
             \hline
         \end{tabular}  
-        \caption{Results for demanding activity models scenario.}
+        \caption{Results of $SA³$ for demanding activity models scenario.}
         \label{tab-sa3-demanding}
     \end{center}
 \end{table}
