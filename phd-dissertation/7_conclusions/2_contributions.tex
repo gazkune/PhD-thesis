@@ -1,0 +1,47 @@
+\section{Contributions}
+\label{sec:conclusions:contrib}
+
+A summary of the contributions explained in this dissertation is presented in this section:
+
+\begin{itemize}
+ \item An in-depth state of the art for activity monitoring, modelling and recognition was presented in Chapter \ref{cha:soa}.
+ \begin{itemize}
+  \item Providing a detailed taxonomy of activity recognition approaches.
+  \item Analysing the advantages and disadvantages of activity modelling approaches.
+ \end{itemize}
+
+ \item A knowledge representation formalism for activities and intelligent environments was presented in Chapter \ref{cha:archi}.
+ \begin{itemize}
+  \item It offers a light-weight knowledge representation and processing based on JavaScript Object Notation (JSON) technology.
+  \item It uses compact and easy-to-extend structures for activities, objects, locations and sensors, to achieve environment independence.
+ \end{itemize}
+
+ \item The design architecture for extended activity models was described in Chapter \ref{cha:archi}.
+ \begin{itemize}
+  \item It offers a convenient modular architecture which separates key concepts and allows the implementation of different approaches.
+ \end{itemize}
+
+ \item A novel activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}.
+ \begin{itemize}
+  \item The initialisation step is provided by $SA³$, which uses initial activity models to run a specific pattern recognition algorithm and find activity clusters.
+  \item New actions are aggregated to initial clusters using the $AA$ algorithm, based on location, type and time analysis of actions and activities.
+  \item The activity clustering algorithm is a good example of how domain knowledge can be used to form semantically meaningful clusters in unlabelled datasets.
+ \end{itemize}
+
+ \item An activity model learning algorithm was presented in Chapter \ref{cha:learner}, which uses activity clusters to extract activity models.
+ \begin{itemize}
+  \item It has a flexible filtering step to pre-process the activity clusters in form of action sequences found by the activity clustering algorithm.
+  \item It implements a model similarity-based outlier detection statistical algorithm to detect spurious activity models.
+  \item It outputs complete and specialised activity models for a concrete user alongside with their occurrence frequencies.
+ \end{itemize}
+
+ \item A hybrid evaluation methodology was designed and implemented to properly evaluate the learning system in Chapter \ref{cha:evaluation}. The methodology can also be used for further activity modelling and recognition approaches.
+ \begin{itemize}
+  \item It is based on surveys to users in order to capture how activities are performed by them.
+  \item Using surveys, it allows obtaining the information of any number of users minimising time-cost.
+  \item A special simulator is implemented: the synthetic dataset generator. Its usage allows generating on demand any kind of dataset.
+  \item It allows modelling sensor errors.
+  \item Combining surveys and simulation tools, any kind of experiment can be prepared generating as much data as needed.
+ \end{itemize}
+
+\end{itemize}

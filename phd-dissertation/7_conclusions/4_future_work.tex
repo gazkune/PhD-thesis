@@ -1,0 +1,36 @@
+\section{Future Work}
+\label{sec:conclusions:future}
+
+Inspired by the weaknesses and limitations of the research presented in this dissertation, further research lines have been identified:
+
+\subsection{Integrate the EAM learning system in a complete activity modelling process}
+
+As it has been said in Section \ref{sec:conclusions:conclusions}, the EAM learning system is a solid step towards a dynamic and personalised activity modelling system. However, there are some other pieces to complete the puzzle. For example, Chen et al. developed a learning approach to learn descriptive properties of knowledge-driven activity models in \cite{Chen2014}. They also presented a mechanism to discover new activities.
+
+Combining action and descriptive properties learning schemes with new activity discovery mechanisms in the same activity modelling system is still a challenge. The building blocks are already there, but their integration is not straightforward and it is beyond a technical issue. 
+
+\subsection{Discard meaningless user-object interactions}
+
+The monitoring and modelling approach relies on user-object interactions monitored by simple sensors. However, not all the interactions registered by the sensors are meaningful, in the sense that they are not always directed to the execution of a concrete activity. This phenomenon has been identified in the dissertation as being mainly caused by user erratic behaviour. The consequences of meaningless user-object interactions is the appearance of false positive activity models in the learning process. Thus, research on sensor-action mapping steps to distinguish between meaningful and meaningless user-object interactions is needed.
+
+A possible approach could be to add a sensor-action mapping step, where only those sensor activations that last for a concrete amount of time are mapped to actions. This implies considering sensor state changes from interaction state to no-interaction state and monitor time lapses. Another criterion which can be used for sensor-action mapping step is to monitor how many times a user interacts with an object in a time interval, even though those interactions are short. Combining both criteria, only meaningful object interactions could be identified. Such an approach would allow applying the same EAM learning algorithm to probably obtain better results, reducing the false positive rate of learned activity models.
+
+\subsection{Single user - concurrent activities}
+
+Another promising future research direction is to extend the learning approach to single-user concurrent-activities scenario. People do not usually perform activities sequentially, but they tend to interleave activities, such as washing dishes while preparing pasta. This will have an impact in the clustering process, demanding more complex pattern recognition and time management. For instance, $SA^3$ uses the single-user single-activity constraint for its pattern recognition algorithm, and $AA$ defines insider and outsider actions based on the same constraint. If concurrent activities are considered, the clustering process should be changed. However, some key ideas could be maintained. 
+
+A first idea to tackle such scenarios is to invert the sequence of the clustering process. In the single user - single activity scenario, activities are sequentially ordered in the time axis, which makes the usage of $SA³$ as the initialisation step convenient. But if activities are not sequentially arranged in time, initialisation is more complicated. It seems that defining more generic metrics in the activity space, considering time, location and type information, would generate some initial clusters formed by several activities per cluster. Once those clusters are obtained, initial activity models could be used to try to analyse each cluster and see how many activity combinations in terms of initial activity models can be found. This way, several action sequences per activity could be found, to afterwards apply the Activity Model Learner as described in this dissertation.
+
+\subsection{Perception for complex actions}
+
+Dense sensing monitoring cannot capture all the actions performed by a user with an object. For example, it is not the same to grab a bottle or to open a bottle. But to distinguish between those two actions with the same object is very complicated - if not impossible - following the dense sensing monitoring approach.
+
+However, activity models would greatly benefit from the usage of more complex actions, because descriptions would be more accurate. Being able to use actions such as \textit{opensBottle}, \textit{poursBottleContent}, \textit{closesBottle} and so on would be a big step forward. It seems vision-based perception is the best option for this perception level. Looking at the recent expectation around head mounted devices with cameras like Google Glass\footnote{https://www.google.com/glass/start/}, making research on their benefits for activity monitoring would be very interesting. Head mounted devices allow receiving information about the concrete actions a user is executing, because people tend to look to objects which are being manipulated. Besides, privacy problems are mitigated, because head mounted devices do not record the user externally and they do not have to be necessarily working continuously. 
+
+Taking into account recent progress made in artificial vision and the expected proliferation of head mounted devices, vision-based activity monitoring may become a very good option for activity recognition systems.
+
+\subsection{Learn temporal relations between actions}
+
+Activity models should provide richer information about what actions depend on other actions, instead of being a simple sequence of actions. For example, to introduce fish in the oven after the oven has been switched on. Some actions can be performed in any order, but some others have temporal dependencies.
+
+Once activity clusters have been extracted, the order in which actions have been executed can be analysed. Using frequency analysis and some other learning techniques, it may be feasible to discover and learn temporal relations between actions. This would have an impact in activity models, which would have to be modified in order to incorporate temporal dependencies between actions. 
