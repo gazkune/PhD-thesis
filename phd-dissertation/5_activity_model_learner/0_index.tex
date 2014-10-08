@@ -4,8 +4,8 @@
 
 %: ----------------------- introduction file header -----------------------
 \begin{savequote}[50mm]
-Write here a quote
-\qauthor{Quote author}
+The beautiful thing about learning is that nobody can take it away from you
+\qauthor{B.B. King}
 \end{savequote}
 
 
@@ -21,7 +21,7 @@ Write here a quote
 
 \letra{T}{he} objective of this chapter is to describe and analyse the proposed learning algorithm for specialised and complete activity models which is called Activity Model Learner ($AML$). $AML$ uses the results obtained by the activity clustering process described in Chapter \ref{cha:clustering}, where different action sequences for every activity are identified in the form of clusters. The aim of $AML$ is to learn extended activity models from the information given by the clustering process.
 
-The learning algorithm presented in this Chapter is a statistical algorithm. It uses the similarity between action sequences describing the same activity to identify spurious action sequences, based on statistical outlier detection techniques. As real world scenarios contain sensor errors and as the clustering process may not always label correctly the actions, some of the clusters provided to $AML$ will be spurious. More concretely, some of the clusters will be spurious variations of the actual activity models for a given activity. $AML$ detects those spurious action sequences and fuses them with the most similar action sequence which has been considered valid. The result of such a process is a set of specialised and complete activity models for every activity defined in the context knowledge. 
+The learning algorithm presented in this Chapter is a statistical algorithm. It uses the similarity between action sequences describing the same activity to identify spurious action sequences, based on statistical outlier detection techniques. As real world scenarios contain sensor errors and as the clustering process may not always label correctly the actions, some of the clusters provided to $AML$ will not be valid. More concretely, some of the clusters will be spurious variations of the actual activity models for a given activity. $AML$ detects those spurious action sequences and fuses them with the most similar action sequence which has been considered valid. The result of such a process is a set of specialised and complete activity models for every activity defined in the context knowledge. 
 
 The chapter is divided in four sections:
 

@@ -5,7 +5,7 @@ Introduction
 What's well begun, is half done
 Horace (Horacio)
 
-The first step, my son, which one makes in the world, is the one on which depends the rest of our days.
+* The first step, my son, which one makes in the world, is the one on which depends the rest of our days.
 Voltaire
 
 The distance is nothing; it is only the first step that costs.
@@ -15,7 +15,7 @@ Marie Anne de Vichy-Chamrond, marquise du Deffand,
 Related Work
 -----------------------------------
 
-If I have seen further it is by standing on the shoulders of giants.
+* If I have seen further it is by standing on the shoulders of giants.
 Isaac Newton
 
 -----------------------------------
@@ -28,7 +28,7 @@ Paola Antonelli (2001), curator of architecture and design, Museum of Modern Art
 Simplicity is the keynote of all true elegance.
 Coco Chanel
 
-Simplicity is the shortest path to a solution.
+* Simplicity is the shortest path to a solution.
 Ward Cunningham
 
 Everything should be made as simple as possible, but no simpler.
@@ -54,7 +54,7 @@ William Shakespeare
 What's done can't be undone.
 William Shakespeare
 
-If you keep doing what you've always done, you'll keep getting what you've always gotten.
+* If you keep doing what you've always done, you'll keep getting what you've always gotten.
 Neil Strauss
 
 So many worlds, so much to do,
@@ -70,6 +70,15 @@ George Herbert
 ------------------------------------
 Activity Model Learner
 ------------------------------------
+
+* The beautiful thing about learning is that nobody can take it away from you
+B.B. King
+
+We learn from failure, not from success!
+Bram Stoker
+
+Learning is not child's play; we cannot learn without pain.
+Aristotle
 
 Learning is a kind of natural food for the mind.
 Cicero
@@ -90,7 +99,7 @@ Ward Cunningham
 It is those who know little, and not those who know much, who so positively assert that this or that problem will never be solved by science.
 Charles Darwin
 
-Science is a way of trying not to fool yourself. The first principle is that you must not fool yourself, and you are the easiest person to fool.
+* Science is a way of trying not to fool yourself. The first principle is that you must not fool yourself, and you are the easiest person to fool.
 Richard Feynman
 
 Science, at bottom, is really anti-intellectual. It always distrusts pure reason, and demands the production of objective fact.
@@ -110,5 +119,5 @@ Niels Bohr
 Conclusions
 ------------------------------------
 
-Alea iacta est
+* Alea iacta est
 Julius Caesar
