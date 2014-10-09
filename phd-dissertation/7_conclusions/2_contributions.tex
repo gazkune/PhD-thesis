@@ -12,20 +12,21 @@ A summary of the contributions explained in this dissertation is presented in th
 
  \item A knowledge representation formalism for activities and intelligent environments was presented in Chapter \ref{cha:archi}.
  \begin{itemize}
-  \item It offers a light-weight knowledge representation and processing based on JavaScript Object Notation (JSON) technology.
+  \item It offers a light-weight knowledge representation and processing framework based on JavaScript Object Notation (JSON) technology.
   \item It uses compact and easy-to-extend structures for activities, objects, locations and sensors, to achieve environment independence.
  \end{itemize}
 
- \item The design architecture for extended activity models was described in Chapter \ref{cha:archi}.
+ \item The design architecture for learning extended activity models was described in Chapter \ref{cha:archi}.
  \begin{itemize}
   \item It offers a convenient modular architecture which separates key concepts and allows the implementation of different approaches.
  \end{itemize}
 
- \item A novel activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}.
- \begin{itemize}
-  \item The initialisation step is provided by $SA³$, which uses initial activity models to run a specific pattern recognition algorithm and find activity clusters.
-  \item New actions are aggregated to initial clusters using the $AA$ algorithm, based on location, type and time analysis of actions and activities.
-  \item The activity clustering algorithm is a good example of how domain knowledge can be used to form semantically meaningful clusters in unlabelled datasets.
+ \item A novel two-step activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}.
+ \begin{itemize}  
+  \item It allows grouping data in clusters and recognises each cluster's label using previously given incomplete models.
+  \item It works on the activity space, which is composed by location, type and time axis.
+  \item It defines heuristic functions and time metrics to process actions.
+  \item It is a good example of how domain knowledge can be used to form semantically meaningful clusters in unlabelled datasets.
  \end{itemize}
 
  \item An activity model learning algorithm was presented in Chapter \ref{cha:learner}, which uses activity clusters to extract activity models.
@@ -37,10 +38,11 @@ A summary of the contributions explained in this dissertation is presented in th
 
  \item A hybrid evaluation methodology was designed and implemented to properly evaluate the learning system in Chapter \ref{cha:evaluation}. The methodology can also be used for further activity modelling and recognition approaches.
  \begin{itemize}
+  \item It offers a realistic and cost-efficient way to evaluate activity modelling and recognition approaches.
   \item It is based on surveys to users in order to capture how activities are performed by them.
   \item Using surveys, it allows obtaining the information of any number of users minimising time-cost.
-  \item A special simulator is implemented: the synthetic dataset generator. Its usage allows generating on demand any kind of dataset.
-  \item It allows modelling sensor errors.
+  \item It provides a special simulator to generate sensor datasets: the synthetic dataset generator. Its usage allows generating on demand any kind of dataset representing different activity executions.
+  \item It allows modelling two kinds of sensor errors using probabilistic models: sensor positive and missing errors.
   \item Combining surveys and simulation tools, any kind of experiment can be prepared generating as much data as needed.
  \end{itemize}
 
