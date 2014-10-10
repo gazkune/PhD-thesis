@@ -115,7 +115,7 @@ As it can be seen in Figure \ref{fig-survey-1}, the survey begins with a brief e
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{adl_survey_part1.pdf}
-    \caption{The first part of the survey. A small introduction can be found where the aim of the survey is explained, continuing with the behaviour model part.}
+    \caption{The first part of the survey. A brief introduction can be found where the aim of the survey is explained, continuing with the behaviour model part.}
     \label{fig-survey-1}
 \end{figure}
 
@@ -277,7 +277,7 @@ In consequence, the context knowledge file has the information about activities,
 
 \subsubsection*{Simulation loop}
 
-Using the ADL script and the context model file, the synthetic dataset generator creates a CSV file where each sensor activation has an associated time-stamp and is labelled with an activity name or with the special label None if it is caused by noise. Additionally, activity start and end times are marked in the dataset.
+Using the ADL script and the context knowledge file, the synthetic dataset generator creates a CSV file where each sensor activation has an associated time-stamp and is labelled with an activity name or with the special label None if it is caused by noise. Additionally, activity start and end times are marked in the dataset.
 
 For the purpose of generating realistic sensor activation datasets, the synthetic dataset generator has a simulation loop which has been represented in a flowchart in Figure \ref{fig-sim-loop}. First of all, the simulator fixes the first day to start the simulation. In the current implementation the same day the simulator is launched is used as the first day. Afterwards, for the selected day, sensor positive noise is generated. For that purpose, the simulator generates a random number per each sensor with a probability greater than zero. If the sensor has to be activated, the simulator chooses a concrete time inside the current hour using a uniform distribution. The process finishes when the 24 hours of the day have been treated.
 

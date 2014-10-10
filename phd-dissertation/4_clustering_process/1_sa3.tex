@@ -34,7 +34,7 @@ In order to tackle Problem \ref{prob-sa3} a three-step algorithm has been design
 The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label those actions pertaining to IAMs and thus it cannot infer a label for all the other actions of the sensor activation dataset. An example of how a partially annotated dataset looks like is provided in Figure \ref{fig-partially-annotated}. The first column shows the time-stamp of the sensor activation. The second column shows the activated sensor. Those two columns form the sensor activation dataset. $SA^3$ adds the third, fourth and fifth columns, where action, activity label and start/end tags are provided. Start tag refers to the first action pertaining to the IAM of a valid activity discovered by $SA^3$. End tag has the same meaning but for the last action. In consequence, start and end tags show the start and end times for a detected activity. For convenience, and even though any action not pertaining to the IAM of the detected activity cannot be labelled by $SA^3$, all the actions between start and end times are labelled with the detected activity name, and not with the special label None. This labelling criterion is applied to make visualization easier and it does not have any effect on the output of $SA^3$, neither for $AC$ nor for evaluation purposes.
 
 \begin{figure}[htbp]
-\begin{small}
+\begin{scriptsize}
 \begin{lstlisting}
 2014-05-23 07:42:17.106962,wsugarSens,hasFlavour,None,
 2014-05-23 07:49:17.310460,bedSens,useFurniture,None,
@@ -47,7 +47,7 @@ The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label t
 2014-05-23 09:48:47.199512,chocoSens,hasChocolate,MakeChocolate,end
 2014-05-23 09:54:11.553695,mugSens,hasContainer,None,
 \end{lstlisting}
-\end{small}
+\end{scriptsize}
 \caption{Example of a partially annotated dataset, the output of the $SA^3$ algorithm.}
 \label{fig-partially-annotated}
 \end{figure}
@@ -155,7 +155,7 @@ Sections \ref{subsec:clustering:sa3:transform}, \ref{subsec:clustering:sa3:find}
  \end{algorithmic}
 \end{algorithm}
 
-An illustrative example is shown next, to describe how $SA^3$ works. Time-stamps are ignored in the example, considering that duration criterion is fulfilled by the shown action sequence and considered activities. This assumption helps making the example clearer. The illustrative example has been designed to show in detail how the $SA^3$ works, so it does not have to be coherent with the reality. 
+An illustrative example is shown next, to describe how $SA^3$ works. Time-stamps are ignored in the example, considering that duration criterion is fulfilled by the shown action sequence and considered activities. This assumption helps making the example clearer. The illustrative example has been designed to show in detail how $SA^3$ works, so it does not have to be coherent with the reality. 
 
 Imagine initial activity models for MakeCoffee, MakeTiramisu, MakeWhippedCream and BrushTeeth are defined as follow:
  \begin{equation*}
