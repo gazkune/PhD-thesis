@@ -18,34 +18,35 @@ A summary of the contributions explained in this dissertation is presented in th
  \end{itemize}
  \end{comment}
 
+ % If I want to keep this contribution, expand the text to highlight its importance
  \item The design architecture for learning extended activity models was described in Chapter \ref{cha:archi}.
  \begin{itemize}
   \item It offers a convenient modular architecture which separates key concepts and allows the implementation of different approaches.
  \end{itemize}
 
  \item A novel two-step activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}. % try to explain how SOA is advanced by this contribution
- \begin{itemize}  
-  \item It allows grouping data in clusters and recognises each cluster's label using previously given incomplete models.
-  \item It works on the activity space, which is composed by location, type and time axis.
-  \item It defines heuristic functions and time metrics to process actions.
-  \item It is a good example of how domain knowledge can be used to form semantically meaningful clusters in unlabelled datasets.
+ \begin{itemize}
+  \item State of the art clustering algorithms allow including prior knowledge in form of constraints or some points' memberships. The approach presented in this dissertation specifies prior knowledge as incomplete models.
+  \item It allows grouping data in clusters and recognises each cluster's label using previously given incomplete models. Even though it is an unsupervised approach, the activity clustering algorithm provides the semantic labels of each cluster. No previous work shows clustering approaches with labelling capacities, due to the way prior knowledge is represented and incorporated.
+  \item It works on the activity space, which is composed by location, type and time axis, providing a meaningful low-dimensional space for efficient activity clustering.
+  \item Typical clustering algorithms define distance functions in the corresponding space to group points that are close to each other. Defining continuous distance metrics in the activity space is not possible, so heuristic functions which exploit domain knowledge and time distance metrics are used to process actions. Heuristic functions process the information provided by discontinuous location and type axis, whereas time distance metrics work on the continuous axis of time. The activity clustering approach is a good example of how clustering can be performed in discontinuous spaces.
+  %\item It is a good example of how domain knowledge can be used to form semantically meaningful clusters in unlabelled datasets.
  \end{itemize}
 
  \item An activity model learning algorithm was presented in Chapter \ref{cha:learner}, which uses activity clusters to extract activity models. % try to explain how SOA is advanced by this contribution
  \begin{itemize}
   \item It has a flexible filtering step to pre-process the activity clusters in form of action sequences found by the activity clustering algorithm.
-  \item It implements a model similarity-based outlier detection statistical algorithm to detect spurious activity models.
+  \item It implements a model similarity-based outlier detection statistical algorithm to detect spurious action sequences. The main novelty of the approach is to interpret outliers as pairs of a valid action sequence and its spurious variation. Hence, the algorithm fuses both action sequences, taking into account the occurrence frequency of both action sequences.
   \item It outputs complete and specialised activity models for a concrete user alongside with their occurrence frequencies.
  \end{itemize}
 
  \item A hybrid evaluation methodology was designed and implemented to properly evaluate the learning system in Chapter \ref{cha:evaluation}. The methodology can also be used for further activity modelling and recognition approaches. % try to explain how SOA is advanced by this contribution
  \begin{itemize}
-  \item It offers a realistic and cost-efficient way to evaluate activity modelling and recognition approaches.
-  \item It is based on surveys to users in order to capture how activities are performed by them.
+  \item Following previous work on simulation for pervasive environments, the hybrid evaluation methodology offers a realistic and cost-efficient way to evaluate activity modelling and recognition approaches.
+  \item It addresses one of the major problems of simulation-based approaches, which is the problem of modelling human behaviour. Surveys to users are designed in order to capture how activities are performed by them and model effectively their behaviour.
   \item Using surveys, it allows obtaining the information of any number of users minimising time-cost.
-  \item It provides a special simulator to generate sensor datasets: the synthetic dataset generator. Its usage allows generating on demand any kind of dataset representing different activity executions.
-  \item It allows modelling two kinds of sensor errors using probabilistic models: sensor positive and missing errors.
-  \item Combining surveys and simulation tools, any kind of experiment can be prepared generating as much data as needed.
+  \item It provides a special simulator to generate sensor datasets: the synthetic dataset generator. Its usage allows generating on demand any kind of dataset representing different activity executions. The synthetic dataset generator allows modelling two kinds of sensor errors using probabilistic models: sensor positive and missing errors. Previous work does not address the simulation of sensor noise for dense sensing monitoring scenarios.
+  \item Combining surveys and simulation tools, any kind of experiment can be prepared generating as much data as needed, in contrast with standard methodologies, where experiments are very expensive and testing different situations is very difficult.
  \end{itemize}
 
 \end{itemize}
