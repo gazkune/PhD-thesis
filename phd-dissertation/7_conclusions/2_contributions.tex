@@ -10,18 +10,20 @@ A summary of the contributions explained in this dissertation is presented in th
   \item Analysing the advantages and disadvantages of activity modelling approaches.
  \end{itemize}
 
+ \begin{comment}
  \item A knowledge representation formalism for activities and intelligent environments was presented in Chapter \ref{cha:archi}.
  \begin{itemize}
   \item It offers a light-weight knowledge representation and processing framework based on JavaScript Object Notation (JSON) technology.
   \item It uses compact and easy-to-extend structures for activities, objects, locations and sensors, to achieve environment independence.
  \end{itemize}
+ \end{comment}
 
  \item The design architecture for learning extended activity models was described in Chapter \ref{cha:archi}.
  \begin{itemize}
   \item It offers a convenient modular architecture which separates key concepts and allows the implementation of different approaches.
  \end{itemize}
 
- \item A novel two-step activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}.
+ \item A novel two-step activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}. % try to explain how SOA is advanced by this contribution
  \begin{itemize}  
   \item It allows grouping data in clusters and recognises each cluster's label using previously given incomplete models.
   \item It works on the activity space, which is composed by location, type and time axis.
@@ -29,14 +31,14 @@ A summary of the contributions explained in this dissertation is presented in th
   \item It is a good example of how domain knowledge can be used to form semantically meaningful clusters in unlabelled datasets.
  \end{itemize}
 
- \item An activity model learning algorithm was presented in Chapter \ref{cha:learner}, which uses activity clusters to extract activity models.
+ \item An activity model learning algorithm was presented in Chapter \ref{cha:learner}, which uses activity clusters to extract activity models. % try to explain how SOA is advanced by this contribution
  \begin{itemize}
   \item It has a flexible filtering step to pre-process the activity clusters in form of action sequences found by the activity clustering algorithm.
   \item It implements a model similarity-based outlier detection statistical algorithm to detect spurious activity models.
   \item It outputs complete and specialised activity models for a concrete user alongside with their occurrence frequencies.
  \end{itemize}
 
- \item A hybrid evaluation methodology was designed and implemented to properly evaluate the learning system in Chapter \ref{cha:evaluation}. The methodology can also be used for further activity modelling and recognition approaches.
+ \item A hybrid evaluation methodology was designed and implemented to properly evaluate the learning system in Chapter \ref{cha:evaluation}. The methodology can also be used for further activity modelling and recognition approaches. % try to explain how SOA is advanced by this contribution
  \begin{itemize}
   \item It offers a realistic and cost-efficient way to evaluate activity modelling and recognition approaches.
   \item It is based on surveys to users in order to capture how activities are performed by them.
