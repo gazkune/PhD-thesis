@@ -21,14 +21,14 @@ A summary of the contributions explained in this dissertation is presented in th
 
  % If I want to keep this contribution, expand the text to highlight its importance
  \begin{itemize}
- \item The design architecture for learning extended activity models was described in Chapter \ref{cha:archi}.
+ \item The design architecture for learning extended activity models was described in Chapter \ref{cha:archi}. This contribution addresses objective 2 and the design part of objective 3 (Section \ref{sec:intro:hypothesis}).
  \begin{itemize}
   \item It offers a convenient modular architecture which separates key concepts and allows the implementation of different approaches.
   \item Communication between different modules is carried out by means of files which follow standard formats, such as JavaScript Notation (JSON) and Comma Separated Values (CSV). 
   \item It uses a light-weight knowledge representation and processing framework based on JavaScript Object Notation (JSON) technology, presenting compact and easy-to-extend structures for activities, objects, locations and sensors, to achieve environment independence.
  \end{itemize}
 
- \item A novel two-step activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}. % try to explain how SOA is advanced by this contribution
+ \item A novel two-step activity clustering process which uses previous knowledge in unlabelled sensor datasets is explained in Chapter \ref{cha:clustering}. This contribution tackles part of objective 3, defined in Section \ref{sec:intro:hypothesis}. % try to explain how SOA is advanced by this contribution
  \begin{itemize}
   \item State of the art clustering algorithms allow including prior knowledge in form of constraints or some points' memberships. The approach presented in this dissertation specifies prior knowledge as incomplete models.
   \item It allows grouping data in clusters and recognises each cluster's label using previously given incomplete models. Even though it is an unsupervised approach, the activity clustering algorithm provides the semantic labels of each cluster. No previous work shows clustering approaches with labelling capacities, due to the way prior knowledge is represented and incorporated.
@@ -37,14 +37,14 @@ A summary of the contributions explained in this dissertation is presented in th
   %\item It is a good example of how domain knowledge can be used to form semantically meaningful clusters in unlabelled datasets.
  \end{itemize}
 
- \item An activity model learning algorithm was presented in Chapter \ref{cha:learner}, which uses activity clusters to extract activity models. % try to explain how SOA is advanced by this contribution
+ \item An activity model learning algorithm was presented in Chapter \ref{cha:learner}, which uses activity clusters to extract activity models. With this contribution, objective 3 is completed (Section \ref{sec:intro:hypothesis})  % try to explain how SOA is advanced by this contribution
  \begin{itemize}
   \item It has a flexible filtering step to pre-process the activity clusters in form of action sequences found by the activity clustering algorithm.
   \item It implements a model similarity-based outlier detection statistical algorithm to detect spurious action sequences. The main novelty of the approach is to interpret outliers as pairs of a valid action sequence and its spurious variation. Hence, the algorithm fuses both action sequences, taking into account the occurrence frequencies of both action sequences.
   \item It outputs complete and specialised activity models for a concrete user alongside with their occurrence frequencies.
  \end{itemize}
 
- \item A hybrid evaluation methodology was designed and implemented to properly evaluate the learning system in Chapter \ref{cha:evaluation}. The methodology can also be used for further activity modelling and recognition approaches. % try to explain how SOA is advanced by this contribution
+ \item A hybrid evaluation methodology was designed and implemented to properly evaluate the learning system in Chapter \ref{cha:evaluation}. The methodology can also be used for further activity modelling and recognition approaches. This contribution addresses objective 4 (Section \ref{sec:intro:hypothesis}). % try to explain how SOA is advanced by this contribution
  \begin{itemize}
   \item Following previous work on simulation for pervasive environments, the hybrid evaluation methodology offers a realistic and cost-efficient way to evaluate activity modelling and recognition approaches.
   \item It addresses one of the major problems of simulation-based approaches, which is the problem of modelling human behaviour. Surveys to users are designed in order to capture how activities are performed by them and model effectively their behaviour.
