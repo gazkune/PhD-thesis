@@ -42,7 +42,7 @@
 %% The amssymb package provides various useful mathematical symbols
 \usepackage{amssymb}
 %% The amsthm package provides extended theorem environments
-\usepackage{amsthm}
+\usepackage{amsthm, thmtools}
 \theoremstyle{definition}
 \newtheorem{defn}{Definition} % definition numbers are dependent on theorem numbers
 
@@ -221,7 +221,9 @@
 
 \listoffigures	% print list of figures
 \listoftables  % print list of tables
-
+\renewcommand{\listtheoremname}{List of definitions}
+\listoftheorems[ignoreall, show={defn}]
+%\listoftheorems[show={defn}]
 
 %: ----------------------- glossary ------------------------
 
