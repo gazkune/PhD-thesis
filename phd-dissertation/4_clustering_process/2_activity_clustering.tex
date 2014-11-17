@@ -100,7 +100,7 @@ To implement this heuristic, a definition for $\Delta_t(A, a)$, the time distanc
  \end{equation}
 \end{enumerate}
 
-Let us explain the third time distance in detail. Activity start and end times provided by $SA^3$ are not generally trustful, since they depend on what actions are in the IAM of the detected activity and on the order of executions of those actions by the user. Imagine that $IAM(A)=\{a, b\}$ and that the action sequence processed by $SA^3$ is $S=\{d, b, a, c\}$. Assume that sequence $S$ is the action sequence performed by the user for activity $A$. $SA^3$ will detect that activity $A$ is being performed in sequence $S$, but it will only label actions $b$ and $a$ as pertaining to the activity. $SA^3$ does not have any information to know whether actions $d$ and $c$ pertain to activity $A$. So the start time of activity $A$ for $SA^3$ will be the time-stamp associated to action $b$ and not to action $d$. The same happens for the activity end time.
+Let us explain the third time distance in detail. Activity start and end times provided by $SA^3$ are not generally trustful, since they depend on what actions are in the IAM of the detected activity and on the order of executions of those actions by the user. Imagine that $IAM(A)=\{a, b\}$ and that the action sequence processed by $SA^3$ is $S=\{d, b, a, c\}$. Assume that sequence $S$ is the action sequence performed by the user for activity $A$. $SA^3$ will detect that activity $A$ is being performed in sequence $S$, but it will only label actions $b$ and $a$ as pertaining to the activity. $SA^3$ does not have any information to know whether actions $d$ and $c$ pertain to activity $A$. So the start time of activity $A$ for $SA^3$ will be the timestamp associated to action $b$ and not to action $d$. The same happens for the activity end time.
 
 Nevertheless, while executing the $AA$ algorithm, starting times of activities can be estimated better, but with some limitations. In the previous example, as outsiders in $AA$ are treated in time order for convenience, when treating outsider $c$, its previous activity's previous actions have already been treated (in this case, action $d$). $AA$ has already determined that action $d$ pertains to activity $A$. This means that the start of that previous activity $A$ has been fixed and it is different from the start time provided by $SA^3$ ($t_{start} ^{AA} \neq t_{start} ^{SA^3}$).
 
@@ -184,7 +184,7 @@ An example of the fully annotated dataset can be seen in Table \ref{tab-fully-an
   \begin{center}
         \begin{tabular}{ccccccc}
             \hline            
-            Time-stamp & Sensor & Action & Activity* & Start/End* & Activity & Start/End \\             
+            Timestamp & Sensor & Action & Activity* & Start/End* & Activity & Start/End \\             
             \hline
             2014-05-23 13:34:09 & storeSens & openStore & None &  & MakePasta & start \\
 2014-05-23 13:34:15 & potSens & useCookingUtensil & MakePasta & start & MakePasta &  \\
@@ -198,7 +198,7 @@ An example of the fully annotated dataset can be seen in Table \ref{tab-fully-an
 2014-05-23 13:46:05 & creamSens & hasCream & None &  & MakePasta & end \\
             \hline
         \end{tabular}                
-        \caption{Example of a fully annotated dataset, the output of the $AA$ algorithm shown in table format. To visualise better, time-stamps have been shortened. The asterisk refers to the result given by $SA^3$.}
+        \caption{Example of a fully annotated dataset, the output of the $AA$ algorithm shown in table format. To visualise better, timestamps have been shortened. The asterisk refers to the result given by $SA^3$.}
         \label{tab-fully-annotated}
     \end{center}
 \end{table}

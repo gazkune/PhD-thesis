@@ -31,7 +31,7 @@ In order to tackle Problem \ref{prob-sa3} a three-step algorithm has been design
     \label{fig:sa3_algorithm}
 \end{figure}
 
-The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label those actions pertaining to IAMs and thus it cannot infer a label for all the other actions of the sensor activation dataset. An example of how a partially annotated dataset looks like is provided in Table \ref{tab-partially-annotated}. The first column shows the time-stamp of the sensor activation. The second column shows the activated sensor. Those two columns form the sensor activation dataset. $SA^3$ adds the third, fourth and fifth columns, where action, activity label and start/end tags are provided. Start tag refers to the first action pertaining to the IAM of a valid activity discovered by $SA^3$. End tag has the same meaning but for the last action. In consequence, start and end tags show the start and end times for a detected activity. For convenience, and even though any action not pertaining to the IAM of the detected activity cannot be labelled by $SA^3$, all the actions between start and end times are labelled with the detected activity name, and not with the special label None. This labelling criterion is applied to make visualization easier and it does not have any effect on the output of $SA^3$, neither for $AC$ nor for evaluation purposes.
+The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label those actions pertaining to IAMs and thus it cannot infer a label for all the other actions of the sensor activation dataset. An example of how a partially annotated dataset looks like is provided in Table \ref{tab-partially-annotated}. The first column shows the timestamp of the sensor activation. The second column shows the activated sensor. Those two columns form the sensor activation dataset. $SA^3$ adds the third, fourth and fifth columns, where action, activity label and start/end tags are provided. Start tag refers to the first action pertaining to the IAM of a valid activity discovered by $SA^3$. End tag has the same meaning but for the last action. In consequence, start and end tags show the start and end times for a detected activity. For convenience, and even though any action not pertaining to the IAM of the detected activity cannot be labelled by $SA^3$, all the actions between start and end times are labelled with the detected activity name, and not with the special label None. This labelling criterion is applied to make visualization easier and it does not have any effect on the output of $SA^3$, neither for $AC$ nor for evaluation purposes.
 
 \begin{comment}
 \begin{figure}[htbp]
@@ -58,7 +58,7 @@ The result of $SA^3$ is the partially annotated dataset. $SA^3$ can only label t
   \begin{center}
         \begin{tabular}{ccccc}
             \hline            
-            Time-stamp & Sensor & Action & Activity & Start/End \\             
+            Timestamp & Sensor & Action & Activity & Start/End \\             
             \hline
             2014-05-23 07:42:17.106962 & wsugarSens & hasFlavour & None & \\
 	    2014-05-23 07:49:17.310460 & bedSens & useFurniture & None & \\
@@ -129,11 +129,11 @@ To fully understand the described process to check for valid activities, the \te
   IAM(A_i) \subseteq S(A_i)   
   \end{equation}
   
-  \item Duration criterion: for an action sequence to fulfil the duration criterion, the duration of the action sequence has to be smaller than the duration estimation of the corresponding IAM. The duration of an action sequence $S(A_i)$ is calculated as the rest of the time-stamps of the last action and the first action: 
+  \item Duration criterion: for an action sequence to fulfil the duration criterion, the duration of the action sequence has to be smaller than the duration estimation of the corresponding IAM. The duration of an action sequence $S(A_i)$ is calculated as the rest of the timestamps of the last action and the first action: 
   \begin{equation}
     \Delta_t(S(A_i)) = t(S(A_i)_{last}) - t(S(A_i)_{first})
   \end{equation}
-  where $t(S(A_i)_j)$ is the time-stamp of the $j$-th action of the sequence $S(A_i)$. Duration estimations for activities are stored in the context knowledge file and are written as $\Delta_t(A_i)$. Hence, the duration criterion establishes that an action sequence fulfils the duration criterion if and only if 
+  where $t(S(A_i)_j)$ is the timestamp of the $j$-th action of the sequence $S(A_i)$. Duration estimations for activities are stored in the context knowledge file and are written as $\Delta_t(A_i)$. Hence, the duration criterion establishes that an action sequence fulfils the duration criterion if and only if 
   \begin{equation}
    \label{eq-duration}
    \Delta_t(S(A_i)) \leq \Delta_t(A_i)

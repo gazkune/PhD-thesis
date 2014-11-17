@@ -21,7 +21,13 @@ This dissertation presents an approach to using data-driven techniques to evolve
 \selectlanguage{spanish}
 % Pon tu resumen aquí.
 
-Resumen en espa\~nol aqu\'i
+%Resumen en espa\~nol aqu\'i
+
+El reconocimiento de actividades realizadas por humanos es una de las competencias clave para las tecnologías que quieran adaptarse a los humanos. La principal idea de dichas tecnologías es adaptar los servicios que ofrecen a sus usuarios, por lo que ser capaz de identificar lo que el usuario hace en cada momento es muy importante para adaptar los sevicios de forma adecuada.
+
+Uno de los sistemas más prometedores para reconocer las actividades humanas es el llamado sistema basado en el conocimiento, que ya ha demostrado varias propiedades interesantes y ventajas importantes. Los sistemas basados en el conocimiento permiten usar el conocimiento de expertos para describir las actividades y los entornos en los que se llevan a cabo, ofreciendo sistemas de reconocimiento eficientes. Sin embargo, dichos sistemas también presentan algunos inconvenientes, como es el uso de modelos de actividad genéricos y estáticos. Es decir, por un lado las actividades se definen por sus características generales, y por ello no son capaces de incorporar información personal, y por otro, una vez que las actividades se han definido, no hay mecanismos para hacer que evolucionen a medida que los usuarios cambian.
+
+Esta tesis doctoral presenta un sistema de modelado que usa técnicas basadas en datos para hacer evolucionar modelos de actividad basados en el conocimiento usando los datos generados por un usuario. El sistema de modelado se basa en un algoritmo nuevo de \textit{clustering} donde se usan modelos incompletos iniciales creados por técnicas basadas en el conocimiento para detectar grupos de acciones que describen actividades y poder añadir así nuevas acciones. Sobre estos grupos de acciones se despliga un proceso de aprendizaje para aprender y modelar distintas formas de realizar actividades. De este modo, se obtienen modelos completos y especializados de las actividades definidas inicialmente. El sistema de modelado se ha probado con información de usuarios reales, sensores defectuosos y secuencias exigentes de actividades. Los resultados muestran que se pueden aprender modelos de actividad completos y especializados con índices de éxito del 100\%, con el inconveniente de aprender también algunos modelos falsos.
 
 
 \end{resumen}
@@ -30,7 +36,13 @@ Resumen en espa\~nol aqu\'i
  \selectlanguage{basque} 
  % Idatzi hemen zure laburpena
  
- Laburpena euskaraz hemen
+ %Laburpena euskaraz hemen
+ 
+ Giza-jarduerak igartzeko gaitasuna mugarrietako bat da gizakiengana egokitzen diren teknologiak garatzerako orduan. Teknologia horien helburua zerbitzuak gizakien behar eta nahietara egokitzea da, eta horretarako, giza-erabiltzailea momentuoro egiten ari dena igartzeko gai izatea oso garrantzitsua da.
+ 
+ Giza-jarduerak igartzeko egin diren sistemen artean, etorkizun oparoenetako bat duen sistema ezagutzan oinarriturikoa da. Ezagutzan oinarrituriko sistemek jada hainbat abantaila eta ezaugarri interesgarri erakutsi dituzte. Beren muinean dago adituen ezagutza erabili ahal izatea giza-jarduerak eta inguruneak deskribatzeko, eta modu horretara, jarduerak igartzeko sistema eraginkorrak eskaintzen dituzte. Hala ere, sistema horiek badituzte beren desabantailak ere. Hala nola, jarduera ereduak orokorrak izan ohi dira, hots, jarduerak beren ezaugarri orokorren medioz deskribatzen direnez, ez dituzte ezaugarri pertsonalak erabiltzen, eta gainera jarduerak behin definituz gero, ez dira denboran zehar eguneratzen.
+ 
+ Tesi honetan giza-jarduerak modelatzeko sistema berri bat aurkezten da. Erabiltzaileek sortutako datuak erabiliz eta datuetan oinarritutako teknikak aplikatuz, ezagutzan oinarritutako jarduera ereduak eguneratzako sistemak aurkezten dira. Sistemaren oinarrietako bat \textit{clustering} algoritmo berri bat da. Bere bitartez, ezagutzan oinarrituriko hasierako eredu osatugabeak erabiltzen dira giza-jarduerak deskribatzen dituzten ekintza multzoak detektatu eta ekintza berriak gehitzeko. Ekintza multzo horien gainean, ikasketa prozesu bat jartzen da martxan, jarduera bat egiteko modu ezberdinak ikasi eta modelatzeko. Modu horretara, jarduera eredu oso eta espezializatuak ikas daitezke. Modelatze sistema benetako erabiltzaileen informazioa, sentsore zaratatsuak eta jarduera sekuentzia konplexuak erabiliz probatu da. Emaitzek erakusten duten arabera, jarduera eredu oso eta espezializatuak ikas daitezke \%100eko arrakasta tasekin, nahiz eta eredu faltsu batzuk ere ikasten diren prozesuan.
  
 \end{laburpena}
 
