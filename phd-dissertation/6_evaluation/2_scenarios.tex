@@ -222,9 +222,9 @@ For the next experiments, assessing the performance of $SA³$ under sensor missi
              & 0.01 & 0.02 & 0.05 & 0.07 & 0.1 \\
              & TP- FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%) & TP - FP - FN (\%)\\
             \hline
-            MakeChocolate*   & 99.2 - 0 - 0 & 99.2 - 0 - 0 & 94.6 - 0 - 0 & 92.3 - 0 - 0 & 89.2 - 0 - 0 \\
+            MakeChocolate*   & 99.2 - 0 - 0.8 & 99.2 - 0 - 0.8 & 94.6 - 0 - 3.4 & 92.3 - 0 - 7.7 & 89.2 - 0 - 10.8 \\
 	    WatchTelevision  & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
-	    BrushTeeth*      & 98.9 - 0 - 0 & 98.6 - 0 - 0 & 96 - 0 - 0 & 93.8 - 0 - 0 & 89.4 - 0 - 0 \\
+	    BrushTeeth*      & 98.9 - 0 - 1.1 & 98.6 - 0 - 1.4 & 96 - 0 - 4 & 93.8 - 0 - 6.2 & 89.4 - 0 - 10.6 \\
 	    WashHands        & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
 	    MakePasta        & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
 	    ReadBook         & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0 \\
@@ -236,7 +236,7 @@ For the next experiments, assessing the performance of $SA³$ under sensor missi
     \end{center}
 \end{table}
 
-As it can be seen in Table \ref{tab-sa3-missing}, the performance of $SA³$ for the rest of activities does not vary. It keeps on producing 100\% of true positives, while false positives and negatives are null. However, true positive rate of activities MakeChocolate and BrushTeeth seems to be linearly reducing with sensor missing noise probability. There is no effect in false positives and negatives, but the effect on true positives is clear, as expected. To make the linearity more clear, Figure \ref{fig:sa3-missing} plots true positive rates for both activities for measured sensor missing noise probabilities. 
+As it can be seen in Table \ref{tab-sa3-missing}, the performance of $SA³$ for the rest of activities does not vary. It keeps on producing 100\% of true positives, while false positives and negatives are null. However, true positive rate of activities MakeChocolate and BrushTeeth seems to be linearly reducing with sensor missing noise probability. The reduction of true positives generates the appearance of false negatives, since those activities that are not detected, are labelled as None. Thus, they are considered false negatives. There is no effect in false positives, but the effect on true positives is clear, as expected. To make the linearity more clear, Figure \ref{fig:sa3-missing} plots true positive rates for both activities for measured sensor missing noise probabilities. 
 
 \begin{figure}[htbp]
 \centering
@@ -306,7 +306,7 @@ Results show that $SA³$ is not affected by the similarity of IAMs, as long as t
 
 Results shown in Section \ref{subsubsec:evaluation:sa3:results} show that $SA^3$ can handle varying order of actions in activity performance without any problem. All four set-ups contain different activation patterns, where actions are executed in different orders. This can be seen in Figure \ref{fig:basic-script-activities}: every activity has different sensor activation sequences with varying orders. As the ideal scenario shows (Table \ref{tab-sa3-ideal}), the success rate of the algorithm for every activity is 100\% and neither false positives nor negatives are observed. Notice that sensor activation sequences used for each activity contain many actions which are not used to define any of the IAMs, but the algorithm still performs perfectly when detecting activities. Hence, $SA^3$ can also handle non-considered actions.
 
-As far as noisy scenarios regard, results suggest that missing sensor activations cannot be properly handled by the algorithm, when those activations are linked to actions that are used to define IAMs, i.e. if a sensor activation which is mapped to one of the actions used to define the IAM of a concrete activity fails, that activity cannot be detected by $SA³$. The non-captured activities are proportional to the missing activation probability of those actions, as shown in Figure \ref{fig:sa3-missing}. This is due to the completeness criterion used in the second step of $SA^3$, as explained in Section \ref{sec:clustering:sa3}, which demands the presence of all actions in the IAM of an activity to consider an action sequence a valid activity. However, missing sensor noise only affects true positive rates of the activities which are faultily registered by sensors. False positive and negative rates keep behaving as the ideal scenario. Moreover, a non-detection of an activity does not have any other effect on the other activities. Following this reasoning, a good way to minimise the impact of sensor missing noise is to monitor key objects for IAMs using robust sensors such as contact sensors.  
+As far as noisy scenarios regard, results suggest that missing sensor activations cannot be properly handled by the algorithm, when those activations are linked to actions that are used to define IAMs, i.e. if a sensor activation which is mapped to one of the actions used to define the IAM of a concrete activity fails, that activity cannot be detected by $SA³$. The non-captured activities are proportional to the missing activation probability of those actions, as shown in Figure \ref{fig:sa3-missing}. This is due to the completeness criterion used in the second step of $SA^3$, as explained in Section \ref{sec:clustering:sa3}, which demands the presence of all actions in the IAM of an activity to consider an action sequence a valid activity. However, missing sensor noise only affects true positive and false negative rates of the activities which are faultily registered by sensors. False positive rates keep behaving as the ideal scenario. Moreover, a non-detection of an activity does not have any other effect on the other activities. Following this reasoning, a good way to minimise the impact of sensor missing noise is to monitor key objects for IAMs using robust sensors such as contact sensors.  
 
 Independently from such robust monitoring strategies, it is reasonable to think whether algorithmic solutions to mitigate sensor missing noise can be adopted. The completion criterion is very restrictive in that sense, but it is also very reasonable, since if not, distinguishing real activity executions from positive noise would be very difficult, specially considering the low number of actions used in the IAMs (see Table \ref{tab-avg-actions-comp-t2}). Further approaches have not been analysed in this dissertation, because the low level of missing sensor noise in real environments makes the detection rates very good. However, some ideas are suggested in Chapter \ref{cha:conclusions} for their future development.
 
@@ -347,7 +347,7 @@ The evaluation criterion in this case, is the so called \textit{action-based eva
 
 \paragraph*{Ideal scenario}
 
-The 8 datasets generated from the ADL surveys for the ideal scenario contain around 2128 sensor activations in average. For each of the experiments, the average true positives, false positives and false negatives are depicted per activity. The averages are calculated over the 8 users. A comparison between the actions labelled by $SA^3$ and $AA$ is depicted in the results. Remember that those results cannot be compared to the results shown for $SA³$ evaluation (Section \ref{subsubsec:evaluation:sa3:results}), since evaluation criteria are different. Table \ref{tab-r-ideal-t1} shows the results when simple time distance is used in $AA$ (equation \ref{eq-t1}). Similarly, Table \ref{tab-r-ideal-t2} depicts the results when normalised time distance is applied (see equation \ref{eq-t2}). Finally, Table \ref{tab-r-ideal-t3} shows how the clustering process performs when the dynamic centre normalised time distance is used for the previous activity (see equation \ref{eq-t3}) and the normalised time distance for the next activity.
+The 8 datasets generated from the ADL surveys for the ideal scenario contain 2128 sensor activations in average. For each of the experiments, the average true positives, false positives and false negatives are depicted per activity. The averages are calculated over the 8 users. A comparison between the actions labelled by $SA^3$ and $AA$ is depicted in the results. Remember that those results cannot be compared to the results shown for $SA³$ evaluation (Section \ref{subsubsec:evaluation:sa3:results}), since evaluation criteria are different. Table \ref{tab-r-ideal-t1} shows the results when simple time distance is used in $AA$ (equation \ref{eq-t1}). Similarly, Table \ref{tab-r-ideal-t2} depicts the results when normalised time distance is applied (see equation \ref{eq-t2}). Finally, Table \ref{tab-r-ideal-t3} shows how the clustering process performs when the dynamic centre normalised time distance is used for the previous activity (see equation \ref{eq-t3}) and the normalised time distance for the next activity.
 
 \begin{table}[htbp]\scriptsize
     \begin{center}    
@@ -435,7 +435,7 @@ To get a clearer comparison between three time metrics, Table \ref{tab-r-compara
 
 \paragraph*{Complete scenario}
 
-The 8 datasets for the complete scenario are obtained from the same ADL surveys and scripts. But for these datasets, sensor error models are applied. As a result, datasets have an average of around 2942 sensor activations. Compared to the ideal scenario, those datasets have 38.25\% more sensor activations, which gives a clear idea of the high level of sensor positive noise. Notice that this increment comes even having missing errors, which are applied to every sensor activation. The combination of missing and positive noise gives datasets containing 38.25\% more sensor activations, thus sensor positive noise is very high. 
+The 8 datasets for the complete scenario are obtained from the same ADL surveys and scripts. But for these datasets, sensor error models are applied. As a result, datasets have an average of 2942 sensor activations. Compared to the ideal scenario, those datasets have 38.25\% more sensor activations, which gives a clear idea of the high level of sensor positive noise. Notice that this increment comes even having missing errors, which are applied to every sensor activation. The combination of missing and positive noise gives datasets containing 38.25\% more sensor activations, thus sensor positive noise is very high. 
 
 Results are shown in the same manner as for the ideal scenario. As such, Table \ref{tab-r-comp-t1} shows the results when using simple time distance, Table \ref{tab-r-comp-t2} when using normalised time distance and finally, Table \ref{tab-r-comp-t3} when combining dynamic centre normalised and normalised time distances. Once again, a summary of the performance of the three variants is depicted in Table \ref{tab-r-comparative-complete}, where average precision and recall are shown.
        
@@ -574,13 +574,13 @@ The datasets used for those experiments have already been described in Section \
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
              & Correct Models & Spurious Models & Total Models & \\
             \hline
-            MakeChocolate   & 1    & 0     & 0  & 1 \\
-	    WatchTelevision & 1.14 & 0     & 0  & 1.14    \\
-	    BrushTeeth      & 1.25 & 0.31  & 0  & 1.25 \\
-	    WashHands       & 1    & 0.37  & 0  & 1 \\
-	    MakePasta       & 2    & 0     & 0  & 2 \\
-	    ReadBook        & 1.12 & 0     & 0  & 1.12  \\
-	    MakeCoffee      & 1.71 & 0.24  & 0  & 1.71  \\
+            MakeChocolate   & 1    & 0     & 1  & 1 \\
+	    WatchTelevision & 1.14 & 0     & 1.14  & 1.14    \\
+	    BrushTeeth      & 1.25 & 0.31  & 1.56  & 1.25 \\
+	    WashHands       & 1    & 0.37  & 1.37  & 1 \\
+	    MakePasta       & 2    & 0     & 2  & 2 \\
+	    ReadBook        & 1.12 & 0     & 1.12  & 1.12  \\
+	    MakeCoffee      & 1.71 & 0.24  & 1.71  & 1.71  \\
             \hline
         \end{tabular}
         \caption{Average results for 8 users of the EAM learning process for the ideal scenario, using the simple time distance in the clustering process.}
@@ -596,13 +596,13 @@ The datasets used for those experiments have already been described in Section \
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
              & Correct Models & Spurious Models & Total Models & \\
             \hline
-            MakeChocolate   & 1    & 0     & 0  & 1 \\
-	    WatchTelevision & 1.14 & 0     & 0  & 1.14    \\
-	    BrushTeeth      & 1.25 & 0.31  & 0  & 1.25 \\
-	    WashHands       & 1    & 0.37  & 0  & 1 \\
-	    MakePasta       & 2    & 0     & 0  & 2 \\
-	    ReadBook        & 1.12 & 0     & 0  & 1.12  \\
-	    MakeCoffee      & 1.71 & 0     & 0  & 1.71  \\
+            MakeChocolate   & 1    & 0     & 1     & 1 \\
+	    WatchTelevision & 1.14 & 0     & 1.14  & 1.14    \\
+	    BrushTeeth      & 1.25 & 0.31  & 1.56  & 1.25 \\
+	    WashHands       & 1    & 0.37  & 1.37  & 1 \\
+	    MakePasta       & 2    & 0     & 2     & 2 \\
+	    ReadBook        & 1.12 & 0     & 1.12  & 1.12  \\
+	    MakeCoffee      & 1.71 & 0     & 1.71  & 1.71  \\
             \hline
         \end{tabular}
         \caption{Average results for 8 users of the EAM learning process for the ideal scenario, using the normalised time distance in the clustering process.}
@@ -619,13 +619,13 @@ The datasets used for those experiments have already been described in Section \
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
              & Correct Models & Spurious Models & Total Models & \\
             \hline
-            MakeChocolate   & 1    & 0     & 0  & 1 \\
-	    WatchTelevision & 1.14 & 0     & 0  & 1.14    \\
-	    BrushTeeth      & 1.25 & 0.47  & 0  & 1.25 \\
-	    WashHands       & 1    & 0.25  & 0  & 1 \\
-	    MakePasta       & 2    & 0     & 0  & 2 \\
-	    ReadBook        & 1.12 & 0     & 0  & 1.12  \\
-	    MakeCoffee      & 1.71 & 0     & 0  & 1.71  \\
+            MakeChocolate   & 1    & 0     & 1     & 1 \\
+	    WatchTelevision & 1.14 & 0     & 1.14  & 1.14    \\
+	    BrushTeeth      & 1.25 & 0.47  & 1.72  & 1.25 \\
+	    WashHands       & 1    & 0.25  & 1.25  & 1 \\
+	    MakePasta       & 2    & 0     & 2     & 2 \\
+	    ReadBook        & 1.12 & 0     & 1.12  & 1.12  \\
+	    MakeCoffee      & 1.71 & 0     & 1.71  & 1.71  \\
             \hline
         \end{tabular}
         \caption{Average results for 8 users of the EAM learning process for the ideal scenario, using dynamic centre normalised time distance for the previous activity and normalised time distance for the next activity.}
@@ -664,13 +664,13 @@ In the following experiments, $AML$ has been run in the complete scenario, where
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
              & Correct Models & Spurious Models & Total Models & \\
             \hline
-            MakeChocolate   & 1    & 1.2   & 0 & 1 \\
-	    WatchTelevision & 1.14 & 0.89  & 0 & 1.14 \\
-	    BrushTeeth      & 1.25 & 1.17  & 0 & 1.25 \\
-	    WashHands       & 1    & 0.75  & 0 & 1 \\
-	    MakePasta       & 2    & 1.12  & 0 & 2 \\
-	    ReadBook        & 1.12 & 0.14  & 0 & 1.12 \\
-	    MakeCoffee      & 1.71 & 1.34  & 0 & 1.71 \\
+            MakeChocolate   & 1    & 1.2   & 2.2  & 1 \\
+	    WatchTelevision & 1.14 & 0.89  & 2.03 & 1.14 \\
+	    BrushTeeth      & 1.25 & 1.17  & 2.42 & 1.25 \\
+	    WashHands       & 1    & 0.75  & 1.75 & 1 \\
+	    MakePasta       & 2    & 1.12  & 2.12 & 2 \\
+	    ReadBook        & 1.12 & 0.14  & 1.26 & 1.12 \\
+	    MakeCoffee      & 1.71 & 1.34  & 3.05 & 1.71 \\
             \hline
         \end{tabular}                
         \caption{Average results for 8 users of the EAM learning process for the complete scenario, using simple time distance in the clustering process.}
@@ -685,13 +685,13 @@ In the following experiments, $AML$ has been run in the complete scenario, where
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
              & Correct Models & Spurious Models & Total Models & \\
             \hline
-            MakeChocolate   & 1    & 1.2   & 0 & 1 \\
-	    WatchTelevision & 1.14 & 0.89  & 0 & 1.14 \\
-	    BrushTeeth      & 1.25 & 1.17  & 0 & 1.25 \\
-	    WashHands       & 1    & 0.75  & 0 & 1 \\
-	    MakePasta       & 2    & 1.12  & 0 & 2 \\
-	    ReadBook        & 1.12 & 0.14  & 0 & 1.12 \\
-	    MakeCoffee      & 1.71 & 1.59  & 0 & 1.71 \\
+            MakeChocolate   & 1    & 1.2   & 2.2  & 1 \\
+	    WatchTelevision & 1.14 & 0.89  & 2.03 & 1.14 \\
+	    BrushTeeth      & 1.25 & 1.17  & 2.42 & 1.25 \\
+	    WashHands       & 1    & 0.75  & 1.75 & 1 \\
+	    MakePasta       & 2    & 1.12  & 3.12 & 2 \\
+	    ReadBook        & 1.12 & 0.14  & 1.26 & 1.12 \\
+	    MakeCoffee      & 1.71 & 1.59  & 3.3 & 1.71 \\
             \hline
         \end{tabular}                
         \caption{Average results for 8 users of the EAM learning process for the complete scenario, using normalised time distance in the clustering process.}
@@ -708,13 +708,13 @@ In the following experiments, $AML$ has been run in the complete scenario, where
             \textbf{Activity} & \multicolumn{3}{c}{\textbf{Learning Results}} & \textbf{Average Number of Patterns} \\
              & Correct Models & Spurious Models & Total Models & \\
             \hline
-            MakeChocolate   & 1    & 1.2   & 0 & 1 \\
-	    WatchTelevision & 1.14 & 0.89  & 0 & 1.14 \\
-	    BrushTeeth      & 1.25 & 1.17  & 0 & 1.25 \\
-	    WashHands       & 1    & 0.75  & 0 & 1 \\
-	    MakePasta       & 2    & 1.12  & 0 & 2 \\
-	    ReadBook        & 1.12 & 0.14  & 0 & 1.12 \\
-	    MakeCoffee      & 1.71 & 1.71   & 0 & 1.71 \\
+            MakeChocolate   & 1    & 1.2   & 2.2  & 1 \\
+	    WatchTelevision & 1.14 & 0.89  & 2.03 & 1.14 \\
+	    BrushTeeth      & 1.25 & 1.17  & 2.42 & 1.25 \\
+	    WashHands       & 1    & 0.75  & 1.75 & 1 \\
+	    MakePasta       & 2    & 1.12  & 3.12 & 2 \\
+	    ReadBook        & 1.12 & 0.14  & 1.26 & 1.12 \\
+	    MakeCoffee      & 1.71 & 1.71  & 3.42 & 1.71 \\
             \hline
         \end{tabular}                
         \caption{Average results for 8 users of the EAM learning process for the complete scenario, using dynamic centre normalised time distance for the previous activity and normalised time distance for the next activity.}
@@ -776,7 +776,7 @@ Having three time approaches for the clustering process places the question of w
 
 Obtained results suggest that $AML$ behaves very robustly regardless the time approach used. Even though the initial number of clusters for time approaches one and two are more than for time approach three, $AML$ is able to detect outliers and fuse them to get always very similar results. So from the point of view of the EAM learning system, it is not easy to say which time approach is the best one. Nevertheless, taking into account that time approach three behaves better for clustering and for EAM learning in the ideal scenario, it seems natural to choose it as the reference time approach. From now on, the discussion will be focused thus on the third time approach.
 
-The desired results for correctly learned activity models come with the learning of some spurious models, specially for the complete scenario. Learning some spurious or false model was expected, since the objective of the learning algorithm is to avoid removing any activity pattern that has been actually performed by the user. It is preferable to get false action sequences than removing any activity pattern that has been really performed. For that purpose, the learning process is conservative when removing and fusing activity patterns. Even with this conservative approach, it has been observed during experiments that the learning process can reduce clusters provided by the clustering process from 17 to 3 in some cases, thus removing many false action sequences and keeping the 100\% of correct action patterns.
+The desired results for correctly learned activity models come with the learning of some spurious models, specially for the complete scenario. Learning some spurious or false models was expected, since the objective of the learning algorithm is to avoid removing any activity pattern that has been actually performed by the user. It is preferable to get false action sequences than removing any activity pattern that has been really performed. For that purpose, the learning process is conservative when removing and fusing activity patterns. Even with this conservative approach, it has been observed during experiments that the learning process can reduce clusters provided by the clustering process from 17 to 3 in some cases, thus removing many false action sequences and keeping the 100\% of correct action patterns.
 
 %Nevertheless, the false positive rates shown in the results have to be properly interpreted. The highest rate can be found for activity MakeChocolate in the complete scenario: 120\%. As shown in Table \ref{tab-rp-comp-t2}, the average number of patterns of the activity MakeChocolate is 1, which means that all 8 users perform the activity in only one way. The false positive rate of 120\% comes from the fact that EAM learning algorithm learns in average 2.2 activity models for MakeChocolate, i.e. it learns additional 1.2 patterns in average. Putting it in that perspective and applying the same interpretation to all activities, false positive rates are assumable.
 

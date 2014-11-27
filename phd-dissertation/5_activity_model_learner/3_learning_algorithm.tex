@@ -75,7 +75,7 @@ JM = \left(
 \right)
 \end{equation}
 
-The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient is 1 ($\forall i, j : i = j \rightarrow Jaccard(S_i, S_j) = 1$). Diagonal values do not provide any information for outlier detection, so they are removed. Removing diagonal values from $JM$, $\hat{JM}$ is obtained. The $\hat{JM}$ matrix has the information of the similarity of all action sequences detected for a concrete activity. Figure \ref{fig-similarity} shows a plot of the similarity values between 11 action sequences, taken from a real example (they are representing the activity MakePasta for a concrete user). The idea of the similarity-based outlier detection is to identify similarity values that stand out among everyone else; take the action sequences that are represented by those outlier similarity values and fuse them.  
+The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient is 1 ($\forall i, j : i = j \rightarrow Jaccard(S_i, S_j) = 1$). Diagonal values do not provide any information for outlier detection, so they are removed. Removing diagonal values from $JM$, $\hat{JM}$ is obtained. The $\hat{JM}$ matrix has the information of the similarity of all action sequences detected for a concrete activity. Figure \ref{fig-similarity} shows a plot of the similarity values between 11 action sequences, taken from a real example (they are representing the activity MakePasta for a concrete user). The idea of the similarity-based outlier detection is to identify similarity values that stand out among everyone else; then, take the action sequences that are represented by those outlier similarity values and fuse them.  
 
 \begin{figure}[htbp]
 \centering
@@ -86,11 +86,33 @@ The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient
 
 To detect outlier similarity values, a statistical approach has been defined. Fixing a static threshold value for every activity is not appropriate, since some activities may contain many actions, whereas others are performed by means of few actions. So a difference of a single action in a ``short'' activity cannot have the same weight as in a ``long'' activity (short and long are here used to refer to the number of actions of activities). Furthermore, some users may execute very different action sequences to perform the same activity, while others may only add slight variations. In consequence, the outlier detection method has to calculate a threshold for every action sequence group describing an activity. 
 
-The strategy followed to calculate the threshold is based on the median value of the $\hat{JM}$ matrix. The median is the numerical value separating the higher half of a data sample from the lower half. The median of a finite list of numbers can be found by arranging all the observations from lowest value to highest value and picking the middle one. If there is an even number of observations, then there is no single middle value; the median is then usually defined to be the mean of the two middle values. The median has been chosen rather than the mean, because the median is a robust estimator which is less influenced by outliers than the mean value. Using the median allows detecting the similarity ``centre of gravity'' minimising the influence of outliers. Once the median of $\hat{JM}$ is calculated, the standard deviation of similarity values to the median is calculated. Summing the median and the standard deviation value an appropriate threshold for outlier detection is determined:
+The strategy followed to calculate the threshold is based on the median value of the $\hat{JM}$ matrix. The median is the numerical value separating the higher half of a data sample from the lower half. The median of a finite list of numbers can be found by arranging all the observations from lowest value to highest value and picking the middle one. If there is an even number of observations, then there is no single middle value; the median is then usually defined to be the mean of the two middle values. The median has been chosen rather than the mean, because the median is a robust estimator which is less influenced by outliers than the mean value. Using the median allows detecting the similarity ``centre of gravity'' minimising the influence of outliers. %Once the median of $\hat{JM}$ is calculated, the standard deviation of similarity values to the median is calculated. Summing the median and the standard deviation value an appropriate threshold for outlier detection is determined:
+
+% The standard deviation is not being used really. We are using the average absolute deviation about median
+
+Once the median of $\hat{JM}$ measures the central tendency, another statistic is needed to capture the dispersion of similarity in $\hat{JM}$. Two good candidates to measure the dispersion in univariate datasets have been found in the literature \cite{Hoaglin1983}. The first one is the median absolute deviation (MAD) and it is defined as the median of the absolute deviations from the data's median:
+
+\begin{equation}
+\label{eq-mad}
+ MAD = median_i (|X_i - median_j(X)|)
+\end{equation}
+
+The MAD is a measure of statistical dispersion. Moreover, the MAD is a robust statistic, being more resilient to outliers in a dataset than the standard deviation. In the standard deviation, the distances from the mean are squared, so large deviations are weighted more heavily, and thus outliers can heavily influence it. In the MAD, the deviations of a small number of outliers are irrelevant.
+
+There is another dispersion measure, which is known as the average absolute deviation about median (ADM). The ADM offers a direct measure of the scale of a random variable about its median and it is defines as:
+
+\begin{equation}
+ \label{eq-adm}
+ ADM = E_i |X_i - median(X)|
+\end{equation}
+
+Both the MAD and the ADM can be used to establish a proper threshold and identify outlier similarity values. However, in the current implementation the ADM has been chosen. It is true that the ADM is more influenced by outliers than the MAD, but from the point of view of the conservative approach to learning, the ADM is more suitable. The reason is that the MAD can have a value of zero if there are some similarity values with the same values as the median. This fact makes that the median itself could be taken as the threshold, which is quite aggressive. On the other hand, the only way the ADM can be zero is to have all similarity values being equal to the median. Moreover, it can be shown mathematically that the MAD of a given dataset will be always less or equal than the ADM, so the MAD is more aggressive in all the cases. 
+
+Due to those reasons, the ADM has been chosen to establish a statistical threshold to separate normal similarity values from outlier values. The threshold is defined as:
 
 \begin{equation}
 \label{eq-stat-threshold}
- \theta_S = median(\hat{JM}) + std(\hat{JM})
+ \theta_S = median(\hat{JM}) + ADM(\hat{JM})
 \end{equation}
 
 As the threshold in equation \ref{eq-stat-threshold} has been calculated using statistical approaches, it is denoted as $\theta_S$. Applying equation \ref{eq-stat-threshold} to the similarity values plotted in the example of Figure \ref{fig-similarity}, a threshold can be calculated. This threshold is depicted in Figure \ref{fig-threshold-calc}. Similarity values above the threshold can be considered as outliers. 
@@ -119,7 +141,7 @@ The difference between $S_1$ and $S_3$ is that the user adds pesto in the first 
  \theta = max \{ \theta_S, \lambda \}
 \end{equation}
 
-\noindent where $\lambda$ is a fixed value. The idea of this approach is to state a similarity value that acts as a minimum value for action sequences to be fused. In the experiments performed in this dissertation $\lambda = 0.75$ (Chapter \ref{cha:evaluation}). If $\lambda$ is set to higher values, $AML$ will be even more conservative, whereas decreasing $\lambda$ will make $AML$ rely more in the statistic-based approach ($\theta_S$). Figure \ref{fig-both-thresholds} shows both thresholds, $\theta_S$ and $\lambda$, for the example of MakePasta activity and its three action sequences. Notice that $Jaccard(S_1, S_2) = Jaccard(S_2, S_3)$ and thus, only one point is depicted in the graphic. It can be seen clearly how using only $\theta_S$, $Jaccard(S_1, S_3)$ is an outlier and in consequence, sequences $S_1$ and $S_3$ would be incorrectly fused. But using equation \ref{eq-threshold} and taking the maximum of both thresholds, there is not any outlier and hence all three sequences are kept as valid activity models. 
+\noindent where $\lambda$ is a fixed value. The idea of this approach is to state a similarity value that acts as a minimum value for action sequences to be fused. In the experiments performed in this dissertation $\lambda = 0.75$ (Chapter \ref{cha:evaluation}). If $\lambda$ is set to higher values, $AML$ will be even more conservative, whereas decreasing $\lambda$ will make $AML$ rely more on the statistic-based approach ($\theta_S$). Figure \ref{fig-both-thresholds} shows both thresholds, $\theta_S$ and $\lambda$, for the example of MakePasta activity and its three action sequences. Notice that $Jaccard(S_1, S_2) = Jaccard(S_2, S_3)$ and thus, only one point is depicted in the graphic. It can be seen clearly how using only $\theta_S$, $Jaccard(S_1, S_3)$ is an outlier and in consequence, sequences $S_1$ and $S_3$ would be incorrectly fused. But using equation \ref{eq-threshold} and taking the maximum of both thresholds, there is not any outlier and hence all three sequences are kept as valid activity models. 
 
 \begin{figure}[htbp]
 \centering
