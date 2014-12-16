@@ -384,7 +384,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="456.04611"
+     inkscape:cx="582.6011"
      inkscape:cy="247.59502"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -411,88 +411,85 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g5937"
-       transform="translate(444.36558,118.69298)">
+       id="g3941">
       <rect
          ry="21.213203"
-         y="553.3468"
-         x="191.92899"
+         y="672.03979"
+         x="636.29456"
          height="69.700523"
          width="158.59395"
          id="rect3904"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+         style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <text
          sodipodi:linespacing="125%"
          id="text3906"
-         y="583.91583"
-         x="270.92517"
+         y="702.60883"
+         x="715.29077"
          style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            id="tspan3912"
-           y="583.91583"
-           x="270.92517"
+           y="702.60883"
+           x="715.29077"
            sodipodi:role="line"
            style="font-size:18px">Action</tspan><tspan
            id="tspan5926"
-           y="606.41583"
-           x="270.92517"
+           y="725.10883"
+           x="715.29077"
            sodipodi:role="line"
            style="font-size:18px">Aggregator</tspan></text>
     </g>
     <g
-       id="g5204"
-       transform="translate(-138.06601,119.198)">
+       id="g3947">
       <rect
          ry="21.195747"
-         y="553.88062"
-         x="361.48309"
+         y="673.07861"
+         x="223.41708"
          height="69.643166"
          width="175.70918"
          id="rect3904-0"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.15735841;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+         style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.15735841000000006;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <text
          sodipodi:linespacing="125%"
          id="text3906-7"
-         y="583.11627"
-         x="449.96268"
+         y="702.31427"
+         x="311.89667"
          style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
-           y="583.11627"
-           x="449.96268"
+           y="702.31427"
+           x="311.89667"
            sodipodi:role="line"
            id="tspan5198"
            style="font-size:18px">Semantic Activity</tspan><tspan
-           y="605.61627"
-           x="449.96268"
+           y="724.81427"
+           x="311.89667"
            sodipodi:role="line"
            id="tspan6816"
            style="font-size:18px">Annotation</tspan></text>
     </g>
     <g
-       id="g4010"
-       transform="translate(-582.00521,248.49752)">
+       id="g3953">
       <rect
          ry="21.213203"
-         y="553.85193"
-         x="607.60675"
+         y="802.34943"
+         x="25.60154"
          height="69.700523"
          width="158.59395"
          id="rect3904-4"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+         style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <text
          sodipodi:linespacing="125%"
          id="text3906-8"
-         y="584.66705"
-         x="686.84515"
+         y="833.16455"
+         x="104.83994"
          style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
-           y="584.66705"
-           x="686.84515"
+           y="833.16455"
+           x="104.83994"
            sodipodi:role="line"
            id="tspan5930"
            style="font-size:18px">Synthetic</tspan><tspan
-           y="607.16705"
-           x="686.84515"
+           y="855.66455"
+           x="104.83994"
            sodipodi:role="line"
            id="tspan6436"
            style="font-size:18px">Data Generator</tspan></text>
@@ -739,34 +736,33 @@
          id="tspan8912"
          style="font-size:18px">Activity clusters</tspan></text>
     <g
-       id="g5937-9"
-       transform="translate(821.05975,119.87941)">
+       id="g3938">
       <rect
          ry="21.213203"
-         y="553.3468"
-         x="191.92899"
+         y="673.2262"
+         x="1012.9887"
          height="69.700523"
          width="158.59395"
          id="rect3904-8"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-9"
-         y="583.91583"
-         x="270.92517"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           id="tspan3912-1"
-           y="583.91583"
-           x="270.92517"
-           sodipodi:role="line"
-           style="font-size:18px">Activity Model</tspan><tspan
-           id="tspan5926-0"
-           y="606.41583"
-           x="270.92517"
-           sodipodi:role="line"
-           style="font-size:18px">Learner</tspan></text>
+         style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="1091.9849"
+       y="703.79523"
+       id="text3906-9"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="1091.9849"
+         y="703.79523"
+         id="tspan3912-1">Activity Model</tspan><tspan
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="1091.9849"
+         y="726.29523"
+         id="tspan5926-0">Learner</tspan></text>
     <image
        y="803.22406"
        x="1053.9127"
@@ -889,7 +885,7 @@
        id="path4874"
        inkscape:connector-curvature="0" />
     <rect
-       style="opacity:0.17695474;fill:#241f1c;fill-opacity:1;stroke:#000000;stroke-width:1.3746407;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="opacity:0.17695474000000000;fill:#c8b7b7;fill-opacity:1;stroke:#000000;stroke-width:1.37464070000000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect3132"
        width="628.29132"
        height="196.8627"

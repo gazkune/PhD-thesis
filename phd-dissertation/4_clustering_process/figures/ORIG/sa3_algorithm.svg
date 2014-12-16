@@ -412,7 +412,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="547.17153"
+     inkscape:cx="456.04611"
      inkscape:cy="287.04265"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -430,7 +430,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -438,64 +438,56 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g3945"
-       transform="translate(194.28571,181.42857)">
-      <rect
-         ry="21.192957"
-         y="491.36407"
-         x="282.78354"
-         height="69.634003"
-         width="178.52742"
-         id="rect3904"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.1665262;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906"
-         y="519.89691"
-         x="372.45593"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           id="tspan3912"
-           y="519.89691"
-           x="372.45593"
-           sodipodi:role="line"
-           style="font-size:18px">Activity Sequence</tspan><tspan
-           id="tspan5926"
-           y="542.39691"
-           x="372.45593"
-           sodipodi:role="line"
-           style="font-size:18px">Finding</tspan></text>
-    </g>
-    <g
-       id="g5204"
-       transform="translate(-138.06601,119.198)">
-      <rect
-         ry="21.195747"
-         y="553.88062"
-         x="361.48309"
-         height="69.643166"
-         width="175.70918"
-         id="rect3904-0"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.15735841;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-7"
-         y="583.11627"
-         x="449.96268"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="583.11627"
-           x="449.96268"
-           sodipodi:role="line"
-           id="tspan6816"
-           style="font-size:18px">Sensor-action</tspan><tspan
-           y="605.61627"
-           x="449.96268"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3153">transformation</tspan></text>
-    </g>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.16652620000000007;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904"
+       width="178.52742"
+       height="69.634003"
+       x="477.06924"
+       y="672.79266"
+       ry="21.192957" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="566.74164"
+       y="701.3255"
+       id="text3906"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="566.74164"
+         y="701.3255"
+         id="tspan3912">Activity Sequence</tspan><tspan
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="566.74164"
+         y="723.8255"
+         id="tspan5926">Finding</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.15735841000000006;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-0"
+       width="175.70918"
+       height="69.643166"
+       x="223.41708"
+       y="673.07861"
+       ry="21.195747" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="311.89667"
+       y="702.31427"
+       id="text3906-7"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:18px"
+         id="tspan6816"
+         sodipodi:role="line"
+         x="311.89667"
+         y="702.31427">Sensor-action</tspan><tspan
+         id="tspan3153"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="311.89667"
+         y="724.81427">transformation</tspan></text>
     <image
        y="661.7276"
        x="64.431503"
@@ -573,35 +565,31 @@
          y="794.97815"
          id="tspan7596"
          style="font-size:18px">dataset</tspan></text>
-    <g
-       id="g3955"
-       transform="translate(449.42857,183.14286)">
-      <rect
-         ry="21.200048"
-         y="491.35245"
-         x="286.34332"
-         height="69.657303"
-         width="171.40787"
-         id="rect3904-8"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.14322078;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-9"
-         y="519.89691"
-         x="372.27136"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           id="tspan3912-1"
-           y="519.89691"
-           x="372.27136"
-           sodipodi:role="line"
-           style="font-size:18px">Correct Activity</tspan><tspan
-           id="tspan5926-0"
-           y="542.39691"
-           x="372.27136"
-           sodipodi:role="line"
-           style="font-size:18px">Sequence Fitting</tspan></text>
-    </g>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.14322078000000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-8"
+       width="171.40787"
+       height="69.657303"
+       x="735.77191"
+       y="674.4953"
+       ry="21.200048" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="821.69995"
+       y="703.03979"
+       id="text3906-9"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="821.69995"
+         y="703.03979"
+         id="tspan3912-1">Correct Activity</tspan><tspan
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="821.69995"
+         y="725.53979"
+         id="tspan5926-0">Sequence Fitting</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
        d="m 134.28571,706.6479 87.14286,0"

@@ -43,7 +43,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="261.26326"
+     inkscape:cx="283.70218"
      inkscape:cy="557.88149"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -157,247 +157,215 @@
        id="path6386"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
-    <g
-       id="g3844"
-       transform="translate(-372.85715,-290)">
-      <rect
-         ry="21.213203"
-         y="491.33084"
-         x="292.75027"
-         height="69.700523"
-         width="158.59395"
-         id="rect3904-4"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8"
-         y="519.89691"
-         x="371.77478"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="519.89691"
-           x="371.77478"
-           sodipodi:role="line"
-           id="tspan6436"
-           style="font-size:18px">Design</tspan><tspan
-           y="542.39691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3838">activity survey</tspan></text>
-    </g>
-    <g
-       id="g3844-8"
-       transform="translate(-70.618684,-289.53321)">
-      <rect
-         ry="21.213203"
-         y="491.33084"
-         x="292.75027"
-         height="69.700523"
-         width="158.59395"
-         id="rect3904-4-6"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8-3"
-         y="519.89691"
-         x="371.77478"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="519.89691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3838-2">Select</tspan><tspan
-           y="542.39691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3882">target users</tspan></text>
-    </g>
-    <g
-       id="g3844-8-3"
-       transform="translate(-230.61868,-165.24748)">
-      <rect
-         ry="21.213203"
-         y="491.33084"
-         x="292.75027"
-         height="69.700523"
-         width="158.59395"
-         id="rect3904-4-6-1"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8-3-2"
-         y="519.89691"
-         x="371.77478"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="519.89691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3882-1">Distribute</tspan><tspan
-           y="542.39691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3916">survey</tspan></text>
-    </g>
-    <g
-       id="g3961"
-       transform="translate(-388.57143,247.14286)">
-      <rect
-         ry="21.198618"
-         y="193.25018"
-         x="442.15555"
-         height="69.652603"
-         width="172.83174"
-         id="rect3904-4-6-5"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.14792049;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8-3-1"
-         y="221.79228"
-         x="528.29895"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="221.79228"
-           x="531.16418"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3950">Translate surveys </tspan><tspan
-           y="244.29228"
-           x="528.29895"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3955">to scripts</tspan></text>
-    </g>
-    <g
-       id="g4008"
-       transform="translate(5.0507627,-123.23861)">
-      <rect
-         ry="27.300444"
-         y="678.20172"
-         x="50.031822"
-         height="89.701462"
-         width="172.67755"
-         id="rect3904-4-6-5-7"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.30211425;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8-3-1-7"
-         y="706.66675"
-         x="136.09813"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="706.66675"
-           x="136.09813"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3955-8">Run Synthetic</tspan><tspan
-           y="729.16675"
-           x="136.09813"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3999">dataset generator</tspan><tspan
-           y="751.66675"
-           x="136.09813"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan4001">with scripts</tspan></text>
-    </g>
-    <g
-       id="g3844-8-3-4"
-       transform="translate(-477.1901,71.03823)">
-      <rect
-         ry="21.213203"
-         y="491.33084"
-         x="292.75027"
-         height="69.700523"
-         width="158.59395"
-         id="rect3904-4-6-1-9"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8-3-2-7"
-         y="519.89691"
-         x="371.77478"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="519.89691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3916-0">Model</tspan><tspan
-           y="542.39691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan4047">sensor noise</tspan></text>
-    </g>
-    <g
-       id="g4008-3"
-       transform="translate(413.6294,-280.69027)">
-      <rect
-         ry="27.300444"
-         y="678.20172"
-         x="50.031822"
-         height="89.701462"
-         width="172.67755"
-         id="rect3904-4-6-5-7-7"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.30211425;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8-3-1-7-4"
-         y="706.66675"
-         x="136.09813"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="706.66675"
-           x="138.96336"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan4087">Develop activity </tspan><tspan
-           y="729.16675"
-           x="136.09813"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan4093">recognition</tspan><tspan
-           y="751.66675"
-           x="136.09813"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan4089">system</tspan></text>
-    </g>
-    <g
-       id="g3844-8-3-1"
-       transform="translate(187.95274,66.75251)">
-      <rect
-         ry="21.213203"
-         y="491.33084"
-         x="292.75027"
-         height="69.700523"
-         width="158.59395"
-         id="rect3904-4-6-1-2"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8-3-2-73"
-         y="519.89691"
-         x="371.77478"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="519.89691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3882-1-7">Compare</tspan><tspan
-           y="542.39691"
-           x="371.77478"
-           sodipodi:role="line"
-           style="font-size:18px"
-           id="tspan3916-9">results</tspan></text>
-    </g>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4"
+       width="158.59395"
+       height="69.700523"
+       x="-80.106873"
+       y="201.33084"
+       ry="21.213203" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1.0823697"
+       y="229.89691"
+       id="text3906-8"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:18px"
+         id="tspan6436"
+         sodipodi:role="line"
+         x="-1.0823697"
+         y="229.89691">Design</tspan><tspan
+         id="tspan3838"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="-1.0823697"
+         y="252.39691">activity survey</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4-6"
+       width="158.59395"
+       height="69.700523"
+       x="222.13159"
+       y="201.79764"
+       ry="21.213203" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="301.1561"
+       y="230.36371"
+       id="text3906-8-3"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3838-2"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="301.1561"
+         y="230.36371">Select</tspan><tspan
+         id="tspan3882"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="301.1561"
+         y="252.86371">target users</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4-6-1"
+       width="158.59395"
+       height="69.700523"
+       x="62.131596"
+       y="326.08337"
+       ry="21.213203" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="141.1561"
+       y="354.64944"
+       id="text3906-8-3-2"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3882-1"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="141.1561"
+         y="354.64944">Distribute</tspan><tspan
+         id="tspan3916"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="141.1561"
+         y="377.14944">survey</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.14792048999999996;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4-6-5"
+       width="172.83174"
+       height="69.652603"
+       x="53.584118"
+       y="440.39304"
+       ry="21.198618" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="139.72752"
+       y="468.93515"
+       id="text3906-8-3-1"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3950"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="142.59276"
+         y="468.93515">Translate surveys </tspan><tspan
+         id="tspan3955"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="139.72752"
+         y="491.43515">to scripts</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.30211425000000003;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4-6-5-7"
+       width="172.67755"
+       height="89.701462"
+       x="55.082584"
+       y="554.96313"
+       ry="27.300444" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="141.1489"
+       y="583.42816"
+       id="text3906-8-3-1-7"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3955-8"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="141.1489"
+         y="583.42816">Run Synthetic</tspan><tspan
+         id="tspan3999"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="141.1489"
+         y="605.92816">dataset generator</tspan><tspan
+         id="tspan4001"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="141.1489"
+         y="628.42816">with scripts</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4-6-1-9"
+       width="158.59395"
+       height="69.700523"
+       x="-184.43982"
+       y="562.36908"
+       ry="21.213203" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-105.41532"
+       y="590.93512"
+       id="text3906-8-3-2-7"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3916-0"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="-105.41532"
+         y="590.93512">Model</tspan><tspan
+         id="tspan4047"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="-105.41532"
+         y="613.43512">sensor noise</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.30211425000000003;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4-6-5-7-7"
+       width="172.67755"
+       height="89.701462"
+       x="463.66122"
+       y="397.51144"
+       ry="27.300444" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="549.72754"
+       y="425.97647"
+       id="text3906-8-3-1-7-4"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan4087"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="552.59277"
+         y="425.97647">Develop activity </tspan><tspan
+         id="tspan4093"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="549.72754"
+         y="448.47647">recognition</tspan><tspan
+         id="tspan4089"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="549.72754"
+         y="470.97647">system</tspan></text>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4-6-1-2"
+       width="158.59395"
+       height="69.700523"
+       x="480.703"
+       y="558.08337"
+       ry="21.213203" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="559.72754"
+       y="586.64941"
+       id="text3906-8-3-2-73"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3882-1-7"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="559.72754"
+         y="586.64941">Compare</tspan><tspan
+         id="tspan3916-9"
+         style="font-size:18px"
+         sodipodi:role="line"
+         x="559.72754"
+         y="609.14941">results</tspan></text>
   </g>
 </svg>

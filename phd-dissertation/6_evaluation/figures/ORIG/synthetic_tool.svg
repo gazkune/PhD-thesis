@@ -384,7 +384,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="434.42343"
+     inkscape:cx="182.99486"
      inkscape:cy="237.20314"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -402,7 +402,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -410,35 +410,31 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g4010"
-       transform="translate(-281.7195,239.92609)">
-      <rect
-         ry="21.213203"
-         y="553.85193"
-         x="607.60675"
-         height="69.700523"
-         width="158.59395"
-         id="rect3904-4"
-         style="fill:#aaeeff;fill-opacity:1;stroke:#000000;stroke-width:1.10000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3906-8"
-         y="584.66705"
-         x="686.84515"
-         style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="584.66705"
-           x="686.84515"
-           sodipodi:role="line"
-           id="tspan5930"
-           style="font-size:18px">Synthetic</tspan><tspan
-           y="607.16705"
-           x="686.84515"
-           sodipodi:role="line"
-           id="tspan6436"
-           style="font-size:18px">Data Generator</tspan></text>
-    </g>
+    <rect
+       style="fill:#afc6e9;fill-opacity:1;stroke:#000000;stroke-width:1.10000001999999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3904-4"
+       width="158.59395"
+       height="69.700523"
+       x="325.88724"
+       y="793.77802"
+       ry="21.213203" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="405.12564"
+       y="824.59314"
+       id="text3906-8"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:18px"
+         id="tspan5930"
+         sodipodi:role="line"
+         x="405.12564"
+         y="824.59314">Synthetic</tspan><tspan
+         style="font-size:18px"
+         id="tspan6436"
+         sodipodi:role="line"
+         x="405.12564"
+         y="847.09314">Data Generator</tspan></text>
     <g
        id="g4326">
       <image

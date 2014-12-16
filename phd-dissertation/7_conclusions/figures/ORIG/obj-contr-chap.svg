@@ -39,7 +39,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="332.63244"
+     inkscape:cx="415.5274"
      inkscape:cy="713.13843"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -57,7 +57,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -65,373 +65,332 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g3992">
-      <g
-         id="g3986">
-        <rect
-           style="fill:#abee51;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753"
-           width="134.28572"
-           height="54.285713"
-           x="66.332962"
-           y="142.36218" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="132.14725"
-           y="164.4584"
-           id="text3925"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan3927"
-             x="132.14725"
-             y="164.4584"
-             style="font-size:12px">1 Study state</tspan><tspan
-             sodipodi:role="line"
-             x="132.14725"
-             y="184.4584"
-             id="tspan3929"
-             style="font-size:12px">of the art</tspan></text>
-      </g>
-      <g
-         id="g3980">
-        <rect
-           style="fill:#abee51;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-6"
-           width="134.28572"
-           height="54.285713"
-           x="66.332962"
-           y="237.36215" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="134.28937"
-           y="259.39243"
-           id="text3931"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             x="134.28937"
-             y="259.39243"
-             id="tspan3935"
-             style="font-size:12px">2 Choose knowledge</tspan><tspan
-             sodipodi:role="line"
-             x="134.28937"
-             y="274.39243"
-             id="tspan3939"
-             style="font-size:12px">representation</tspan></text>
-      </g>
-      <g
-         id="g3973">
-        <rect
-           style="fill:#abee51;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-3"
-           width="134.28572"
-           height="54.285713"
-           x="66.332962"
-           y="332.36215" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="133.38075"
-           y="346.28586"
-           id="text3941"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan3943"
-             x="135.29091"
-             y="346.28586"
-             style="font-size:12px">3 Design &amp; </tspan><tspan
-             sodipodi:role="line"
-             x="133.38075"
-             y="361.28586"
-             style="font-size:12px"
-             id="tspan3947">implement</tspan><tspan
-             sodipodi:role="line"
-             x="133.38075"
-             y="376.28586"
-             id="tspan3945"
-             style="font-size:12px">learning algorithm</tspan></text>
-      </g>
-      <g
-         id="g3967">
-        <rect
-           style="fill:#abee51;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-5"
-           width="134.28572"
-           height="54.285713"
-           x="66.332962"
-           y="427.36215" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="134.3503"
-           y="450.27066"
-           id="text3949"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan3951"
-             x="134.3503"
-             y="450.27066"
-             style="font-size:12px">4 Identify evaluation</tspan><tspan
-             sodipodi:role="line"
-             x="134.3503"
-             y="465.27066"
-             id="tspan3953"
-             style="font-size:12px">methodology</tspan></text>
-      </g>
-      <g
-         id="g3961">
-        <rect
-           style="fill:#abee51;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-4"
-           width="134.28572"
-           height="54.285713"
-           x="66.332962"
-           y="522.36218" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="133.27922"
-           y="546.23517"
-           id="text3955"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan3957"
-             x="133.27922"
-             y="546.23517"
-             style="font-size:12px">5 Validate approach</tspan><tspan
-             sodipodi:role="line"
-             x="133.27922"
-             y="561.23517"
-             id="tspan3959"
-             style="font-size:12px">with results</tspan></text>
-      </g>
-    </g>
-    <g
-       id="g4072">
-      <g
-         id="g4030">
-        <rect
-           style="fill:#51ee61;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-0"
-           width="134.28572"
-           height="54.285713"
-           x="319.59503"
-           y="208.07648" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="387.87827"
-           y="230.15894"
-           id="text4020"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4022"
-             x="387.87827"
-             y="230.15894"
-             style="font-size:12px">Architecture for</tspan><tspan
-             sodipodi:role="line"
-             x="387.87827"
-             y="245.15894"
-             id="tspan4024"
-             style="font-size:12px">the learning system</tspan></text>
-      </g>
-      <g
-         id="g4042">
-        <rect
-           style="fill:#51ee61;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-6-3"
-           width="134.28572"
-           height="54.285713"
-           x="319.59503"
-           y="303.07645" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="386.88843"
-           y="325.01175"
-           id="text4036"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4038"
-             x="386.88843"
-             y="325.01175"
-             style="font-size:12px">Activity clustering</tspan><tspan
-             sodipodi:role="line"
-             x="386.88843"
-             y="340.01175"
-             id="tspan4040"
-             style="font-size:12px">process</tspan></text>
-      </g>
-      <g
-         id="g4054">
-        <rect
-           style="fill:#51ee61;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-3-3"
-           width="134.28572"
-           height="54.285713"
-           x="319.59503"
-           y="398.07648" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="385.85797"
-           y="421.01685"
-           id="text4048"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4050"
-             x="385.85797"
-             y="421.01685"
-             style="font-size:12px">Activity model</tspan><tspan
-             sodipodi:role="line"
-             x="385.85797"
-             y="436.01685"
-             id="tspan4052"
-             style="font-size:12px">learning algorithm</tspan></text>
-      </g>
-      <g
-         id="g4066">
-        <rect
-           style="fill:#51ee61;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-5-7"
-           width="134.28572"
-           height="54.285713"
-           x="319.59503"
-           y="493.07648" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="385.81735"
-           y="516.01178"
-           id="text4060"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4062"
-             x="385.81735"
-             y="516.01178"
-             style="font-size:12px">Hybrid evaluation</tspan><tspan
-             sodipodi:role="line"
-             x="385.81735"
-             y="531.01178"
-             id="tspan4064"
-             style="font-size:12px">methdology</tspan></text>
-      </g>
-    </g>
-    <g
-       id="g4163">
-      <g
-         id="g4130">
-        <rect
-           style="fill:#51ee91;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-1"
-           width="134.28572"
-           height="54.285713"
-           x="572.85706"
-           y="146.64792" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="639.40625"
-           y="176.49901"
-           id="text4118"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4120"
-             x="639.40625"
-             y="176.49901"
-             style="font-size:12px">Chapter 2</tspan></text>
-      </g>
-      <g
-         id="g4135">
-        <rect
-           style="fill:#51ee91;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-6-7"
-           width="134.28572"
-           height="54.285713"
-           x="572.85706"
-           y="241.64789" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="642.41638"
-           y="271.45334"
-           id="text4122"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4124"
-             x="642.41638"
-             y="271.45334"
-             style="font-size:12px">Chapter 3</tspan></text>
-      </g>
-      <g
-         id="g4140">
-        <rect
-           style="fill:#51ee91;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-3-8"
-           width="134.28572"
-           height="54.285713"
-           x="572.85706"
-           y="336.64789" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="642.41638"
-           y="366.4483"
-           id="text4126"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4128"
-             x="642.41638"
-             y="366.4483"
-             style="font-size:12px">Chapter 4</tspan></text>
-      </g>
-      <g
-         id="g4149">
-        <rect
-           style="fill:#51ee91;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-5-4"
-           width="134.28572"
-           height="54.285713"
-           x="572.85706"
-           y="431.64789" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="641.40625"
-           y="462.39249"
-           id="text4145"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4147"
-             x="641.40625"
-             y="462.39249"
-             style="font-size:12px">Chapter 5</tspan></text>
-      </g>
-      <g
-         id="g4158">
-        <rect
-           style="fill:#51ee91;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-           id="rect3753-4-3"
-           width="134.28572"
-           height="54.285713"
-           x="572.85706"
-           y="526.64789" />
-        <text
-           xml:space="preserve"
-           style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-           x="642.45703"
-           y="555.3468"
-           id="text4154"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4156"
-             x="642.45703"
-             y="555.3468"
-             style="font-size:12px">Chapter 6</tspan></text>
-      </g>
-    </g>
+    <rect
+       style="fill:#d7f4e3;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-8"
+       width="134.28572"
+       height="54.285713"
+       x="572.28369"
+       y="240.3308"
+       ry="13.131983" />
+    <rect
+       style="fill:#d7f4e3;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-29"
+       width="134.28572"
+       height="54.285713"
+       x="572.28369"
+       y="335.28513"
+       ry="13.131983" />
+    <rect
+       style="fill:#d7f4e3;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-02"
+       width="134.28572"
+       height="54.285713"
+       x="573.29382"
+       y="430.23947"
+       ry="13.131983" />
+    <rect
+       style="fill:#d7f4e3;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-6"
+       width="134.28572"
+       height="54.285713"
+       x="573.29388"
+       y="525.19379"
+       ry="13.131983" />
+    <rect
+       style="fill:#d7f4e3;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-7"
+       width="134.28572"
+       height="54.285713"
+       x="572.30402"
+       y="144.3663"
+       ry="13.131983" />
+    <rect
+       style="fill:#f4e3d7;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-122"
+       width="134.28572"
+       height="54.285713"
+       x="66.197273"
+       y="526.20398"
+       ry="13.131983" />
+    <rect
+       style="fill:#f4e3d7;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-12"
+       width="134.28572"
+       height="54.285713"
+       x="67.187126"
+       y="425.18869"
+       ry="13.131983" />
+    <rect
+       style="fill:#f4e3d7;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-3"
+       width="134.28572"
+       height="54.285713"
+       x="67.207428"
+       y="330.23438"
+       ry="13.131983" />
+    <rect
+       style="fill:#f4e3d7;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-2"
+       width="134.28572"
+       height="54.285713"
+       x="66.176971"
+       y="236.29019"
+       ry="13.131983" />
+    <rect
+       style="fill:#f4e3d7;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753"
+       width="134.28572"
+       height="54.285713"
+       x="66.332962"
+       y="142.36218"
+       ry="13.131983" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="132.14725"
+       y="164.4584"
+       id="text3925"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3927"
+         x="132.14725"
+         y="164.4584"
+         style="font-size:12px">1 Study state</tspan><tspan
+         sodipodi:role="line"
+         x="132.14725"
+         y="179.4584"
+         id="tspan3929"
+         style="font-size:12px">of the art</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="134.28937"
+       y="259.39243"
+       id="text3931"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="134.28937"
+         y="259.39243"
+         id="tspan3935"
+         style="font-size:12px">2 Choose knowledge</tspan><tspan
+         sodipodi:role="line"
+         x="134.28937"
+         y="274.39243"
+         id="tspan3939"
+         style="font-size:12px">representation</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="133.38075"
+       y="346.28586"
+       id="text3941"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3943"
+         x="135.29091"
+         y="346.28586"
+         style="font-size:12px">3 Design &amp; </tspan><tspan
+         sodipodi:role="line"
+         x="133.38075"
+         y="361.28586"
+         style="font-size:12px"
+         id="tspan3947">implement</tspan><tspan
+         sodipodi:role="line"
+         x="133.38075"
+         y="376.28586"
+         id="tspan3945"
+         style="font-size:12px">learning algorithm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="134.3503"
+       y="450.27066"
+       id="text3949"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3951"
+         x="134.3503"
+         y="450.27066"
+         style="font-size:12px">4 Identify evaluation</tspan><tspan
+         sodipodi:role="line"
+         x="134.3503"
+         y="465.27066"
+         id="tspan3953"
+         style="font-size:12px">methodology</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="133.27922"
+       y="550.23517"
+       id="text3955"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3957"
+         x="133.27922"
+         y="550.23517"
+         style="font-size:12px">5 Validate approach</tspan><tspan
+         sodipodi:role="line"
+         x="133.27922"
+         y="565.23517"
+         id="tspan3959"
+         style="font-size:12px">with results</tspan></text>
+    <rect
+       style="fill:#e3d7f4;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-0"
+       width="134.28572"
+       height="54.285713"
+       x="319.59503"
+       y="208.07648" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="387.87827"
+       y="230.15894"
+       id="text4020"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4022"
+         x="387.87827"
+         y="230.15894"
+         style="font-size:12px">Architecture for</tspan><tspan
+         sodipodi:role="line"
+         x="387.87827"
+         y="245.15894"
+         id="tspan4024"
+         style="font-size:12px">the learning system</tspan></text>
+    <rect
+       style="fill:#e5d5ff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-6-3"
+       width="134.28572"
+       height="54.285713"
+       x="319.59503"
+       y="303.07645" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="386.88843"
+       y="325.01175"
+       id="text4036"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4038"
+         x="386.88843"
+         y="325.01175"
+         style="font-size:12px">Activity clustering</tspan><tspan
+         sodipodi:role="line"
+         x="386.88843"
+         y="340.01175"
+         id="tspan4040"
+         style="font-size:12px">process</tspan></text>
+    <rect
+       style="fill:#e5d5ff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-3-3"
+       width="134.28572"
+       height="54.285713"
+       x="319.59503"
+       y="398.07648" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="385.85797"
+       y="421.01685"
+       id="text4048"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4050"
+         x="385.85797"
+         y="421.01685"
+         style="font-size:12px">Activity model</tspan><tspan
+         sodipodi:role="line"
+         x="385.85797"
+         y="436.01685"
+         id="tspan4052"
+         style="font-size:12px">learning algorithm</tspan></text>
+    <rect
+       style="fill:#e5d5ff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:3.79999995000000013;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3753-5-7"
+       width="134.28572"
+       height="54.285713"
+       x="319.59503"
+       y="493.07648" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="385.81735"
+       y="516.01178"
+       id="text4060"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4062"
+         x="385.81735"
+         y="516.01178"
+         style="font-size:12px">Hybrid evaluation</tspan><tspan
+         sodipodi:role="line"
+         x="385.81735"
+         y="531.01178"
+         id="tspan4064"
+         style="font-size:12px">methdology</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="639.40625"
+       y="176.49901"
+       id="text4118"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4120"
+         x="639.40625"
+         y="176.49901"
+         style="font-size:12px">Chapter 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="642.41638"
+       y="271.45334"
+       id="text4122"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4124"
+         x="642.41638"
+         y="271.45334"
+         style="font-size:12px">Chapter 3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="642.41638"
+       y="366.4483"
+       id="text4126"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4128"
+         x="642.41638"
+         y="366.4483"
+         style="font-size:12px">Chapter 4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="641.40625"
+       y="462.39249"
+       id="text4145"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4147"
+         x="641.40625"
+         y="462.39249"
+         style="font-size:12px">Chapter 5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="642.45703"
+       y="555.3468"
+       id="text4154"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4156"
+         x="642.45703"
+         y="555.3468"
+         style="font-size:12px">Chapter 6</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
