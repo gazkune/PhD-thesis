@@ -174,7 +174,7 @@ Combining the filtering step described in Section \ref{subsec:learner:filtering}
  \label{alg:aml}
  \begin{algorithmic}
  \REQUIRE activity\_clusters, $\lambda$
- \ENSURE learned\_action\_sequences
+ \ENSURE learnt\_action\_sequences
  \STATE $activities \leftarrow obtainActivities(activity\_clusters)$
  \FORALL{$activity \in activities$}
    \STATE $action\_sequences \leftarrow obtainSequences(activity, activity\_clusters)$
@@ -188,13 +188,13 @@ Combining the filtering step described in Section \ref{subsec:learner:filtering}
      \STATE $outliers \leftarrow detectOutliers(\hat{JM}, \theta_S, \lambda)$
      \STATE $action\_sequences \leftarrow fuseSequences(action\_sequences, outliers)$
    \UNTIL{$outliers = \emptyset$}
-   \STATE $learned\_action\_sequences \leftarrow addActivityModel(activity, action\_sequences)$
+   \STATE $learnt\_action\_sequences \leftarrow addActivityModel(activity, action\_sequences)$
  \ENDFOR
- \RETURN $learned\_action\_sequences$ 
+ \RETURN $learnt\_action\_sequences$ 
  \end{algorithmic}
 \end{algorithm}
 
-The output of the $AML$ algorithm is the so called learned action sequences file, stored in a JSON file in the current implementation. This file contains the extended activity models for every activity defined in the context model. An example can be seen in Figure \ref{fig-aml-output}, where two complete and specialised models for activity MakePasta are provided. The example is extracted from a real experiment, where the user prepares pasta \textit{carbonara} more or less the 50\% of times and pasta with tomato sauce also around 50\% of times. Looking at the action sequences, the different ways of preparing pasta can be distinguished. In the first way, labelled by the user as pasta \textit{carbonara}, bacon and cream are used by the user (actions \textit{hasBacon} and \textit{hasCream}). In the second way, action \textit{hasTomato} appears, which makes reference to the usage of tomato sauce. Notice also that the first action sequence contains an \textit{openFridge} action, which suggests that some of the ingredients are stored in the fridge. This does not happen in the second action sequence, where all the ingredients are taken from the food store (action \textit{openStore}).
+The output of the $AML$ algorithm is the so called learnt action sequences file, stored in a JSON file in the current implementation. This file contains the extended activity models for every activity defined in the context model. An example can be seen in Figure \ref{fig-aml-output}, where two complete and specialised models for activity MakePasta are provided. The example is extracted from a real experiment, where the user prepares pasta \textit{carbonara} more or less the 50\% of times and pasta with tomato sauce also around 50\% of times. Looking at the action sequences, the different ways of preparing pasta can be distinguished. In the first way, labelled by the user as pasta \textit{carbonara}, bacon and cream are used by the user (actions \textit{hasBacon} and \textit{hasCream}). In the second way, action \textit{hasTomato} appears, which makes reference to the usage of tomato sauce. Notice also that the first action sequence contains an \textit{openFridge} action, which suggests that some of the ingredients are stored in the fridge. This does not happen in the second action sequence, where all the ingredients are taken from the food store (action \textit{openStore}).
 
 \begin{figure}[htbp]
 \begin{small}
