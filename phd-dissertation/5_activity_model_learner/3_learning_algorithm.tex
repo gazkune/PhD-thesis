@@ -15,7 +15,7 @@ Summing up the conclusions obtained in Sections \ref{sec:learner:objectives} and
 
 The designed learning algorithm works on the similarity between action sequences and their occurrence frequencies. A two-step process has been designed and implemented for that purpose: (i) the filtering step (Section \ref{subsec:learner:filtering}), where action sequences will be treated in terms of repeated actions and varied order of actions, and (ii) the similarity-based outlier detection step (Section \ref{subsec:learner:outlier}), where outlier action sequences will be detected in the similarity space and fused with the most similar action sequence taking their occurrence frequencies into account. The complete $AML$ algorithm and its final output are described in Section \ref{subsec:learner:complete}.
 
-\subsection{Filtering step}
+\subsection{The filtering step}
 \label{subsec:learner:filtering}
 
 If action clusters which define activities are carefully analysed, it can be seen that there are some clusters that contain repeated actions. Additionally, some clusters contain the same actions but in different order. In the ontology-based activity modelling approach described in Section \ref{sec:approach:ontology}, the activity models in terms of action properties do not contain repeated actions and the order in which actions are executed is not important (notice that descriptive properties do reflect this information, but they are not used when recognising activities). In consequence, two filtering steps are performed:
@@ -37,7 +37,7 @@ If action clusters which define activities are carefully analysed, it can be see
 As a consequence of the filtering step, the number of clusters for an activity will be equal or less than the clusters provided as input.
 
 
-\subsection{Similarity-based outlier detection step}
+\subsection{The similarity-based outlier detection step}
 \label{subsec:learner:outlier}
 The idea behind the similarity-based outlier detection is simple: all the action sequences describing the same activity will have their own similarity distribution depending on the varied ways of performing the activity by a concrete user. Spurious action sequences will be those which are very similar to valid action sequences, and their difference will be related to sensor noise or clustering errors. Hence, if outliers are detected in the similarity space between action sequences, those outliers will point to spurious action sequences. 
 
@@ -75,7 +75,7 @@ JM = \left(
 \right)
 \end{equation}
 
-The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient is 1 ($\forall i, j : i = j \rightarrow Jaccard(S_i, S_j) = 1$). Diagonal values do not provide any information for outlier detection, so they are removed. Removing diagonal values from $JM$, $\hat{JM}$ is obtained. The $\hat{JM}$ matrix has the information of the similarity of all action sequences detected for a concrete activity. Figure \ref{fig-similarity} shows a plot of the similarity values between 11 action sequences, taken from a real example (they are representing the activity MakePasta for a concrete user). The idea of the similarity-based outlier detection is to identify similarity values that stand out among everyone else; then, take the action sequences that are represented by those outlier similarity values and fuse them.  
+The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient is 1 ($\forall i, j : i = j \rightarrow Jaccard(S_i, S_j) = 1$). Diagonal values do not provide any information for outlier detection, so they are removed. Additionally, values from the upper and lower triangles of $JM$ are the same, since $Jaccard(S_i, S_j) = Jaccard(S_j, S_i)$. So extracting only the values of the upper triangle from $JM$, $\hat{JM}$ is obtained, which is stored as a vector. The $\hat{JM}$ vector has the information of the similarity of all action sequences detected for a concrete activity. Figure \ref{fig-similarity} shows a plot of the similarity values between 11 action sequences, taken from a real example (they are representing the activity MakePasta for a concrete user). The idea of the similarity-based outlier detection is to identify similarity values that stand out among everyone else; then, take the action sequences that are represented by those outlier similarity values and fuse them.  
 
 \begin{figure}[htbp]
 \centering
@@ -86,7 +86,7 @@ The diagonal of $JM$ is 1, since two equal action sequences' Jaccard coefficient
 
 To detect outlier similarity values, a statistical approach has been defined. Fixing a static threshold value for every activity is not appropriate, since some activities may contain many actions, whereas others are performed by means of few actions. So a difference of a single action in a ``short'' activity cannot have the same weight as in a ``long'' activity (short and long are here used to refer to the number of actions of activities). Furthermore, some users may execute very different action sequences to perform the same activity, while others may only add slight variations. In consequence, the outlier detection method has to calculate a threshold for every action sequence group describing an activity. 
 
-The strategy followed to calculate the threshold is based on the median value of the $\hat{JM}$ matrix. The median is the numerical value separating the higher half of a data sample from the lower half. The median of a finite list of numbers can be found by arranging all the observations from lowest value to highest value and picking the middle one. If there is an even number of observations, then there is no single middle value; the median is then usually defined to be the mean of the two middle values. The median has been chosen rather than the mean, because the median is a robust estimator which is less influenced by outliers than the mean value. Using the median allows detecting the similarity ``centre of gravity'' minimising the influence of outliers. %Once the median of $\hat{JM}$ is calculated, the standard deviation of similarity values to the median is calculated. Summing the median and the standard deviation value an appropriate threshold for outlier detection is determined:
+The strategy followed to calculate the threshold is based on the median value of the $\hat{JM}$ vector. The median is the numerical value separating the higher half of a data sample from the lower half. The median of a finite list of numbers can be found by arranging all the observations from lowest value to highest value and picking the middle one. If there is an even number of observations, then there is no single middle value; the median is then usually defined to be the mean of the two middle values. The median has been chosen rather than the mean, because the median is a robust estimator which is less influenced by outliers than the mean value. Using the median allows detecting the similarity ``centre of gravity'' minimising the influence of outliers. %Once the median of $\hat{JM}$ is calculated, the standard deviation of similarity values to the median is calculated. Summing the median and the standard deviation value an appropriate threshold for outlier detection is determined:
 
 % The standard deviation is not being used really. We are using the average absolute deviation about median
 
@@ -99,14 +99,14 @@ Once the median of $\hat{JM}$ measures the central tendency, another statistic i
 
 The MAD is a measure of statistical dispersion. Moreover, the MAD is a robust statistic, being more resilient to outliers in a dataset than the standard deviation. In the standard deviation, the distances from the mean are squared, so large deviations are weighted more heavily, and thus outliers can heavily influence it. In the MAD, the deviations of a small number of outliers are irrelevant.
 
-There is another dispersion measure, which is known as the average absolute deviation about median (ADM). The ADM offers a direct measure of the scale of a random variable about its median and it is defines as:
+There is another dispersion measure, which is known as the average absolute deviation about median (ADM). The ADM offers a direct measure of the scale of a random variable about its median and it is defined as:
 
 \begin{equation}
  \label{eq-adm}
  ADM = E_i |X_i - median(X)|
 \end{equation}
 
-Both the MAD and the ADM can be used to establish a proper threshold and identify outlier similarity values. However, in the current implementation the ADM has been chosen. It is true that the ADM is more influenced by outliers than the MAD, but from the point of view of the conservative approach to learning, the ADM is more suitable. The reason is that the MAD can have a value of zero if there are some similarity values with the same values as the median. This fact makes that the median itself could be taken as the threshold, which is quite aggressive. On the other hand, the only way the ADM can be zero is to have all similarity values being equal to the median. Moreover, it can be shown mathematically that the MAD of a given dataset will always be less or equal to the ADM, so the MAD is more aggressive in all the cases. 
+\noindent where $E_i |X|$ stands for the mean value of $X$. Both the MAD and the ADM can be used to establish a proper threshold and identify outlier similarity values. However, in the current implementation the ADM has been chosen. It is true that the ADM is more influenced by outliers than the MAD, but from the point of view of the conservative policy selected for learning, the ADM is more suitable. The reason is that the MAD can have a value of zero if there are some similarity values with the same values as the median. This fact makes that the median itself could be taken as the threshold, which is quite aggressive. On the other hand, the only way the ADM can be zero is to have all similarity values being equal to the median. Moreover, it can be shown mathematically that the MAD of a given dataset will always be less or equal to the ADM, so the MAD is more aggressive in all the cases. 
 
 Due to those reasons, the ADM has been chosen to establish a statistical threshold to separate normal similarity values from outlier values. The threshold is defined as:
 
@@ -183,7 +183,7 @@ Combining the filtering step described in Section \ref{subsec:learner:filtering}
    \STATE // The similarity-based outlier detection step
    \REPEAT
      \STATE $JM \leftarrow jaccardMatrix(action\_sequences)$
-     \STATE $\hat{JM} \leftarrow removeDiagonal(JM)$
+     \STATE $\hat{JM} \leftarrow extractUpperTriangle(JM)$
      \STATE $\theta_S \leftarrow calculateStatisticThreshold(\hat{JM})$
      \STATE $outliers \leftarrow detectOutliers(\hat{JM}, \theta_S, \lambda)$
      \STATE $action\_sequences \leftarrow fuseSequences(action\_sequences, outliers)$
