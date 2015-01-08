@@ -63,7 +63,7 @@ As can be seen in the literature review done in the paragraph above, simulation 
 
 The hybrid evaluation methodology has been specially designed for activity recognition systems which assume the dense sensing paradigm (see constraint \ref{cons-dense}). Even though the methodology itself is not limited to concrete scenarios, the implementation presented in this document works for single user - single activity scenarios, i.e. only one user is considered and concurrent or interleaved activities are not taken into account (see constraint \ref{cons-single}). 
 
-The methodology has been named hybrid because it combines real users’ inputs and simulation tools. The key idea is to circulate surveys among target users with the objective of capturing how they perform certain activities of daily living. Additionally, users are also requested to describe how their days are in terms of defined activities. For example, a user might make a coffee and brush teeth in week days between 7:00 and 7:30 AM. So the aim of those surveys is to model real human behaviour, covering one of the major weaknesses of simulation-based evaluation methodologies. Using the information collected by surveys, individual scripts are prepared, which are then processed by a synthetic dataset generator tool to simulate arbitrary number of days and generate perfectly labelled datasets of activities. To get as close as possible to real world settings, the synthetic dataset generator uses probabilistic sensor noise models and probabilistic time lapses.
+The methodology has been named hybrid because it combines real users’ inputs and simulation tools. The key idea is to circulate surveys among target users with the objective of capturing how they perform certain activities of daily living. Additionally, users are also requested to describe how their days are in terms of defined activities. For example, a user might make a coffee and brush her teeth in week days between 7:00 and 7:30 AM. So the aim of those surveys is to model real human behaviour, covering one of the major weaknesses of simulation-based evaluation methodologies. Using the information collected by surveys, individual scripts are prepared, which are then processed by a synthetic dataset generator tool to simulate arbitrary number of days and generate perfectly labelled datasets of activities. To get as close as possible to real world settings, the synthetic dataset generator uses probabilistic sensor noise models and probabilistic time lapses.
 
 Based on those constraints and ideas, the proposed hybrid evaluation methodology has the following steps (see Figure \ref{fig-methodology}):
 
@@ -108,7 +108,7 @@ On the other hand, to model human behaviour appropriately, acquiring activity mo
  A behaviour model is a sequence of activities with associated time slots and time lapses. A user might provide several behaviour models, as every day can be different in terms of performed activities and times.
 \end{defn}
 
-The main objective of the survey is to obtain activity and behaviour models from target users. Hence, the survey for activities of daily living has two main parts. The first part is devoted to capture what activities are performed in different days, i.e. behaviour models (see definition \ref{def-behaviour}. The second part, on the other hand, asks users about how they perform those activities based on user-object interactions, i.e. activity models. The concrete survey used for the experiments carried out in this dissertation can be found in the web\footnote{http://goo.gl/etCNyi}. 
+The main objective of the survey is to obtain activity and behaviour models from target users. Hence, the survey for activities of daily living has two main parts. The first part is devoted to capture what activities are performed in different days, i.e. behaviour models (see definition \ref{def-behaviour}). The second part, on the other hand, asks users about how they perform those activities based on user-object interactions, i.e. activity models. The concrete survey used for the experiments carried out in this dissertation can be found in the web\footnote{http://goo.gl/etCNyi}. 
 
 As can be seen in Figure \ref{fig-survey-1}, the survey begins with a brief explanation for target users, where the aims of the survey are stated and the target activities are presented. In this case, the target activities are seven: (i) make a coffee, (ii) make a chocolate, (iii) make pasta, (iv) brush teeth, (v) watch television, (vi) wash hands and (vii) read a book. Afterwards, under the heading of ``Day Description'', users are asked to describe their week days in terms of activities. They are expected to provide information about time slots and activity sequences performed in those time slots. Users are also asked to provide time relations between two consecutive activities. For example, between 7:00 and 7:30 AM a user might make a coffee and ten minutes later might brush her teeth. This first part has been designed to obtain behaviour models for target users.
 
@@ -204,7 +204,7 @@ The first information given in the ADL script refers to the number of days that 
 
 The next part of the file is for defining \textit{sensor activation patterns} for activities. Sensor activation patterns are used to describe how activities are performed in terms of sensor activations and thus represent activity models in terms of sensors. An activity can have an arbitrary number of sensor activation patterns, which are specified with an occurrence probability and a sequence of sensor activations with relative time lapses. An example of sensor activation patterns for activity MakeCoffee can be found in Figure \ref{fig:sensor-act}.
 
-\begin{figure}
+\begin{figure}[htbp]
 \begin{small}
 \lstset{linewidth=\textwidth}
 \begin{lstlisting}
@@ -232,7 +232,7 @@ Once all activity models are represented using appropriate sensor activation pat
 Specific week days are not represented in behaviour models. Instead of that, the probability of a concrete list of sequences and alterations is given. A list of sequences and alterations models a day. So if such a day model occurs 2 days in a week, i.e. in weekends, the assigned probability will be $2/7 \simeq 0.29$. An example is depicted in Figure \ref{fig:activity-pattern}. A typical day of a user is described, with an occurrence probability of 0.29, since the activity pattern describes a weekend day. In this case, the user reported that (s)he sometimes reads a book in the afternoon. Alterations allow modelling this kind of behaviour.
 
 
-\begin{figure}
+\begin{figure}[htbp]
 \begin{small}
 \lstset{linewidth=\textwidth}
 \begin{lstlisting}
@@ -288,7 +288,9 @@ For the purpose of generating realistic sensor activation datasets, the syntheti
     \label{fig-sim-loop}
 \end{figure}
 
-Once sensor positive noise has been generated for the whole day, a behaviour model is chosen, taking into account the probabilities of each model. The behaviour model is a list of sequences and alterations. The first element of the list is taken. If it is a sequence, the activities of the sequence are executed in the specified time slot. For example, assume the sequence is such that 
+Once sensor positive noise has been generated for the whole day, a behaviour model is chosen, taking into account the probabilities of each model. The behaviour model is a list of sequences and alterations. The first element of the list is taken. If it is a sequence, the activities of the sequence are executed in the specified time slot. 
+
+Let us show an example of how a sequence is executed by the simulator. Assume the sequence to be executed is such that 
 
 \begin{small}
 \begin{lstlisting}
@@ -329,7 +331,7 @@ The core ideas of the hybrid methodology are using surveys to capture user behav
 
 In this case, the constraints and features of the EAM learning system make feasible the usage of surveys and simulators. The dense sensing paradigm for activity monitoring establishes that user-object interactions are monitored through simple sensor activations, which are used for activity modelling. So sensor activations are boolean valued, making simulation much easier. For example, Persim introduces sensor value generation functions, because the simulated sensors are broader and can produce different values depending on the context. 
 
-Another simplification comes from the activity modelling approach, which is based on action sequences mapped from sensor activations which monitor objects. This means that sensors like thermometers, humidity sensors and so on. do not have to be modelled and simulated for the EAM learning system. Only sensors attached to objects. The same activity modelling approach makes feasible obtaining accurate activity models from users, since it is easy for any user to describe what objects are used to perform activities. 
+Another simplification comes from the activity modelling approach, which is based on action sequences mapped from sensor activations which monitor objects. This means that sensors like thermometers, humidity sensors and so on do not have to be modelled and simulated for the EAM learning system. Only sensors attached to objects. The same activity modelling approach makes feasible obtaining accurate activity models from users, since it is easy for any user to describe what objects are used to perform activities. 
 
 The single user - single activity constraint also simplifies the whole evaluation process. Firstly, users do not have to provide information about overlapping and concurrent activities, which is very complicated. Additionally, activity models and behaviour models are kept simple for simulation. Modelling and simulating concurrent activities is a challenge that is avoided in this case. 
 
