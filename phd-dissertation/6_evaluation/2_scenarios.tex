@@ -176,7 +176,7 @@ For all four evaluation scenarios the same metrics have been used. The most impo
 \label{metric-sa3}
 \end{equation}
 
-This evaluation criterion is called \textit{activity-based evaluation}. Using activity-based evaluation criterion, true positives, false positives and false negatives are calculated for every activity, comparing the output of $SA³$ with the ground truth.
+This evaluation criterion is called \textit{activity-based evaluation}. Using activity-based evaluation criterion, true positives, false positives and false negatives are calculated for every activity, comparing the output of $SA³$ with the ground truth. Notice that true negatives are ignored, since they are equivalent to computing the true positives for the None activity, which is not interesting for evaluation purposes.
 
 \subsubsection{Results}
 \label{subsubsec:evaluation:sa3:results}
@@ -214,6 +214,7 @@ Table \ref{tab-sa3-ideal} shows that the 100\% of all activities are properly ca
 
 For the next experiments, assessing the performance of $SA³$ under sensor missing error noise is the objective. In principle, the completion criterion of the activity sequence finding step of $SA^3$ suggests that if a sensor activation which is mapped to one of the IAMs fails, $SA³$ will fail to detect that activity (see Section \ref{subsec:clustering:sa3:find} for a detailed explanation). In order to test that suggestion, two of the seven activities have been chosen. Sensor activations which are mapped to the IAMs of those activities are given an increasing missing probability, to see how this missing noise affects the detection of those activities. The rest of the activities are kept noiseless, to measure the effect of missing noise in other activities. Table \ref{tab-sa3-missing} shows the results for the sensor missing noise scenario. The activities which suffer missing noise are marked with an asterisk (MakeChocolate and BrushTeeth). Five experiments are run, each of them simulating 130 days. Sensor missing probabilities are 0.01, 0.02, 0.05, 0.07 and 0.1. For each experiment, true positives, false positives and false negatives are measured, using the activity-based evaluation criterion. 
 
+\begin{comment}
 \begin{table}[htbp]\scriptsize
   \begin{center}
         \begin{tabular}{cccccc}
@@ -235,6 +236,32 @@ For the next experiments, assessing the performance of $SA³$ under sensor missi
         \label{tab-sa3-missing}
     \end{center}
 \end{table}
+\end{comment}
+
+
+\begin{table}[htbp]\scriptsize
+\setlength{\tabcolsep}{5pt}
+  \begin{center}
+        \begin{tabular}{cccccccccccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{15}{c}{\textbf{Sensor missing probability}}\\
+             & \multicolumn{3}{c}{0.01} & \multicolumn{3}{c}{0.02} & \multicolumn{3}{c}{0.05} & \multicolumn{3}{c}{0.07} & \multicolumn{3}{c}{0.1} \\
+             & TP & FP & FN & TP & FP & FN & TP & FP & FN & TP & FP & FN & TP & FP & FN \\
+            \hline
+            MakeChocolate*   & 99.2 & 0 & 0.8 & 99.2 & 0 & 0.8 & 94.6 & 0 & 5.4 & 92.3 & 0 & 7.7 & 89.2 & 0 & 10.8 \\
+	    WatchTelevision  & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    BrushTeeth*      & 98.9 & 0 & 1.1 & 98.6 & 0 & 1.4 & 96 & 0 & 4 & 93.8 & 0 & 6.2 & 89.4 & 0 & 10.6 \\
+	    WashHands        & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    MakePasta        & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    ReadBook         & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    MakeCoffee       & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0 \\
+            \hline
+        \end{tabular}                
+        \caption{Results of $SA³$ for the sensor missing noise scenario, where TP: true positives, FP: false positives and FN: false negatives. The activities affected by the noise have an asterisk.}
+        \label{tab-sa3-missing}
+    \end{center}
+\end{table}
+
 
 As can be seen in Table \ref{tab-sa3-missing}, the performance of $SA³$ for the rest of activities does not vary. It keeps on producing 100\% of true positives, while false positives and negatives are null. However, true positive rate of activities MakeChocolate and BrushTeeth seems to be linearly reducing with sensor missing noise probability. The reduction of true positives generates the appearance of false negatives, since those activities that are not detected, are labelled as None. Thus, they are considered false negatives. There is no effect in false positives, but the effect on true positives is clear, as expected. To make the linearity more clear, Figure \ref{fig:sa3-missing} plots true positive rates for both activities for measured sensor missing noise probabilities. 
 
@@ -251,6 +278,7 @@ Taking into account that noise generation is probabilistically accomplished in t
 
 To test the sensor positive noise scenario, five experiments have been run. For each of the experiments, six sensors are picked up randomly and they are assigned increasing sensor positive noise probabilities. This strategy allows measuring the performance of $SA³$ in presence of positive noise. For each of the experiments 130 days are simulated again. To have a reference of the level of noise, sensor activations in each dataset scale from 5054 to 8850. The noiseless scenario presented 4093 sensor activations, so the noisiest dataset contains around 46\% more sensor activations. Table \ref{tab-sa3-positive} shows the results for the sensor positive noise scenario. Each experiment is identified by its noise level, where 0.05 means that all randomly selected sensors have a positive noise probability of 0.05 per hour. For each experiment, true positives, false positives and false negatives are depicted.
 
+\begin{comment}
 \begin{table}[htbp]\scriptsize
     \begin{center}    
         \begin{tabular}{cccccc}
@@ -266,6 +294,30 @@ To test the sensor positive noise scenario, five experiments have been run. For 
 	    MakePasta       & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0     & 100 - 0 - 0 & 99.3 - 0.7 - 0 \\
 	    ReadBook        & 100 - 0 - 0 & 100 - 0 - 0 & 97.5 - 2.5 - 0  & 100 - 0 - 0 & 98.1 - 1.9 - 0 \\
 	    MakeCoffee      & 100 - 0 - 0 & 100 - 0 - 0 & 100 - 0 - 0     & 100 - 0 - 0 & 100 - 0 - 0 \\
+            \hline
+        \end{tabular}          
+        \caption{Results of $SA³$ for positive sensor noise scenario; TP: true positives; FP: false positives; FN: false negatives}
+        \label{tab-sa3-positive}
+    \end{center}
+\end{table}
+\end{comment}
+
+\begin{table}[htbp]\scriptsize
+\setlength{\tabcolsep}{5pt}
+    \begin{center}    
+        \begin{tabular}{cccccccccccccccc}
+            \hline            
+            \textbf{Activity} & \multicolumn{15}{c}{\textbf{Sensor positive probability}}\\
+             & \multicolumn{3}{c}{0.05} & \multicolumn{3}{c}{0.1} & \multicolumn{3}{c}{0.15} & \multicolumn{3}{c}{0.2} & \multicolumn{3}{c}{0.25} \\
+             & TP & FP & FN & TP & FP & FN & TP & FP & FN & TP & FP & FN & TP & FP & FN \\
+            \hline
+            MakeChocolate   & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0     & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    WatchTelevision & 100 & 0 & 0 & 100 & 0 & 0 & 99.1 & 0.9 & 0  & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    BrushTeeth      & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0     & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    WashHands       & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0     & 100 & 0 & 0 & 100 & 0 & 0 \\
+	    MakePasta       & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0     & 100 & 0 & 0 & 99.3 & 0.7 & 0 \\
+	    ReadBook        & 100 & 0 & 0 & 100 & 0 & 0 & 97.5 & 2.5 & 0  & 100 & 0 & 0 & 98.1 & 1.9 & 0 \\
+	    MakeCoffee      & 100 & 0 & 0 & 100 & 0 & 0 & 100 & 0 & 0     & 100 & 0 & 0 & 100 & 0 & 0 \\
             \hline
         \end{tabular}          
         \caption{Results of $SA³$ for positive sensor noise scenario; TP: true positives; FP: false positives; FN: false negatives}
@@ -356,14 +408,14 @@ So the experimental set-up designed consists of:
 
 The datasets used for the experiments carried out to evaluate activity clustering are available in the web\footnote{http://www.morelab.deusto.es/pub/synthetic\_adl\_datasets/}. As a summary, 16 different datasets can be found there, 2 per user: the datasets for the ideal and the complete scenarios. All datasets simulate 60 days according to the behaviour models provided by each user.
 
-The evaluation criterion in this case, is the so called \textit{action-based evaluation}: compare the labels given by the clustering process to every sensor activation/action with the ground truth produced by the synthetic dataset generator tool by means of true positives, false positives and false negatives. This evaluation criterion assesses the performance of the clustering process as an activity annotator.
+The evaluation criterion in this case, is the so called \textit{action-based evaluation}: compare the labels given by the clustering process to every sensor activation/action with the ground truth produced by the synthetic dataset generator tool by means of true positives, false positives and false negatives (true negatives are ignored again, because they represent actions which have been correctly labelled as None). This evaluation criterion assesses the performance of the clustering process as an activity annotator.
 
 \subsubsection{Results}
 \label{subsubsec:evaluation:clustering:results}
 
 \paragraph*{Ideal scenario}
 
-The 8 datasets generated from the ADL surveys for the ideal scenario contain 2128 sensor activations in average. For each of the experiments, the average true positives, false positives and false negatives are depicted per activity. The averages are calculated over the 8 users. A comparison between the actions labelled by $SA^3$ and $AA$ is depicted in the results. Remember that those results cannot be compared to the results shown for $SA³$ evaluation (Section \ref{subsubsec:evaluation:sa3:results}), since evaluation criteria are different. Table \ref{tab-r-ideal-t1} shows the results when simple time distance is used in $AA$ (equation \ref{eq-t1}). Similarly, Table \ref{tab-r-ideal-t2} depicts the results when normalised time distance is applied (see equation \ref{eq-t2}). Finally, Table \ref{tab-r-ideal-t3} shows how the clustering process performs when the dynamic centre normalised time distance is used for the previous activity (see equation \ref{eq-t3}) and the normalised time distance for the next activity.
+The 8 datasets generated from the ADL surveys for the ideal scenario contain 2128 sensor activations in average. For each of the experiments, the average true positives, false positives and false negatives are depicted per activity. The averages are calculated over the 8 users. A comparison between the actions labelled by $SA^3$ and $AA$ is depicted in the results. Remember that those results cannot be compared to the results shown for $SA³$ evaluation (Section \ref{subsubsec:evaluation:sa3:results}), since the evaluation criteria are different. Table \ref{tab-r-ideal-t1} shows the results when simple time distance is used in $AA$ (Equation \ref{eq-t1}). Similarly, Table \ref{tab-r-ideal-t2} depicts the results when normalised time distance is applied (see Equation \ref{eq-t2}). Finally, Table \ref{tab-r-ideal-t3} shows how the clustering process performs when the dynamic centre normalised time distance is used for the previous activity (see Equation \ref{eq-t3}) and the normalised time distance for the next activity.
 
 \begin{table}[htbp]\scriptsize
     \begin{center}    
@@ -547,7 +599,7 @@ Results are shown in the same manner as for the ideal scenario. As such, Table \
 
 The first discussion point for the clustering process is the difference in performance of the three time metrics. Tables \ref{tab-r-comparative-ideal} and \ref{tab-r-comparative-complete} show a clear comparative, both in the ideal and complete scenario. It can be seen that the difference between simple time distance and normalised time distance is not significant. But using dynamic centre normalised time distance for previous activity and normalised time distance for next activity, yields better results. Notice that even though differences are not very big, the higher precision of the third approach is due to lower false positive rates. For some activities, the first two approaches produce even higher true positives, but at the expense of generating more false positives. Recall values are very similar for all three time metrics in both scenarios. So results suggest that as far as sensor activation labelling regards, combining the dynamic centre normalised time distance and normalised time distance is the best option.
 
-The small differences between three time approaches shown in Tables \ref{tab-r-comparative-ideal} and \ref{tab-r-comparative-complete} mean that for outsider actions, the candidate function solves the vast majority of the cases (equation \ref{eq-candidate}). For those outsiders that cannot be classified by the candidate function, the three time metrics play a role. But their effect is minimised because of the low number of such outsiders.
+The small differences between three time approaches shown in Tables \ref{tab-r-comparative-ideal} and \ref{tab-r-comparative-complete} mean that for outsider actions, the candidate function solves the vast majority of the cases (Equation \ref{eq-candidate}). For those outsiders that cannot be classified by the candidate function, the three time metrics play a role. But their effect is minimised because of the low number of such outsiders.
 
 For the rest of the discussion about the clustering process, the third time approach will be considered, since it seems to be the best approach. Tables \ref{tab-r-ideal-t2} and \ref{tab-r-comp-t2} show the good performance of the activity clustering process using the context knowledge. True positive rate is very high for all activities. The lowest rate is found for activity ReadBook in the complete scenario: 94.37\%. This is due to two factors: (i) the missing sensor probability for pressure sensors is around 10\% and (ii) the IAM for ReadBook has the action \textit{useFurniture} ($IAM(ReadBook) = \{hasBook, useFurniture\}$); all the objects that are mapped to action \textit{useFurniture} are monitored by pressure sensors, for example, sofa, chair or bed. When pressure sensors fail, $SA^3$ cannot detect the activity and hence, true positive rate decreases. Notice that this happens only because the missing action is part of the IAM of the activity. All other activities, even in the complete scenario, show true positive rates higher than 95\%, reaching in some cases 100\% rates. Those high rates are accompanied with very low rates of false positives and negatives. For example, the highest false positive rate has been found for activity MakePasta in the complete scenario with 2.83\%. 
 
@@ -580,7 +632,7 @@ Using the described evaluation scenarios and the \textit{model-based evaluation}
 
 \paragraph*{Ideal scenario}
 
-The datasets used for those experiments have already been described in Section \ref{subsubsec:evaluation:clustering:scenarios}. Remember that the ideal scenario does not contain any sensor noise. $AML$ is run, taking as inputs the results of the clustering process generated in Section \ref{subsubsec:evaluation:clustering:results}. Thus, Table \ref{tab-rp-ideal-t0} shows the results for the ideal scenario using the simple time distance in the clustering process. Analogously, Tables \ref{tab-rp-ideal-t1} and \ref{tab-rp-ideal-t2} show the results in the same scenario, but applying the normalised time distance in the first and the combination of the dynamic centre normalised distance and normalised distance in the second. 
+The datasets used for those experiments have already been described in Section \ref{subsubsec:evaluation:clustering:scenarios}. Remember that the ideal scenario does not contain any sensor noise. $AML$ is run, taking as inputs the results of the clustering process generated in Section \ref{subsubsec:evaluation:clustering:results}. As a reference, using a laptop computer equipped with an Intel i5 processor with 4 cores running at 1.6 GHz and 8 GB of RAM memory, the complete EAM learning system needs around 30 seconds to process such datasets. The obtained results are summarised in the following tables: Table \ref{tab-rp-ideal-t0} shows the results for the ideal scenario using the simple time distance in the clustering process; analogously, Tables \ref{tab-rp-ideal-t1} and \ref{tab-rp-ideal-t2} show the results in the same scenario, but applying the normalised time distance in the first and the combination of the dynamic centre normalised distance and normalised distance in the second. 
 
 
 \begin{table}[htbp]\scriptsize
@@ -796,7 +848,7 @@ The desired results for correctly learnt activity models come with the learning 
 
 %Nevertheless, the false positive rates shown in the results have to be properly interpreted. The highest rate can be found for activity MakeChocolate in the complete scenario: 120\%. As shown in Table \ref{tab-rp-comp-t2}, the average number of patterns of the activity MakeChocolate is 1, which means that all 8 users perform the activity in only one way. The false positive rate of 120\% comes from the fact that EAM learning algorithm learns in average 2.2 activity models for MakeChocolate, i.e. it learns additional 1.2 patterns in average. Putting it in that perspective and applying the same interpretation to all activities, false positive rates are assumable.
 
-In addition to the low number of spurious activity models learnt, it has to be said that those false models are usually easy to discard for an expert for two reasons: (i) they have very low occurrence frequencies and (ii) they usually contain actions that are not generally executed for those activities. For example, for activity MakeChocolate, actions like \textit{hasBacon} have been seen. Notice that those actions cannot be discarded by $AA$ during the clustering process, since they are type and location compatible with MakeChocolate. Such an action is produced by sensor positive noise, which can be observed in the slight false positive increments from ideal scenario to complete scenario in Tables \ref{tab-r-ideal-t2} and \ref{tab-r-comp-t2}. Either those actions are insiders that are not properly aggregated by the compatibility function (equation \ref{eq-comp}), or outsiders that fulfil the candidate function (equation \ref{eq-candidate}). 
+In addition to the low number of spurious activity models learnt, it has to be said that those false models are usually easy to discard for an expert for two reasons: (i) they have very low occurrence frequencies and (ii) they usually contain actions that are not generally executed for those activities. For example, for activity MakeChocolate, actions like \textit{hasBacon} have been seen. Notice that those actions cannot be discarded by $AA$ during the clustering process, since they are type and location compatible with MakeChocolate. Such an action is produced by sensor positive noise, which can be observed in the slight false positive increments from ideal scenario to complete scenario in Tables \ref{tab-r-ideal-t2} and \ref{tab-r-comp-t2}. Either those actions are insiders that are not properly aggregated by the compatibility function (Equation \ref{eq-comp}), or outsiders that fulfil the candidate function (Equation \ref{eq-candidate}). 
 
 Adding more knowledge to the context knowledge would allow discarding such actions in $AA$. For example, if object types state that meat (bacon or sausages) is only used to prepare meals, the algorithm could infer that bacon cannot be used for activity MakeChocolate, which is a sub-class of activity MakeDrink and disjunct of activity MakeMeal. But this brings the initial knowledge balance problem: how much knowledge should be initially provided to such a learning system? The answer depends a lot on the domain. If obtaining and modelling knowledge for a concrete domain is easy, adding knowledge is a good idea. However, obtaining and modelling knowledge can be very expensive in certain domains. The approach presented in this dissertation follows the philosophy of minimising initial knowledge as much as possible, presenting the \textit{worst case scenario}. We believe that the results shown in Section \ref{subsubsec:evaluation:eam:results} support this decision. 
 

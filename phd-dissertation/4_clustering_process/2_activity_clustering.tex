@@ -26,7 +26,7 @@ Given that action classification, two new definitions can be assumed:
  Every action out of the initial clusters provided by $SA^3$ is an \textit{outsider action} or \textit{outsider}, in short.
 \end{defn}
 
-Due to single-user single-activity scenario constraint (constraint \ref{cons-single}), an insider may pertain to its wrapping activity or to none, i.e. it has been produced by noise or user erratic behaviour. There is no chance for an insider to pertain to an activity other than its wrapping activity because such an assumption would imply the existence of interleaved activities. The situation for outsiders is different since an outsider can pertain to its previous activity, next activity or to none. 
+Due to single-user single-activity scenario constraint (Constraint \ref{cons-single}), an insider may pertain to its wrapping activity or to none assuming the output of $SA^3$ is correct, i.e. it has been produced by noise or user erratic behaviour. There is no chance for an insider to pertain to an activity other than its wrapping activity because such an assumption would imply the existence of interleaved activities (remember this is true assuming that the output of $SA^3$ is correct, which is assumed in the $AA$ algorithm). The situation for outsiders is different since an outsider can pertain to its previous activity, next activity or to none. 
 
 The inherent difference between insiders and outsiders demands a different treatment for both cases. $AA$ first treats all insider actions and afterwards computes all outsiders using different approaches.
 
@@ -50,7 +50,7 @@ As an outsider can be aggregated to its previous or next activity, first of all 
  Cand(A, a) = Comp(A, a) \wedge InRange(A, a)
 \end{equation}
 
-\noindent $Comp(A, a)$ has already been defined in equation \ref{eq-comp}, so the candidate function also takes into account location and type. The $InRange$ function is another boolean function that captures time feasibility. Thus the candidate function states that an activity $A$ is a candidate activity for action $a$, if they are compatible ($Comp(A, a) = True$) and in range ($InRange(A, a) = True$). 
+\noindent $Comp(A, a)$ has already been defined in Equation \ref{eq-comp}, so the candidate function also takes into account location and type. The $InRange$ function is another boolean function that captures time feasibility. Thus the candidate function states that an activity $A$ is a candidate activity for action $a$, if they are compatible ($Comp(A, a) = True$) and in range ($InRange(A, a) = True$). 
 
 As commented above, the $InRange$ function has been defined to capture the time feasibility. For example, if an action has been executed two hours before an activity whose estimated duration is three minutes, the action should not be aggregated to that activity, since it is almost impossible for the action to be related with the activity. This reasoning can be implemented in a boolean function using time distance and activity duration.
 
@@ -109,7 +109,7 @@ In contrast with time metrics 1 and 2, where activity start and end were given b
 \subsection{The complete AA algorithm}
 \label{subsec:clustering:complete-ac}
 
-To sum up, the $AA$ algorithm takes the results of $SA^3$ as the initialisation step. First, it treats insiders for all the activities detected by $SA^3$, using the compatibility function (equation \ref{eq-comp}). Afterwards, it treats outsiders in time order, using the candidate function (equation \ref{eq-candidate}) and defined three time metrics (equations \ref{eq-t1}, \ref{eq-t2} and \ref{eq-t3}). The complete algorithm is depicted as pseudo-code in Algorithm \ref{alg:ac}.
+To sum up, the $AA$ algorithm takes the results of $SA^3$ as the initialisation step. First, it treats insiders for all the activities detected by $SA^3$, using the compatibility function (Equation \ref{eq-comp}). Afterwards, it treats outsiders in time order, using the candidate function (Equation \ref{eq-candidate}) and defined three time metrics (Equations \ref{eq-t1}, \ref{eq-t2} and \ref{eq-t3}). The complete algorithm is depicted as pseudo-code in Algorithm \ref{alg:ac}.
 
 \begin{algorithm}
  \caption{$AA$ algorithm for action aggregation}

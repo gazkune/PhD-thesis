@@ -30,7 +30,7 @@ If action clusters which define activities are carefully analysed, it can be see
   S_1 \cap S_2 = S_1 \cup S_2
  \end{equation}
 
- Any two action sequences that fulfil equation \ref{eq-equal} are fused. Fusing implies removing one of the action sequences and to sum occurrence frequencies of both action sequences to assign it to the fused sequence. Thus from two sequences a resultant sequence will remain, reducing the number of valid action sequences.
+ Any two action sequences that fulfil Equation \ref{eq-equal} are fused. Fusing implies removing one of the action sequences and to sum occurrence frequencies of both action sequences to assign it to the fused sequence. Thus from two sequences a resultant sequence will remain, reducing the number of valid action sequences.
 
 \end{enumerate}
 
@@ -115,7 +115,7 @@ Due to those reasons, the ADM has been chosen to establish a statistical thresho
  \theta_S = median(\hat{JM}) + ADM(\hat{JM})
 \end{equation}
 
-As the threshold in equation \ref{eq-stat-threshold} has been calculated using statistical approaches, it is denoted as $\theta_S$. Applying equation \ref{eq-stat-threshold} to the similarity values plotted in the example of Figure \ref{fig-similarity}, a threshold can be calculated. This threshold is depicted in Figure \ref{fig-threshold-calc}. Similarity values above the threshold can be considered as outliers. 
+As the threshold in Equation \ref{eq-stat-threshold} has been calculated using statistical approaches, it is denoted as $\theta_S$. Applying Equation \ref{eq-stat-threshold} to the similarity values plotted in the example of Figure \ref{fig-similarity}, a threshold can be calculated. This threshold is depicted in Figure \ref{fig-threshold-calc}. Similarity values above the threshold can be considered as outliers. 
 
 \begin{figure}[htbp]
 \centering
@@ -141,7 +141,7 @@ The difference between $S_1$ and $S_3$ is that the user adds pesto in the first 
  \theta = max \{ \theta_S, \lambda \}
 \end{equation}
 
-\noindent where $\lambda$ is a fixed value. The idea of this approach is to state a similarity value that acts as a minimum value for action sequences to be fused. In the experiments performed in this dissertation $\lambda = 0.75$ (Chapter \ref{cha:evaluation}). If $\lambda$ is set to higher values, the $AML$ will be even more conservative, whereas decreasing $\lambda$ will make the $AML$ rely more on the statistic-based approach ($\theta_S$). Figure \ref{fig-both-thresholds} shows both thresholds, $\theta_S$ and $\lambda$, for the example of MakePasta activity and its three action sequences. Notice that $Jaccard(S_1, S_2) = Jaccard(S_2, S_3)$ and thus, only one point is depicted in the graphic. It can be seen clearly how using only $\theta_S$, $Jaccard(S_1, S_3)$ is an outlier and in consequence, sequences $S_1$ and $S_3$ would be incorrectly fused. But using equation \ref{eq-threshold} and taking the maximum of both thresholds, there is not any outlier and hence all three sequences are kept as valid activity models. 
+\noindent where $\lambda$ is a fixed value. The idea of this approach is to state a similarity value that acts as a minimum value for action sequences to be fused. In the experiments performed in this dissertation $\lambda = 0.75$ (Chapter \ref{cha:evaluation}). If $\lambda$ is set to higher values, the $AML$ will be even more conservative, whereas decreasing $\lambda$ will make the $AML$ rely more on the statistic-based approach ($\theta_S$). Figure \ref{fig-both-thresholds} shows both thresholds, $\theta_S$ and $\lambda$, for the example of MakePasta activity and its three action sequences. Notice that $Jaccard(S_1, S_2) = Jaccard(S_2, S_3)$ and thus, only one point is depicted in the graphic. It can be seen clearly how using only $\theta_S$, $Jaccard(S_1, S_3)$ is an outlier and in consequence, sequences $S_1$ and $S_3$ would be incorrectly fused. But using Equation \ref{eq-threshold} and taking the maximum of both thresholds, there is not any outlier and hence all three sequences are kept as valid activity models. 
 
 \begin{figure}[htbp]
 \centering
