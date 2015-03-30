@@ -101,19 +101,28 @@
 % below is to generate the title page with crest and author name
 
 % if output to PDF then put the following in PDF header
-\ifpdf  
-    \pdfinfo { /Title  (PhD)
-               /Creator (TeX)
-               /Producer (pdfTeX)
-               /Author (Gorka Azkune)
-               /CreationDate (D:YYYYMMDDhhmmss)  %format D:YYYYMMDDhhmmss
-               /ModDate (D:YYYYMMDDhhmm)
-               /Subject (xyz)
-               /Keywords (keyword1, keyword2, keyword3) }
-    \pdfcatalog { /PageMode (/UseOutlines)
-                  /OpenAction (fitbh)  }
-\fi
+%\ifpdf  
+%    \pdfinfo { /Title  (PhD)
+%               /Creator (TeX)
+%               /Producer (pdfTeX)
+%               /Author (Gorka Azkune)
+%               /CreationDate (D:YYYYMMDDhhmmss)  %format D:YYYYMMDDhhmmss
+%               /ModDate (D:YYYYMMDDhhmm)
+%               /Subject (xyz)
+%               /Keywords (keyword1, keyword2, keyword3) }
+%    \pdfcatalog { /PageMode (/UseOutlines)
+%                  /OpenAction (fitbh)  }
+%\fi
 
+\ifpdf  
+  \hypersetup{pdfinfo={
+    Title={Learning for Dynamic and Personalised Knowledge-Based Activity Models},
+    Author={Gorka Azkune},
+    CreationDate={D:20150324},  %format D:YYYYMMDDhhmmss
+    Subject={Artificial Intelligence},
+    Keywords={Activity recognition, Machine learning, Knowledge-based models}
+}}
+\fi
 
 % Title of the dissertation
 %\title{Towards Dynamic and Personalised Knowledge-Driven Activity Models}
